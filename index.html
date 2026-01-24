@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | PRO PORTAL</title>
+    <title>BLITZ | LINK IN BIO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #ff003c;
             --accent-glow: rgba(255, 0, 60, 0.6);
-            --bg-dark: #020202;
+            --bg-dark: #050505;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,87 +19,106 @@
             background: var(--bg-dark);
             color: #fff;
             font-family: 'Outfit', sans-serif;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* 1. Particle Background Canvas */
+        /* 1. Particle Background */
         #particle-canvas {
             position: fixed; inset: 0; z-index: -1;
         }
 
-        /* 2. Live Status Badge */
-        .live-badge {
-            position: absolute; top: 10px; right: -5px;
-            background: #ff0000; color: white;
-            font-size: 10px; font-weight: 900;
-            padding: 4px 10px; border-radius: 20px;
-            display: none; /* JS ဖြင့် ထိန်းချုပ်မည် */
-            animation: pulse 1.5s infinite;
-            box-shadow: 0 0 15px #ff0000;
-            z-index: 10;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* 3. Main Card Style */
+        /* 2. Main Card */
         .main-card {
-            width: 90%; max-width: 380px;
-            background: rgba(255, 255, 255, 0.03);
+            width: 90%; max-width: 400px;
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 40px;
-            padding: 40px 30px;
+            padding: 50px 25px;
             text-align: center;
-            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            margin: 20px 0;
         }
 
+        /* 3. Avatar with Auto-Live Pulse */
         .avatar-container {
-            width: 120px; height: 120px; margin: 0 auto 20px;
+            width: 125px; height: 125px; margin: 0 auto 25px;
             position: relative;
         }
 
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid var(--accent);
+            border: 3px solid var(--accent);
             object-fit: cover;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        h1 { font-family: 'Syncopate', sans-serif; letter-spacing: 5px; font-size: 24px; margin-bottom: 5px; }
-        .bio { color: #888; font-size: 12px; letter-spacing: 2px; margin-bottom: 30px; }
+        /* Live Indicator Badge */
+        .live-badge {
+            position: absolute; bottom: 5px; right: 5px;
+            background: #ff0000; color: white;
+            font-size: 10px; font-weight: 900;
+            padding: 4px 12px; border-radius: 20px;
+            display: none; /* JS will toggle this */
+            animation: pulse 1.5s infinite;
+            border: 2px solid #000;
+        }
 
-        /* Links */
-        .links-stack { display: flex; flex-direction: column; gap: 12px; }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+
+        /* 4. Text Styling */
+        h1 { font-family: 'Syncopate', sans-serif; letter-spacing: 6px; font-size: 26px; margin-bottom: 8px; }
+        .bio { color: #888; font-size: 13px; letter-spacing: 2px; margin-bottom: 35px; text-transform: uppercase; }
+
+        /* 5. Professional Links */
+        .links-stack { display: flex; flex-direction: column; gap: 15px; }
+
         .link-item {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px; border-radius: 15px;
+            padding: 18px; border-radius: 20px;
             text-decoration: none; color: #fff; font-weight: 600;
-            display: flex; align-items: center; transition: 0.3s;
+            display: flex; align-items: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden;
         }
-        .link-item i { width: 35px; color: var(--accent); font-size: 18px; }
+
+        .link-item i { width: 40px; color: var(--accent); font-size: 20px; }
+
         .link-item:hover {
             background: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px var(--accent-glow);
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px var(--accent-glow);
+            border-color: transparent;
         }
 
-        /* Music Toggle Button */
+        .link-item:hover i { color: #fff; }
+
+        .cta-vip {
+            background: #fff; color: #000;
+            margin-top: 10px; justify-content: center;
+            font-weight: 900; letter-spacing: 1px;
+        }
+        .cta-vip:hover { background: #eee; color: #000; transform: scale(1.03); }
+
+        /* Music Controller */
         .music-ctrl {
-            position: fixed; bottom: 20px; right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            width: 45px; height: 45px; border-radius: 50%;
+            position: fixed; bottom: 25px; right: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 50px; height: 50px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
         }
-
     </style>
 </head>
 <body>
@@ -108,18 +127,26 @@
 
     <div class="main-card">
         <div class="avatar-container">
-            <div id="live-indicator" class="live-badge">LIVE</div>
             <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
+            <div id="live-indicator" class="live-badge">LIVE NOW</div>
         </div>
 
         <h1>BLITZ</h1>
-        <p class="bio">ELITE CONTENT CREATOR</p>
+        <p class="bio">Elite Streamer • Next-Gen Content</p>
 
         <div class="links-stack">
-            <a href="#" class="link-item" onmouseover="playHover()"><i class="fab fa-facebook-f"></i> FACEBOOK</a>
-            <a href="#" class="link-item" onmouseover="playHover()"><i class="fab fa-tiktok"></i> TIKTOK</a>
-            <a href="#" class="link-item" onmouseover="playHover()"><i class="fab fa-youtube"></i> YOUTUBE</a>
-            <a href="#" class="link-item" onmouseover="playHover()" style="background: white; color: black;"><i class="fas fa-crown"></i> JOIN SQUAD</a>
+            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="link-item" onmouseover="playHover()">
+                <i class="fab fa-facebook-f"></i> FACEBOOK STREAM
+            </a>
+            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="link-item" onmouseover="playHover()">
+                <i class="fab fa-tiktok"></i> TIKTOK CLIPS
+            </a>
+            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="link-item" onmouseover="playHover()">
+                <i class="fab fa-youtube"></i> YOUTUBE CHANNEL
+            </a>
+            <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" target="_blank" class="link-item cta-vip" onmouseover="playHover()">
+                <i class="fas fa-crown"></i> JOIN THE SQUAD
+            </a>
         </div>
     </div>
 
@@ -131,13 +158,27 @@
     <audio id="hover-sfx" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
 
     <script>
-        // --- 1. LIVE STATUS CONFIG ---
-        const isLive = true; // Live လွှင့်နေရင် true လို့ပြောင်းပါ
-        if(isLive) {
-            document.getElementById('live-indicator').style.display = 'block';
-        }
+        // --- ၁။ AUTO LIVE STATUS (8:30 PM - 10:00 PM) ---
+        function checkLive() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const liveBadge = document.getElementById('live-indicator');
 
-        // --- 2. SOUND EFFECTS ---
+            // 8:30 PM = 20:30, 10:00 PM = 22:00
+            const isAfterStart = (hour > 20) || (hour === 20 && minute >= 30);
+            const isBeforeEnd = (hour < 22);
+
+            if (isAfterStart && isBeforeEnd) {
+                liveBadge.style.display = 'block';
+            } else {
+                liveBadge.style.display = 'none';
+            }
+        }
+        setInterval(checkLive, 10000);
+        checkLive();
+
+        // --- ၂။ MUSIC & SFX ---
         const bgMusic = document.getElementById('bg-music');
         const hoverSfx = document.getElementById('hover-sfx');
         const musicIcon = document.getElementById('music-icon');
@@ -154,10 +195,10 @@
 
         function playHover() {
             hoverSfx.currentTime = 0;
-            hoverSfx.play();
+            hoverSfx.play().catch(()=>{}); 
         }
 
-        // --- 3. PARTICLES SYSTEM ---
+        // --- ၃။ PARTICLES SYSTEM ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -171,9 +212,9 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
+                this.size = Math.random() * 1.5;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
             }
             update() {
                 this.x += this.speedX;
@@ -184,32 +225,24 @@
                 if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
-        function createParticles() {
-            for (let i = 0; i < 100; i++) {
-                particles.push(new Particle());
-            }
+        function setup() {
+            particles = [];
+            for (let i = 0; i < 80; i++) particles.push(new Particle());
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
 
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        createParticles();
-        animate();
+        window.addEventListener('resize', () => { initCanvas(); setup(); });
+        initCanvas(); setup(); animate();
     </script>
 </body>
 </html>
