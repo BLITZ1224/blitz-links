@@ -3,113 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | THE OFFICIAL NEXUS</title>
+    <title>BLITZ | PREMIUM HUB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --red: #ff0000; --cyan: #00f2ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --accent: #ff003c;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             background: #000;
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            height: 100vh; overflow: hidden;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* DYNAMIC SCANLINE BACKGROUND */
-        body::before {
-            content: "";
-            position: absolute; width: 100%; height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(20,0,0,1) 50%, rgba(0,0,0,1) 100%);
+        /* ၁။ PREMIUM MESH GRADIENT BACKDROP (ဒီအကွက်က Website ကို အသက်ဝင်စေတာ) */
+        .mesh-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(at 0% 0%, rgba(255, 0, 60, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 242, 255, 0.1) 0px, transparent 50%);
             z-index: -1;
+            animation: meshMove 10s ease infinite alternate;
+        }
+        @keyframes meshMove {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
         }
 
-        .container {
-            width: 90%; max-width: 380px; text-align: center;
-            padding: 40px 20px; border-radius: 20px;
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+        .main-card {
+            width: 90%; max-width: 390px;
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* LOGO WITH ELECTRIC GLOW */
-        .profile-wrap { position: relative; display: inline-block; margin-bottom: 20px; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ၂။ AVATAR GLOW & RING */
+        .avatar-container {
+            position: relative; width: 120px; height: 120px; margin: 0 auto 25px;
+        }
         .profile-img {
-            width: 130px; height: 130px; border-radius: 50%;
-            border: 2px solid var(--red);
-            box-shadow: 0 0 20px var(--red);
-            animation: electric 2s infinite alternate;
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; border: 2px solid var(--border);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes electric {
-            0% { box-shadow: 0 0 10px var(--red); filter: brightness(1); }
-            100% { box-shadow: 0 0 30px var(--red), 0 0 10px var(--cyan); filter: brightness(1.2); }
+        .avatar-container::after {
+            content: ''; position: absolute; inset: -5px;
+            border: 2px solid var(--accent); border-radius: 50%;
+            animation: ringScale 2s linear infinite; opacity: 0;
+        }
+        @keyframes ringScale {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 0; }
         }
 
-        /* GLITCH BLITZ TEXT */
+        /* ၃။ TEXT STYLING */
         h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 900;
-            letter-spacing: 10px; color: white; margin-bottom: 5px;
-            text-shadow: 3px 3px var(--red);
-            animation: glitch 3s infinite;
+            font-family: 'Syncopate', sans-serif; font-size: 24px;
+            letter-spacing: 6px; margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        @keyframes glitch {
-            0%, 90%, 100% { transform: none; opacity: 1; }
-            92% { transform: skewX(20deg); opacity: 0.8; color: var(--cyan); }
-            95% { transform: skewX(-20deg); opacity: 0.8; color: var(--red); }
+        .bio { font-size: 13px; color: #888; margin-bottom: 35px; letter-spacing: 1px; }
+
+        /* ၄။ PREMIUM STACKED BUTTONS */
+        .links-stack { display: flex; flex-direction: column; gap: 15px; }
+        
+        .premium-link {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 18px; border-radius: 18px;
+            display: flex; align-items: center;
+            text-decoration: none; color: #fff;
+            font-weight: 600; transition: 0.3s all;
+            position: relative; overflow: hidden;
         }
 
-        .tagline { font-size: 12px; color: #555; letter-spacing: 5px; margin-bottom: 40px; }
+        .premium-link i { font-size: 20px; width: 40px; }
 
-        /* CLEAN PREMIUM BUTTONS */
-        .links-flex { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px; }
-        .btn-sq {
-            flex: 1; text-decoration: none; color: white;
-            padding: 20px 0; background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            transition: 0.3s; font-size: 20px;
-        }
-        .btn-sq:hover {
-            background: var(--red); color: black;
-            box-shadow: 0 0 25px var(--red); transform: translateY(-5px);
+        .premium-link::before {
+            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 0;
+            background: var(--accent); transition: 0.4s; z-index: -1; opacity: 0.2;
         }
 
-        /* THE CORE ACTION BUTTON */
-        .core-btn {
-            display: block; width: 100%; padding: 20px;
-            background: transparent; color: white;
-            border: 1px solid var(--cyan); border-radius: 10px;
-            text-decoration: none; font-family: 'Orbitron', sans-serif;
-            font-size: 14px; letter-spacing: 3px; font-weight: bold;
-            transition: 0.4s; position: relative; overflow: hidden;
+        .premium-link:hover {
+            transform: translateX(10px); border-color: var(--accent);
+            background: rgba(255, 0, 60, 0.05);
         }
-        .core-btn:hover {
-            background: var(--cyan); color: black;
-            box-shadow: 0 0 40px var(--cyan);
+        .premium-link:hover::before { width: 100%; }
+
+        /* ၅။ FLOATING ACTION BUTTON (THE "STAR") */
+        .cta-premium {
+            margin-top: 25px; background: #fff; color: #000;
+            padding: 20px; border-radius: 18px; font-weight: 900;
+            text-decoration: none; display: block;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
+        .cta-premium:hover {
+            background: var(--accent); color: #fff;
+            box-shadow: 0 15px 30px rgba(255, 0, 60, 0.3);
+            transform: translateY(-3px);
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="profile-wrap">
-            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff0000/000000?text=BLITZ'">
+    <div class="mesh-bg"></div>
+
+    <div class="main-card">
+        <div class="avatar-container">
+            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
         </div>
 
         <h1>BLITZ</h1>
-        <p class="tagline">GAMING EVOLVED</p>
+        <p class="bio">ELITE CONTENT • NEXT-GEN STREAMER</p>
 
-        <div class="links-flex">
-            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="btn-sq"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="btn-sq"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="btn-sq"><i class="fab fa-youtube"></i></a>
+        <div class="links-stack">
+            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="premium-link">
+                <i class="fab fa-facebook-f"></i> FACEBOOK STREAM
+            </a>
+            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="premium-link">
+                <i class="fab fa-tiktok"></i> TIKTOK CLIPS
+            </a>
+            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="premium-link">
+                <i class="fab fa-youtube"></i> YOUTUBE HUB
+            </a>
+            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="cta-premium">
+                JOIN THE SQUAD
+            </a>
         </div>
-
-        <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="core-btn">
-            ENTER THE NEXUS
-        </a>
     </div>
 
 </body>
