@@ -3,143 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | ELITE HUB</title>
+    <title>BLITZ | QUANTUM NEXUS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-red: #ff0000;
-            --neon-blue: #00f2ff;
-            --neon-green: #39ff14;
-            --bg-dark: #020202;
+            --quantum-blue: #00f2ff;
+            --quantum-magenta: #ff00ff;
+            --quantum-green: #00ff80;
+            --bg-deep: #000000;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="rgb(0,242,255)" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm-1 17h2v-2h-2v2zm0-4h2V7h-2v8z"/><circle cx="12" cy="12" r="5" fill="rgb(255,0,255)"/></svg>') 12 12, auto; }
+
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-deep);
             color: white;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Share Tech Mono', monospace;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; overflow: hidden; position: relative;
         }
 
-        /* ၁။ BACKGROUND GAMING VIBES (Particles & Glow) */
-        .bg-glow {
-            position: fixed; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a0000 0%, #000 80%);
-            z-index: -1;
+        /* ၁။ QUANTUM ENERGY BACKGROUND (Animated) */
+        .quantum-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(0,242,255,0.15) 0%, rgba(0,0,0,0) 50%);
+            animation: flow 15s linear infinite;
         }
-        .scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            background-size: 100% 4px; z-index: 10; pointer-events: none;
+        @keyframes flow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
         }
 
         .container {
             width: 90%; max-width: 400px; text-align: center; z-index: 20;
-            padding: 30px 20px; border-radius: 20px;
-            background: rgba(10, 10, 10, 0.8); border: 1px solid rgba(255, 0, 0, 0.1);
-            box-shadow: 0 0 50px rgba(0,0,0,1); backdrop-filter: blur(15px);
-            animation: fadeIn 1s ease-out;
+            padding: 30px 20px; border-radius: 25px;
+            background: rgba(10, 10, 10, 0.7); /* Slightly transparent */
+            border: 2px solid rgba(0, 242, 255, 0.3); /* Quantum blue border */
+            box-shadow: 0 0 60px rgba(0, 242, 255, 0.4); /* Blue glow */
+            backdrop-filter: blur(15px);
+            animation: fadeIn 1.2s ease-out;
+            position: relative;
         }
 
-        /* ၂။ HEADER / LOGO PRO-UPGRADE */
-        .logo-box { position: relative; display: inline-block; margin-bottom: 20px; }
+        /* ၂။ HOLOGRAM EFFECT FOR BLITZ TEXT */
+        .hologram-text {
+            font-family: 'Audiowide', cursive; font-size: 2.8rem;
+            letter-spacing: 8px; color: transparent; margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--quantum-blue), var(--quantum-magenta), var(--quantum-green));
+            -webkit-background-clip: text; background-clip: text;
+            text-shadow: 0 0 10px var(--quantum-blue), 0 0 20px var(--quantum-magenta);
+            animation: glitchText 1s infinite alternate;
+        }
+        @keyframes glitchText {
+            0% { text-shadow: 0 0 10px var(--quantum-blue), 0 0 20px var(--quantum-magenta); transform: translate(0,0); }
+            25% { text-shadow: 0 0 5px var(--quantum-green), 0 0 10px var(--quantum-blue); transform: translate(-1px,1px); }
+            50% { text-shadow: 0 0 10px var(--quantum-magenta), 0 0 20px var(--quantum-blue); transform: translate(0,0); }
+            75% { text-shadow: 0 0 5px var(--quantum-blue), 0 0 10px var(--quantum-green); transform: translate(1px,-1px); }
+            100% { text-shadow: 0 0 10px var(--quantum-blue), 0 0 20px var(--quantum-magenta); transform: translate(0,0); }
+        }
+
+        /* ၃။ LOGO & LIVE INDICATOR */
+        .logo-box { position: relative; display: inline-block; margin-bottom: 25px; }
         .profile-img {
-            width: 125px; height: 125px; border-radius: 50%;
-            border: 3px solid var(--neon-red);
-            box-shadow: 0 0 25px var(--neon-red), inset 0 0 15px var(--neon-red);
-            animation: float 3s ease-in-out infinite;
+            width: 140px; height: 140px; border-radius: 50%;
+            border: 4px solid var(--quantum-blue);
+            box-shadow: 0 0 30px var(--quantum-blue), inset 0 0 20px var(--quantum-magenta);
+            animation: logoPulse 4s ease-in-out infinite;
         }
+        @keyframes logoPulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 30px var(--quantum-blue), inset 0 0 20px var(--quantum-magenta); } 50% { transform: scale(1.05); box-shadow: 0 0 50px var(--quantum-magenta), inset 0 0 30px var(--quantum-blue); } }
+        
         .live-indicator {
-            position: absolute; bottom: 5px; right: 5px;
-            background: var(--neon-red); color: white;
-            font-size: 10px; font-weight: bold; padding: 3px 10px;
-            border-radius: 20px; animation: blink 1.2s infinite;
-            box-shadow: 0 0 10px var(--neon-red);
+            position: absolute; bottom: 8px; right: 8px;
+            background: linear-gradient(45deg, var(--quantum-magenta), var(--quantum-blue));
+            color: white; font-size: 10px; font-weight: bold;
+            padding: 4px 12px; border-radius: 20px;
+            animation: blink 1.5s infinite;
+            box-shadow: 0 0 15px var(--quantum-magenta);
+            letter-spacing: 1px;
         }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 2.2rem;
-            letter-spacing: 6px; color: white; margin-bottom: 5px;
-            text-shadow: 0 0 10px var(--neon-red);
-        }
-        .tagline { color: #aaa; font-weight: 500; font-size: 14px; letter-spacing: 1px; margin-bottom: 30px; }
+        .tagline { color: #ccc; font-weight: 400; font-size: 14px; letter-spacing: 1px; margin-bottom: 35px; text-transform: uppercase; }
 
-        /* ၃။ SOCIAL BUTTONS (Icons + Labels) */
-        .social-wrapper { display: flex; justify-content: space-around; margin-bottom: 40px; }
+        /* ၄။ DIGITAL CRYSTAL BUTTONS (Social Links) */
+        .social-wrapper { display: flex; justify-content: space-around; margin-bottom: 45px; }
         .social-btn {
             text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; gap: 8px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        .icon-circle {
-            width: 60px; height: 60px; border-radius: 50%;
+        .icon-box {
+            width: 65px; height: 65px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 24px; border: 2px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.03); transition: 0.3s;
+            font-size: 28px; border: 2px solid rgba(0, 242, 255, 0.2);
+            background: rgba(0, 242, 255, 0.05); transition: 0.4s;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
         }
-        .social-btn span { font-size: 10px; font-weight: 700; color: #888; }
+        .social-btn span { font-size: 9px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* Brand Colors on Hover */
-        .fb:hover .icon-circle { border-color: #1877F2; color: #1877F2; box-shadow: 0 0 20px #1877F2; }
-        .tt:hover .icon-circle { border-color: #ff0050; color: #ff0050; box-shadow: 0 0 20px #ff0050; }
-        .yt:hover .icon-circle { border-color: #ff0000; color: #ff0000; box-shadow: 0 0 20px #ff0000; }
-        .social-btn:hover { transform: translateY(-8px); }
-        .social-btn:hover span { color: white; }
+        .social-btn:hover .icon-box {
+            background: linear-gradient(45deg, var(--quantum-blue), var(--quantum-magenta));
+            color: white; transform: rotateY(360deg) scale(1.1);
+            box-shadow: 0 0 30px var(--quantum-magenta);
+            border-color: var(--quantum-magenta);
+        }
+        .social-btn:hover span { color: var(--quantum-magenta); }
 
-        /* ၄။ HERO CTA BUTTON (Neon Star) */
-        .hero-cta {
+        /* ၅။ NEXUS CORE CTA (Pulsating) */
+        .cta-btn {
             display: block; width: 100%; padding: 20px;
-            background: linear-gradient(45deg, #004d00, #00ff00);
-            color: black; text-decoration: none; font-family: 'Orbitron', sans-serif;
-            font-weight: 900; font-size: 16px; border-radius: 12px;
-            text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
-            position: relative; overflow: hidden; transition: 0.4s;
+            background: linear-gradient(45deg, var(--quantum-green), var(--quantum-blue));
+            color: var(--bg-deep); text-decoration: none; font-family: 'Audiowide', cursive;
+            font-weight: 700; font-size: 1.1rem; border-radius: 12px;
+            text-transform: uppercase; letter-spacing: 3px;
+            box-shadow: 0 0 30px var(--quantum-green);
+            position: relative; overflow: hidden; transition: 0.5s;
+            animation: ctaPulse 2s infinite;
         }
-        .hero-cta:hover {
-            transform: scale(1.03); box-shadow: 0 0 40px var(--neon-green);
-            background: linear-gradient(45deg, #00ff00, #adff2f);
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 0 20px var(--quantum-green); }
+            50% { box-shadow: 0 0 50px var(--quantum-blue), 0 0 30px var(--quantum-green); }
         }
+        .cta-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(45deg, var(--quantum-blue), var(--quantum-green));
+            box-shadow: 0 0 60px var(--quantum-blue);
+        }
+        .cta-btn::before {
+            content: '>>'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+            opacity: 0; animation: ctaArrow 1.5s infinite;
+        }
+        @keyframes ctaArrow { 0%, 100% { left: 15px; opacity: 0; } 50% { left: 5px; opacity: 1; } }
 
-        /* ၅။ ANIMATIONS */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
+        /* ၆။ ANIMATIONS */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-    <div class="scanlines"></div>
+    <div class="quantum-bg"></div>
 
     <div class="container">
         <div class="logo-box">
-            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff0000/000000?text=BLITZ'">
-            <div class="live-indicator">LIVE NOW</div>
+            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/00f2ff/000000?text=BLITZ'">
+            <div class="live-indicator">ACTIVE STREAM</div>
         </div>
 
-        <h1>BLITZ</h1>
-        <div class="tagline">GAMING LIVE 24/7 • WATCH & JOIN THE ACTION</div>
+        <div class="hologram-text">BLITZ</div>
+        <div class="tagline">ENTER THE QUANTUM DOMAIN</div>
 
         <div class="social-wrapper">
-            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="social-btn fb">
-                <div class="icon-circle"><i class="fab fa-facebook-f"></i></div>
-                <span>FB LIVE</span>
+            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="social-btn">
+                <div class="icon-box"><i class="fab fa-facebook-f"></i></div>
+                <span>FB PORTAL</span>
             </a>
-            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="social-btn tt">
-                <div class="icon-circle"><i class="fab fa-tiktok"></i></div>
-                <span>CLIPS</span>
+            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="social-btn">
+                <div class="icon-box"><i class="fab fa-tiktok"></i></div>
+                <span>DATA CLIPS</span>
             </a>
-            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="social-btn yt">
-                <div class="icon-circle"><i class="fab fa-youtube"></i></div>
-                <span>STREAM</span>
+            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="social-btn">
+                <div class="icon-box"><i class="fab fa-youtube"></i></div>
+                <span>VORTEX STREAM</span>
             </a>
         </div>
 
-        <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="hero-cta">
-            WATCH LIVE NOW
+        <a href="https://www.addictinggames.com/puzzle/bubble-shooter" target="_blank" class="cta-btn">
+            ACCESS NEXUS CORE
         </a>
     </div>
 
