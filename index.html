@@ -3,209 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | THE PROFESSIONAL</title>
+    <title>BLITZ | INTERACTIVE HUB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff003c;
-            --primary-glow: rgba(255, 0, 60, 0.5);
-            --dark-bg: #030303;
+            --accent: #ff003c;
+            --accent-glow: rgba(255, 0, 60, 0.5);
+            --bg: #030303;
+            --transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
         }
 
-        /* WebKit Scrollbar - Custom Design */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        /* Cyber Mode Theme (Easter Egg) */
+        body.cyber-mode {
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.5);
+            background-color: #000a0f;
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background var(--transition), color var(--transition), border var(--transition), box-shadow var(--transition); }
 
         body {
-            background-color: var(--dark-bg);
+            background-color: var(--bg);
             color: #fff;
             font-family: 'Outfit', sans-serif;
-            min-height: 100vh;
+            height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 0, 60, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 150, 255, 0.05) 0%, transparent 40%);
+            overflow: hidden;
         }
 
-        /* Floating Particles Background */
-        #particle-canvas { position: fixed; inset: 0; z-index: -1; }
+        /* Glitch Animation for Transition */
+        @keyframes glitch {
+            0% { clip-path: inset(50% 0 30% 0); transform: translate(-5px, 5px); }
+            20% { clip-path: inset(10% 0 80% 0); transform: translate(5px, -5px); }
+            40% { clip-path: inset(40% 0 40% 0); transform: translate(-5px, 0); }
+            100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+        }
 
+        .glitch-active { animation: glitch 0.3s linear infinite; }
+
+        /* Main Card */
         .main-card {
-            width: 92%; max-width: 420px;
-            background: rgba(255, 255, 255, 0.015);
-            backdrop-filter: blur(35px) saturate(200%);
-            -webkit-backdrop-filter: blur(35px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 45px;
-            padding: 60px 30px;
+            width: 90%; max-width: 390px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 50px 30px;
             text-align: center;
             position: relative;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* Profile Glow System */
         .avatar-container {
-            width: 140px; height: 140px; margin: 0 auto 30px;
-            position: relative;
+            width: 130px; height: 130px; margin: 0 auto 25px;
+            position: relative; cursor: pointer;
+            user-select: none;
         }
+
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 5px; object-fit: cover;
-            position: relative; z-index: 2;
-        }
-        .glow-ring {
-            position: absolute; inset: -5px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent, var(--primary), transparent);
-            animation: rotateGlow 3s linear infinite;
-            z-index: 1;
-        }
-        @keyframes rotateGlow {
-            100% { transform: rotate(360deg); }
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        /* Text Elements */
-        h1 {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 30px; letter-spacing: 10px;
-            background: linear-gradient(to bottom, #fff 40%, #666 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-        .bio-container { margin-bottom: 40px; }
-        .bio-text {
-            color: #aaa; font-size: 13px; letter-spacing: 4px;
-            text-transform: uppercase; font-weight: 300;
-        }
+        h1 { font-family: 'Syncopate', sans-serif; letter-spacing: 6px; font-size: 26px; margin-bottom: 5px; }
+        .bio { color: #888; font-size: 12px; letter-spacing: 3px; margin-bottom: 35px; }
 
-        /* Elite Links */
-        .links-stack { display: flex; flex-direction: column; gap: 18px; }
-
+        /* Links */
+        .links-stack { display: flex; flex-direction: column; gap: 15px; }
         .link-item {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 20px; border-radius: 22px;
-            text-decoration: none; color: #fff;
-            display: flex; align-items: center;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px; border-radius: 20px;
+            text-decoration: none; color: #fff; font-weight: 600;
+            display: flex; align-items: center; 
         }
-
-        .link-item i { width: 45px; font-size: 22px; color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
-        .link-item span { font-weight: 600; letter-spacing: 1.5px; font-size: 14px; }
-
-        .link-item::after {
-            content: ''; position: absolute; top: -50%; left: -100%;
-            width: 50%; height: 200%; background: rgba(255,255,255,0.1);
-            transform: rotate(30deg); transition: 0.5s;
-        }
-
+        .link-item i { width: 40px; color: var(--accent); font-size: 20px; }
         .link-item:hover {
-            background: rgba(255, 0, 60, 0.1);
-            border-color: var(--primary);
+            background: var(--accent);
             transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-        .link-item:hover::after { left: 150%; }
-
-        .cta-gold {
-            background: #fff; color: #000 !important;
-            margin-top: 15px; justify-content: center;
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 20px var(--accent-glow);
         }
 
-        /* Audio Control */
-        .music-toggle {
-            position: fixed; top: 20px; right: 20px;
-            padding: 10px 20px; background: rgba(255,255,255,0.05);
-            border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
-            font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+        /* Easter Egg Hint Toast */
+        #hint {
+            position: fixed; bottom: 20px; font-size: 10px; color: #444; letter-spacing: 1px;
         }
     </style>
 </head>
-<body>
+<body id="body">
 
-    <canvas id="particle-canvas"></canvas>
-
-    <div class="music-toggle" onclick="toggleMusic()">
-        <i id="music-icon" class="fas fa-play"></i> <span>ATMOSPHERE</span>
-    </div>
-
-    <div class="main-card">
-        <div class="avatar-container">
-            <div class="glow-ring"></div>
+    <div class="main-card" id="card">
+        <div class="avatar-container" onclick="handleEasterEgg()">
             <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
         </div>
 
-        <div class="bio-container">
-            <h1>BLITZ</h1>
-            <p class="bio-text">Beyond Gaming • Elite Brand</p>
-        </div>
+        <h1>BLITZ</h1>
+        <p class="bio">ELITE CONTENT HUB</p>
 
         <div class="links-stack">
             <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="link-item">
-                <i class="fab fa-facebook"></i> <span>ENTER THE ARENA</span>
+                <i class="fab fa-facebook-f"></i> FACEBOOK STREAM
             </a>
             <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="link-item">
-                <i class="fab fa-tiktok"></i> <span>DAILY CLIPS</span>
+                <i class="fab fa-tiktok"></i> TIKTOK CLIPS
             </a>
             <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="link-item">
-                <i class="fab fa-youtube"></i> <span>MAIN HUB</span>
-            </a>
-            <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" target="_blank" class="link-item cta-gold">
-                <span>JOIN THE ELITE SQUAD</span>
+                <i class="fab fa-youtube"></i> YOUTUBE HUB
             </a>
         </div>
     </div>
 
-    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"></audio>
+    <p id="hint">Tip: Tap the logo 5 times to unlock Cyber Mode</p>
 
     <script>
-        // --- 1. Audio Control ---
-        const bgMusic = document.getElementById('bg-music');
-        const musicIcon = document.getElementById('music-icon');
-        function toggleMusic() {
-            if (bgMusic.paused) { bgMusic.play(); musicIcon.className = 'fas fa-pause'; }
-            else { bgMusic.pause(); musicIcon.className = 'fas fa-play'; }
+        let clickCount = 0;
+        let lastClickTime = 0;
+
+        function handleEasterEgg() {
+            const now = new Date().getTime();
+            
+            // ၁ စက္ကန့်ထက်ကျော်ရင် count ကို reset ပြန်လုပ်မယ်
+            if (now - lastClickTime > 1000) {
+                clickCount = 0;
+            }
+
+            clickCount++;
+            lastClickTime = now;
+
+            // ခပ်သွက်သွက်လေး ၅ ခါနှိပ်ရင်
+            if (clickCount === 5) {
+                activateCyberMode();
+                clickCount = 0;
+            }
         }
 
-        // --- 2. Particles ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function init() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = [];
-            for(let i=0; i<60; i++) particles.push({
-                x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-                vX: Math.random()*0.4-0.2, vY: Math.random()*0.4-0.2,
-                s: Math.random()*1.5
-            });
+        function activateCyberMode() {
+            const body = document.getElementById('body');
+            const card = document.getElementById('card');
+
+            // Glitch Effect စတင်မယ်
+            card.classList.add('glitch-active');
+            
+            setTimeout(() => {
+                body.classList.toggle('cyber-mode'); // Theme အရောင်ပြောင်းမယ်
+                card.classList.remove('glitch-active');
+            }, 300);
+
+            // Sound Effect ထည့်ချင်ရင် ဒီနေရာမှာ ထည့်နိုင်ပါတယ်
+            console.log("Cyber Mode Activated!");
         }
-        function draw() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.fillStyle = "rgba(255,255,255,0.2)";
-            particles.forEach(p => {
-                p.x += p.vX; p.y += p.vY;
-                if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
-                if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(draw);
-        }
-        window.onresize = init; init(); draw();
     </script>
 </body>
 </html>
