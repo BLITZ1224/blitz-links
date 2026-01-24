@@ -1,196 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BLITZ | MOBILE ELITE</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent: #00f2ff;
-            --accent-2: #ff003c;
-            --glass: rgba(10, 10, 10, 0.85);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BLITZ | ELITE</title>
 
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; /* ဖုန်းမှာနှိပ်ရင် အပြာကွက်မပေါ်အောင် */
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Outfit', sans-serif;
-            height: 100dvh; /* Dynamic viewport height for mobile browsers */
-            overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
-        }
+<style>
+:root{
+  --cyan:#00f2ff;
+  --red:#ff003c;
+  --glass:rgba(15,15,18,.72);
+}
 
-        /* Aura Background */
-        #aura-canvas {
-            position: fixed; inset: 0; z-index: -1; filter: blur(35px);
-        }
+*{
+  margin:0;padding:0;box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-        /* Responsive Mobile Card */
-        .mobile-card {
-            width: 88%;
-            max-width: 360px;
-            background: var(--glass);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 40px;
-            padding: 50px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
-            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+html,body{
+  height:100%;
+  background:#000;
+  font-family:'Outfit',sans-serif;
+  overflow:hidden;
+  color:#fff;
+}
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* ===== Ambient Background ===== */
+.bg{
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(60vw 60vw at 20% 20%, rgba(0,242,255,.18), transparent 60%),
+    radial-gradient(50vw 50vw at 80% 70%, rgba(255,0,60,.18), transparent 60%),
+    #000;
+  filter:blur(40px);
+  animation:bgMove 14s linear infinite alternate;
+}
+@keyframes bgMove{
+  to{ transform:scale(1.1) translateY(-20px); }
+}
 
-        /* Profile Section */
-        .pfp-wrap {
-            width: 110px; height: 110px; margin: 0 auto 25px;
-            position: relative;
-        }
-        .pfp-img {
-            width: 100%; height: 100%; border-radius: 50%;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            padding: 8px;
-        }
+/* ===== Card ===== */
+.wrapper{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
 
-        /* Typography */
-        h1 {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 24px; letter-spacing: 10px;
-            margin-bottom: 8px;
-            background: linear-gradient(to bottom, #fff, #999);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .desc {
-            font-size: 9px; letter-spacing: 4px; color: #888;
-            text-transform: uppercase; margin-bottom: 35px;
-        }
+.card{
+  width:min(90vw,380px);
+  background:var(--glass);
+  backdrop-filter:blur(35px) saturate(140%);
+  border-radius:42px;
+  padding:54px 32px 40px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.7),
+    inset 0 0 0 1px rgba(255,255,255,.04);
+  transform-style:preserve-3d;
+  transition:transform .15s ease-out;
+  animation:cardIn .9s cubic-bezier(.2,.9,.2,1);
+}
+@keyframes cardIn{
+  from{opacity:0; transform:translateY(40px) scale(.96);}
+  to{opacity:1; transform:none;}
+}
 
-        /* Touch-Optimized Buttons */
-        .btn-stack { display: flex; flex-direction: column; gap: 12px; }
-        .btn-mobile {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 18px 25px; border-radius: 20px;
-            text-decoration: none; color: #fff;
-            display: flex; align-items: center; justify-content: space-between;
-            font-weight: 600; letter-spacing: 1.5px; font-size: 13px;
-            transition: 0.3s;
-        }
-        .btn-mobile:active {
-            transform: scale(0.96);
-            background: rgba(var(--accent-rgb), 0.2);
-            border-color: var(--accent);
-        }
-        .btn-mobile i { font-size: 18px; color: var(--accent); }
+/* ===== Avatar ===== */
+.avatar{
+  width:118px;height:118px;
+  margin:0 auto 26px;
+  border-radius:50%;
+  padding:8px;
+  background:
+    linear-gradient(135deg,var(--cyan),var(--red));
+}
+.avatar img{
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  background:#000;
+}
 
-        .btn-elite {
-            background: #fff; color: #000; margin-top: 5px;
-        }
-        .btn-elite span, .btn-elite i { color: #000; }
+/* ===== Title ===== */
+h1{
+  font-family:'Syncopate',sans-serif;
+  letter-spacing:12px;
+  font-size:26px;
+  margin-bottom:6px;
+  background:linear-gradient(#fff,#aaa);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.tag{
+  font-size:10px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:#8c8c8c;
+  margin-bottom:34px;
+}
 
-    </style>
+/* ===== Buttons ===== */
+.stack{display:flex;flex-direction:column;gap:14px;}
+
+.btn{
+  position:relative;
+  padding:18px 22px;
+  border-radius:22px;
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:600;
+  letter-spacing:1.4px;
+  font-size:13px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+  transition:.25s;
+}
+
+.btn::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:translateX(-100%);
+}
+
+.btn:active{
+  transform:scale(.96);
+}
+.btn:active::after{
+  transform:translateX(100%);
+  transition:.4s;
+}
+
+.btn i{font-size:18px;color:var(--cyan);}
+
+.elite{
+  background:#fff;
+  color:#000;
+}
+.elite i{color:#000;}
+
+/* ===== Footer Glow ===== */
+.glow{
+  position:absolute;
+  inset:auto -40% -60% -40%;
+  height:120px;
+  background:radial-gradient(closest-side,var(--cyan),transparent);
+  opacity:.35;
+  filter:blur(50px);
+}
+</style>
 </head>
+
 <body>
+<div class="bg"></div>
 
-    <canvas id="aura-canvas"></canvas>
-
-    <div class="mobile-card" id="card">
-        <div class="pfp-wrap">
-            <img src="blitz.png" class="pfp-img" onerror="this.src='https://via.placeholder.com/150/00f2ff/ffffff?text=B'">
-        </div>
-
-        <h1>BLITZ</h1>
-        <p class="desc">Supreme Mobile Authority</p>
-
-        <div class="btn-stack">
-            <a href="https://www.facebook.com/BlitzGamingOfficial" class="btn-mobile">
-                <span>FACEBOOK</span> <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://www.tiktok.com/@streamingbyblitz" class="btn-mobile">
-                <span>TIKTOK</span> <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" class="btn-mobile">
-                <span>YOUTUBE</span> <i class="fab fa-youtube"></i>
-            </a>
-            <a href="#" class="btn-mobile btn-elite">
-                <span>JOIN THE SQUAD</span> <i class="fas fa-bolt"></i>
-            </a>
-        </div>
+<div class="wrapper">
+  <div class="card" id="card">
+    <div class="avatar">
+      <img src="blitz.png" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
     </div>
 
-    <script>
-        const canvas = document.getElementById('aura-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+    <h1>BLITZ</h1>
+    <div class="tag">Supreme Mobile Authority</div>
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+    <div class="stack">
+      <a class="btn" href="https://www.facebook.com/BlitzGamingOfficial">
+        <span>FACEBOOK</span><i class="fab fa-facebook"></i>
+      </a>
+      <a class="btn" href="https://www.tiktok.com/@streamingbyblitz">
+        <span>TIKTOK</span><i class="fab fa-tiktok"></i>
+      </a>
+      <a class="btn" href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1">
+        <span>YOUTUBE</span><i class="fab fa-youtube"></i>
+      </a>
+      <a class="btn elite" href="#">
+        <span>JOIN THE SQUAD</span><i class="fas fa-bolt"></i>
+      </a>
+    </div>
 
-        // Mobile Touch Interaction
-        window.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            createParticles(touch.clientX, touch.clientY);
-        });
+    <div class="glow"></div>
+  </div>
+</div>
 
-        // For testing on Desktop
-        window.addEventListener('mousemove', (e) => {
-            createParticles(e.clientX, e.clientY);
-        });
+<script>
+const card=document.getElementById("card");
+let rx=0,ry=0;
 
-        function createParticles(x, y) {
-            for(let i=0; i<1; i++) {
-                particles.push({
-                    x: x, y: y,
-                    size: Math.random() * 60 + 20,
-                    alpha: 1,
-                    color: Math.random() > 0.5 ? '#00f2ff' : '#ff003c',
-                    vx: Math.random() * 2 - 1,
-                    vy: Math.random() * 2 - 1
-                });
-            }
-        }
+window.addEventListener("deviceorientation",e=>{
+  rx=e.beta/6;
+  ry=e.gamma/6;
+  card.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+});
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach((p, i) => {
-                p.alpha -= 0.02;
-                p.x += p.vx; p.y += p.vy;
-                ctx.globalAlpha = p.alpha;
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-                if(p.alpha <= 0) particles.splice(i, 1);
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // 📱 Device Orientation (ဖုန်းစောင်းရင် လိုက်လှုပ်ဖို့)
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', (e) => {
-                const card = document.getElementById('card');
-                let rX = e.beta / 4;  // Up/Down tilt
-                let rY = e.gamma / 4; // Left/Right tilt
-                card.style.transform = `rotateX(${rX - 10}deg) rotateY(${rY}deg)`;
-            });
-        }
-    </script>
+document.addEventListener("mousemove",e=>{
+  const x=(e.clientX/window.innerWidth-.5)*10;
+  const y=(e.clientY/window.innerHeight-.5)*-10;
+  card.style.transform=`rotateX(${y}deg) rotateY(${x}deg)`;
+});
+</script>
 </body>
 </html>
