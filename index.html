@@ -3,225 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | ULTIMATE PORTAL</title>
+    <title>BLITZ | THE SUPREME</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;500;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@100;400;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #ff003c;
-            --accent-rgb: 255, 0, 60;
-            --bg: #000;
+            --font-main: 'Outfit', sans-serif;
+            --font-title: 'Syncopate', sans-serif;
         }
 
-        body.cyan-mode { --accent: #00f2ff; --accent-rgb: 0, 242, 255; }
-        body.gold-mode { --accent: #ffae00; --accent-rgb: 255, 174, 0; }
-        body.purple-mode { --accent: #bd00ff; --accent-rgb: 189, 0, 255; }
+        body.cyan-mode { --accent: #00f2ff; }
+        body.purple-mode { --accent: #bd00ff; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
+            background: #000;
             color: #fff;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-main);
             height: 100vh;
+            overflow: hidden;
             display: flex; justify-content: center; align-items: center;
-            overflow: hidden; perspective: 1000px;
         }
 
-        /* Animated Mesh Background */
-        #bg-canvas { position: fixed; inset: 0; z-index: -2; opacity: 0.6; }
-        .vignette { position: fixed; inset: 0; background: radial-gradient(circle, transparent 20%, #000 100%); z-index: -1; pointer-events: none; }
+        /* Scanline Effect - Professional Detail */
+        body::before {
+            content: " ";
+            position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            z-index: 100; pointer-events: none;
+        }
 
-        /* The 3D Master Card */
-        .glass-container {
-            width: 90%; max-width: 420px;
-            padding: 3px; border-radius: 50px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent, rgba(var(--accent-rgb), 0.3));
-            position: relative; transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+        #canvas { position: fixed; inset: 0; z-index: -1; }
+
+        /* The supreme Card */
+        .card-wrap {
+            position: relative;
+            padding: 2px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--accent), transparent, var(--accent));
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            transition: 0.5s;
         }
 
         .main-card {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border-radius: 47px;
-            padding: 60px 35px;
+            width: 380px;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(50px);
+            border-radius: 48px;
+            padding: 60px 40px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Profile Area with Hologram Effect */
-        .avatar-box {
-            width: 150px; height: 150px; margin: 0 auto 30px;
-            position: relative; transform: translateZ(50px);
+        /* Profile Glow Animation */
+        .pfp-wrap {
+            position: relative;
+            width: 140px; height: 140px;
+            margin: 0 auto 30px;
         }
-        .profile-img {
+        .pfp-img {
             width: 100%; height: 100%; border-radius: 50%;
-            object-fit: cover; border: 2px solid var(--accent);
-            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.5);
-            transition: var(--transition);
+            border: 2px solid var(--accent);
+            z-index: 2; position: relative;
         }
-        .hologram-ring {
-            position: absolute; inset: -10px;
-            border: 1px solid var(--accent);
-            border-radius: 50%; opacity: 0.3;
-            animation: ripple 2s infinite linear;
-        }
-
-        @keyframes ripple { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
-
-        /* Typography */
-        h1 {
-            font-family: 'Syncopate', sans-serif; font-size: 32px; letter-spacing: 12px;
-            background: linear-gradient(to bottom, #fff, #666);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 10px; transform: translateZ(30px);
-        }
-        .status-pill {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(var(--accent-rgb), 0.1);
-            padding: 5px 15px; border-radius: 20px;
-            font-size: 11px; color: var(--accent);
-            letter-spacing: 2px; margin-bottom: 35px;
-            border: 1px solid rgba(var(--accent-rgb), 0.3);
-        }
-
-        /* Buttons Elite Design */
-        .links-stack { display: flex; flex-direction: column; gap: 15px; transform: translateZ(20px); }
-        .link-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 20px; border-radius: 20px;
-            text-decoration: none; color: #fff;
-            display: flex; align-items: center; justify-content: space-between;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .link-btn:hover {
+        .pfp-glow {
+            position: absolute; inset: -15px;
             background: var(--accent);
-            transform: scale(1.05) translateZ(10px);
-            box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.4);
-            border-color: transparent;
+            filter: blur(40px); opacity: 0.3;
+            animation: breathe 4s infinite alternate;
         }
-        .link-btn i { font-size: 20px; }
-        .link-btn span { font-weight: 600; letter-spacing: 2px; font-size: 14px; text-transform: uppercase; }
+        @keyframes breathe { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 0.5; transform: scale(1.1); } }
 
-        /* Easter Egg Control */
-        .theme-switcher {
-            position: fixed; bottom: 30px; display: flex; gap: 15px;
+        h1 {
+            font-family: var(--font-title);
+            font-size: 28px; letter-spacing: 12px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px var(--accent);
         }
-        .dot { width: 15px; height: 15px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; }
+
+        .stream-status {
+            font-size: 10px; letter-spacing: 4px; color: var(--accent);
+            text-transform: uppercase; margin-bottom: 40px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        /* Elite Interaction Buttons */
+        .link-stack { display: flex; flex-direction: column; gap: 15px; }
+        .btn-elite {
+            padding: 20px; border-radius: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: #fff; text-decoration: none;
+            display: flex; align-items: center; justify-content: space-between;
+            font-weight: 600; letter-spacing: 2px;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .btn-elite:hover {
+            background: var(--accent);
+            transform: translateX(10px) skewX(-2deg);
+            box-shadow: -10px 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Floating Theme Icons */
+        .theme-panel {
+            position: fixed; left: 30px; top: 50%;
+            transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .theme-btn {
+            width: 10px; height: 30px; border-radius: 10px;
+            background: rgba(255,255,255,0.2); cursor: pointer;
+            transition: 0.3s;
+        }
+        .theme-btn:hover { background: var(--accent); height: 50px; }
 
     </style>
 </head>
-<body id="main-body">
+<body id="b">
 
-    <canvas id="bg-canvas"></canvas>
-    <div class="vignette"></div>
+    <canvas id="canvas"></canvas>
 
-    <div class="glass-container" id="tilt-card">
+    <div class="theme-panel">
+        <div class="theme-btn" style="border: 1px solid #ff003c" onclick="st('default')"></div>
+        <div class="theme-btn" style="border: 1px solid #00f2ff" onclick="st('cyan-mode')"></div>
+        <div class="theme-btn" style="border: 1px solid #bd00ff" onclick="st('purple-mode')"></div>
+    </div>
+
+    <div class="card-wrap" id="c">
         <div class="main-card">
-            <div class="avatar-box" onclick="triggerEasterEgg()">
-                <div class="hologram-ring"></div>
-                <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
+            <div class="pfp-wrap">
+                <div class="pfp-glow"></div>
+                <img src="blitz.png" class="pfp-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
             </div>
 
             <h1>BLITZ</h1>
-            <div class="status-pill" id="live-indicator">
-                <i class="fas fa-circle" style="font-size: 8px;"></i> OFFLINE
+            <div class="stream-status">
+                <i class="fas fa-satellite-dish"></i> CONNECTING PROTOCOL...
             </div>
 
-            <div class="links-stack">
-                <a href="https://facebook.com/BlitzGamingOfficial" target="_blank" class="link-btn" onmouseover="playSfx()">
-                    <span>Facebook Stream</span> <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://tiktok.com/@streamingbyblitz" target="_blank" class="link-btn" onmouseover="playSfx()">
-                    <span>TikTok Elite</span> <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://youtube.com/@streamingbyblitz" target="_blank" class="link-btn" onmouseover="playSfx()">
-                    <span>YouTube Hub</span> <i class="fab fa-youtube"></i>
-                </a>
-                <a href="#" class="link-btn" style="background: #fff; color: #000;" onmouseover="playSfx()">
-                    <span style="color: #000;">Join the Squad</span> <i class="fas fa-crown"></i>
+            <div class="link-stack">
+                <a href="#" class="btn-elite"><span>FB STREAM</span> <i class="fab fa-facebook"></i></a>
+                <a href="#" class="btn-elite"><span>TIKTOK HUB</span> <i class="fab fa-tiktok"></i></a>
+                <a href="#" class="btn-elite"><span>YOUTUBE</span> <i class="fab fa-youtube"></i></a>
+                <a href="#" class="btn-elite" style="background: #fff; color: #000;">
+                    <span style="color: #000">SQUAD ACCESS</span> <i class="fas fa-bolt" style="color: #000"></i>
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="theme-switcher">
-        <div class="dot" style="background: #ff003c;" onclick="setTheme('default')"></div>
-        <div class="dot" style="background: #00f2ff;" onclick="setTheme('cyan')"></div>
-        <div class="dot" style="background: #ffae00;" onclick="setTheme('gold')"></div>
-        <div class="dot" style="background: #bd00ff;" onclick="setTheme('purple')"></div>
-    </div>
-
-    <audio id="hover-audio" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
-
     <script>
-        const card = document.getElementById('tilt-card');
-        const body = document.getElementById('main-body');
+        // 1. Theme Switcher
+        function st(t) { document.getElementById('b').className = t; }
 
-        // 1. 3D Tilt Effect
+        // 2. 3D Parallax Mouse Move
+        const c = document.getElementById('c');
         document.addEventListener('mousemove', (e) => {
-            let xAxis = (window.innerWidth / 2 - e.clientX) / 20;
-            let yAxis = (window.innerHeight / 2 - e.clientY) / 20;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+            let x = (window.innerWidth / 2 - e.clientX) / 25;
+            let y = (window.innerHeight / 2 - e.clientY) / 25;
+            c.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
         });
 
-        // 2. Auto Live System (8:30 - 10:00 PM)
-        function updateLive() {
-            const now = new Date();
-            const h = now.getHours();
-            const m = now.getMinutes();
-            const indicator = document.getElementById('live-indicator');
-            const isLive = (h === 20 && m >= 30) || (h === 21);
-            
-            if(isLive) {
-                indicator.innerHTML = '<i class="fas fa-circle" style="animation: pulse 1s infinite"></i> LIVE NOW';
-                indicator.style.color = '#ff0000';
-                indicator.style.borderColor = '#ff0000';
-            }
-        }
-        setInterval(updateLive, 1000);
-
-        // 3. Theme Switcher (Easter Egg)
-        function setTheme(theme) {
-            body.className = theme + '-mode';
-            playSfx();
-        }
-
-        // 4. Sound Effect
-        function playSfx() {
-            const sfx = document.getElementById('hover-audio');
-            sfx.currentTime = 0;
-            sfx.play().catch(() => {});
-        }
-
-        // 5. Dynamic Background Particles
-        const canvas = document.getElementById('bg-canvas');
+        // 3. Matrix Style Particles
+        const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        let particles = Array(80).fill().map(() => ({
+
+        let dots = Array(100).fill().map(() => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: Math.random() * 2,
-            vX: Math.random() * 0.5 - 0.25,
-            vY: Math.random() * 0.5 - 0.25
+            xa: (Math.random() * 2 - 1) / 1.5,
+            ya: (Math.random() * 2 - 1) / 1.5
         }));
 
-        function animateBg() {
+        function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255,255,255,0.3)";
-            particles.forEach(p => {
-                p.x += p.vX; p.y += p.vY;
-                if(p.x < 0 || p.x > canvas.width) p.vX *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vY *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "rgba(255,255,255,0.1)";
+            dots.forEach(d => {
+                d.x += d.xa; d.y += d.ya;
+                if(d.x > canvas.width || d.x < 0) d.xa *= -1;
+                if(d.y > canvas.height || d.y < 0) d.ya *= -1;
+                ctx.fillRect(d.x, d.y, 2, 2);
             });
-            requestAnimationFrame(animateBg);
+            requestAnimationFrame(draw);
         }
-        animateBg();
+        draw();
     </script>
 </body>
 </html>
