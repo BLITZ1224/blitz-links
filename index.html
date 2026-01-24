@@ -2,134 +2,128 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ENTITY DETECTED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLITZ | Links</title>
 
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-:root{--c:#00f2ff;--r:#ff003c;}
+:root{
+  --accent:#00f2ff;
+  --bg:#050508;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{
-  height:100%;background:#000;color:#9ff;
-  font-family:'JetBrains Mono',monospace;overflow:hidden;
+body{
+  height:100vh;
+  background:radial-gradient(60vw 60vw at 20% 20%, rgba(0,242,255,.15), transparent 60%),
+             radial-gradient(50vw 50vw at 80% 70%, rgba(255,0,80,.12), transparent 60%),
+             var(--bg);
+  font-family:'Outfit',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
 }
-#log{
-  padding:20px;font-size:13px;line-height:1.6;
-  white-space:pre-wrap;
-}
-#count{
-  position:fixed;top:10px;right:14px;
-  font-size:12px;color:var(--r);
-}
-#cmd{
-  position:fixed;bottom:0;left:0;right:0;
-  background:#000;border-top:1px solid rgba(255,255,255,.15);
-  padding:12px;font-family:inherit;color:#fff;
-}
-#ui{
-  display:none;position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.panel{
-  border:1px solid rgba(0,242,255,.35);
-  padding:30px;width:min(88vw,360px);
+
+/* Card */
+.card{
+  width:min(90vw,360px);
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(30px);
+  border-radius:32px;
+  padding:42px 28px;
   text-align:center;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
 }
+
+/* Avatar */
+.avatar{
+  width:110px;height:110px;
+  margin:0 auto 24px;
+  border-radius:50%;
+  padding:6px;
+  background:linear-gradient(135deg,var(--accent),#ff0055);
+}
+.avatar img{
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  background:#000;
+}
+
+/* Text */
 h1{
   font-family:'Syncopate',sans-serif;
-  letter-spacing:6px;margin-bottom:6px;
+  letter-spacing:8px;
+  font-size:24px;
+  margin-bottom:6px;
 }
-.sub{font-size:10px;letter-spacing:2px;margin-bottom:18px;}
+.tag{
+  font-size:12px;
+  color:#aaa;
+  margin-bottom:30px;
+}
+
+/* Buttons */
+.links{display:flex;flex-direction:column;gap:14px;}
 .links a{
-  display:flex;justify-content:space-between;
-  padding:12px;margin-top:12px;
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;text-decoration:none;
+  padding:16px 20px;
+  border-radius:18px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:600;
+  letter-spacing:1px;
+  transition:.25s;
 }
-.links a:hover{background:rgba(255,255,255,.05);}
+.links a:hover{
+  background:rgba(0,242,255,.15);
+  transform:translateY(-2px);
+}
+.links i{color:var(--accent);font-size:18px;}
+
+/* Footer */
+.footer{
+  margin-top:28px;
+  font-size:11px;
+  color:#777;
+}
 </style>
 </head>
 
 <body>
 
-<div id="count">RISK LEVEL: <span id="risk">12%</span></div>
-<div id="log"></div>
-<input id="cmd" placeholder="> type command..." autocomplete="off">
-
-<div id="ui">
-  <div class="panel">
-    <h1>BLITZ</h1>
-    <div class="sub">SOVEREIGN ENTITY</div>
-    <div class="links">
-      <a href="https://www.facebook.com/BlitzGamingOfficial">FACEBOOK ↗</a>
-      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK ↗</a>
-      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE ↗</a>
-    </div>
+<div class="card">
+  <div class="avatar">
+    <img src="blitz.png" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
   </div>
+
+  <h1>BLITZ</h1>
+  <div class="tag">Gaming • Streaming • Creator</div>
+
+  <div class="links">
+    <a href="https://www.facebook.com/BlitzGamingOfficial">
+      Facebook <i class="fab fa-facebook"></i>
+    </a>
+    <a href="https://www.tiktok.com/@streamingbyblitz">
+      TikTok <i class="fab fa-tiktok"></i>
+    </a>
+    <a href="https://www.youtube.com/@streamingbyblitz">
+      YouTube <i class="fab fa-youtube"></i>
+    </a>
+    <a href="#">
+      Join the Squad <i class="fas fa-bolt"></i>
+    </a>
+  </div>
+
+  <div class="footer">© BLITZ</div>
 </div>
-
-<script>
-const log=document.getElementById("log");
-const cmd=document.getElementById("cmd");
-const ui=document.getElementById("ui");
-const riskEl=document.getElementById("risk");
-
-let risk=12;
-let idleTimer;
-
-const lines=[
-"[ENTITY] Presence locked",
-"[ANALYSIS] Cognitive delay detected",
-"[WARNING] Entity behavior unpredictable",
-"> Awaiting command..."
-];
-
-let i=0,j=0;
-function type(){
-  if(i<lines.length){
-    if(j<lines[i].length){
-      log.textContent+=lines[i][j++];
-      setTimeout(type,18);
-    }else{
-      log.textContent+="\n";
-      i++;j=0;
-      setTimeout(type,260);
-    }
-  }
-}
-type();
-
-function increaseRisk(){
-  risk+=Math.floor(Math.random()*4)+1;
-  if(risk>99) risk=99;
-  riskEl.textContent=risk+"%";
-}
-idleTimer=setInterval(increaseRisk,1800);
-
-cmd.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    const v=cmd.value.toUpperCase();
-    cmd.value="";
-    log.textContent+=`\n> ${v}\n`;
-    if(v==="HELP"){
-      log.textContent+="Available commands: WHOAMI, OVERRIDE, BLITZ\n";
-    }else if(v==="WHOAMI"){
-      log.textContent+="Unknown entity. Profile incomplete.\n";
-    }else if(v==="OVERRIDE"||v==="BLITZ"){
-      log.textContent+="Override accepted.\nUnlocking core...\n";
-      clearInterval(idleTimer);
-      setTimeout(()=>{
-        log.style.display="none";
-        cmd.style.display="none";
-        ui.style.display="flex";
-      },1200);
-    }else{
-      log.textContent+="Command rejected.\n";
-    }
-  }
-});
-</script>
 
 </body>
 </html>
