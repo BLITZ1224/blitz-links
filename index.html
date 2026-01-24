@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | ULTRA GAMING HUB</title>
+    <title>BLITZ | ARCADE HUB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root { --neon: #ff0000; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #000;
+            background: #0d0d0d; /* အမည်းရောင်နောက်ခံ */
             color: white;
             font-family: 'Segoe UI', sans-serif;
             height: 100vh;
@@ -21,23 +22,7 @@
             position: relative;
         }
 
-        /* YouTube Background Video */
-        .video-background {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.4; /* Video ကို အရောင်မှိန်ထားတာ (စာသားမြင်ရအောင်) */
-        }
-        .video-background iframe {
-            width: 100vw; height: 56.25vw; /* 16:9 ratio */
-            min-height: 100vh; min-width: 177.77vh;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Falling Gaming Icons (Snow Effect) */
+        /* Falling Gaming Icons (နှေးကွေးအောင် ပြင်ထားတယ်) */
         .particles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -47,7 +32,7 @@
         .particle {
             position: absolute;
             color: var(--neon);
-            opacity: 0.3;
+            opacity: 0.2; /* ပိုမှိန်သွားအောင် */
             animation: fall linear infinite;
         }
         @keyframes fall {
@@ -58,31 +43,49 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            background: rgba(0, 0, 0, 0.6); /* Video ပေါ်မှာ စာဖတ်ရအောင် အမည်းရောင်နောက်ခံ ခပ်ပါးပါး */
+            background: rgba(0, 0, 0, 0.7); /* မှိန်တဲ့နောက်ခံ */
             padding: 40px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
         }
 
         .profile-img {
             width: 120px; height: 120px;
             border-radius: 50%;
             border: 3px solid var(--neon);
-            box-shadow: 0 0 20px var(--neon);
-            margin-bottom: 20px;
+            box-shadow: 0 0 25px var(--neon);
+            margin-bottom: 25px;
         }
 
-        h1 { font-size: 32px; letter-spacing: 5px; color: white; text-shadow: 0 0 10px var(--neon); margin-bottom: 30px; }
+        h1 {
+            font-family: 'Press Start 2P', cursive; /* Gaming Font အသစ် */
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            color: white;
+            text-shadow: 4px 4px 0px var(--neon), 6px 6px 0px rgba(255, 0, 0, 0.5); /* Pixelized Shadow */
+            margin-bottom: 35px;
+            animation: glitch 1s infinite alternate; /* စာသား တုန်ခါ animation */
+        }
 
-        /* Icon Buttons Only (သားကြီးပြောသလို အကွက်ကြီးတွေမဟုတ်ဘဲ Logo အဝိုင်းလေးတွေ) */
+        @keyframes glitch {
+            0% { text-shadow: 4px 4px 0px var(--neon), 6px 6px 0px rgba(255, 0, 0, 0.5); transform: translate(0,0); }
+            25% { text-shadow: 2px 2px 0px var(--neon), 4px 4px 0px rgba(255, 0, 0, 0.3); transform: translate(-2px,2px); }
+            50% { text-shadow: 4px 4px 0px var(--neon), 6px 6px 0px rgba(255, 0, 0, 0.5); transform: translate(0,0); }
+            75% { text-shadow: -2px 2px 0px var(--neon), 2px -2px 0px rgba(255, 0, 0, 0.3); transform: translate(2px,-2px); }
+            100% { text-shadow: 4px 4px 0px var(--neon), 6px 6px 0px rgba(255, 0, 0, 0.5); transform: translate(0,0); }
+        }
+
+        /* Social Icons (ဒီအတိုင်းထားမယ်) */
         .social-links {
             display: flex;
             justify-content: center;
             gap: 25px;
+            margin-bottom: 40px;
         }
         .social-btn {
-            width: 70px; height: 70px;
+            width: 65px; height: 65px;
             border-radius: 50%;
             background: rgba(255, 0, 0, 0.1);
             border: 2px solid var(--neon);
@@ -90,24 +93,43 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 30px;
+            font-size: 28px;
             text-decoration: none;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .social-btn:hover {
             background: var(--neon);
-            transform: scale(1.2) rotate(15deg);
-            box-shadow: 0 0 30px var(--neon);
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 25px var(--neon);
             color: black;
+        }
+
+        /* Play Game Button */
+        .play-game-btn {
+            background: linear-gradient(45deg, #00FF00, #00AA00); /* အစိမ်းရောင် ဂိမ်းခလုတ် */
+            border: 2px solid #00AA00;
+            color: white;
+            padding: 18px 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+            transition: 0.3s ease;
+        }
+        .play-game-btn:hover {
+            background: #00AA00;
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(0, 255, 0, 0.8);
         }
 
     </style>
 </head>
 <body>
-
-    <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID?autoplay=1&mute=1&controls=0&loop=1&playlist=YOUR_YOUTUBE_VIDEO_ID" frameborder="0" allow="autoplay"></iframe>
-    </div>
 
     <div class="particles" id="particles"></div>
 
@@ -120,20 +142,23 @@
             <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="social-btn"><i class="fab fa-tiktok"></i></a>
             <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="social-btn"><i class="fab fa-youtube"></i></a>
         </div>
+
+        <a href="https://www.addictinggames.com/puzzle/bubble-shooter" target="_blank" class="play-game-btn">
+            <i class="fas fa-play-circle"></i> Play Game
+        </a>
     </div>
 
     <script>
-        // ဂိမ်းခလုတ်လေးတွေ ကျလာအောင် လုပ်တဲ့ Script
         const particlesContainer = document.getElementById('particles');
-        const icons = ['fa-gamepad', 'fa-ghost', 'fa-headset', 'fa-mouse', 'fa-keyboard'];
+        const icons = ['fa-gamepad', 'fa-ghost', 'fa-headset', 'fa-mouse', 'fa-keyboard', 'fa-terminal', 'fa-dice']; /* Icons ပိုစုံအောင် ထပ်ထည့်ထားတယ် */
         
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 30; i++) { // particles အလုံး ၃၀
             const particle = document.createElement('i');
             particle.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} particle`;
             particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.fontSize = Math.random() * 20 + 10 + 'px';
-            particle.style.animationDuration = Math.random() * 3 + 2 + 's';
-            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.fontSize = Math.random() * 25 + 15 + 'px'; // ပုံစံအမျိုးမျိုး
+            particle.style.animationDuration = Math.random() * 8 + 6 + 's'; // နှေးကွေးအောင် 6-14s ထိ ပြင်ထားတယ်
+            particle.style.animationDelay = Math.random() * 10 + 's'; // ကျတဲ့အချိန် မတူအောင်
             particlesContainer.appendChild(particle);
         }
     </script>
