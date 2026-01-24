@@ -3,176 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | THE NEXT LEVEL</title>
+    <title>BLITZ | ULTRA GAMING HUB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #ff0000; --bg: #050505; }
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        :root { --neon: #ff0000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: var(--bg);
+            background: #000;
             color: white;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            perspective: 1000px;
+            position: relative;
         }
 
-        /* Scanline Effect */
-        body::after {
-            content: " ";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        /* Lightning Strike */
-        .lightning {
+        /* YouTube Background Video */
+        .video-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            opacity: 0;
-            z-index: 9;
+            z-index: -1;
             pointer-events: none;
-            animation: strike 5s steps(1) infinite;
+            opacity: 0.4; /* Video ကို အရောင်မှိန်ထားတာ (စာသားမြင်ရအောင်) */
         }
-        @keyframes strike {
-            0%, 95% { opacity: 0; }
-            96% { opacity: 0.2; background: var(--neon); }
-            97% { opacity: 0; }
-            98% { opacity: 0.4; }
-            99% { opacity: 0; }
+        .video-background iframe {
+            width: 100vw; height: 56.25vw; /* 16:9 ratio */
+            min-height: 100vh; min-width: 177.77vh;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Falling Gaming Icons (Snow Effect) */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            color: var(--neon);
+            opacity: 0.3;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
         }
 
         .container {
-            width: 90%;
-            max-width: 400px;
+            position: relative;
+            z-index: 10;
             text-align: center;
-            z-index: 5;
-            position: relative;
+            background: rgba(0, 0, 0, 0.6); /* Video ပေါ်မှာ စာဖတ်ရအောင် အမည်းရောင်နောက်ခံ ခပ်ပါးပါး */
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        /* Profile HUD Style */
-        .profile-container {
-            position: relative;
-            padding: 20px;
-        }
         .profile-img {
-            width: 130px;
-            height: 130px;
+            width: 120px; height: 120px;
             border-radius: 50%;
+            border: 3px solid var(--neon);
+            box-shadow: 0 0 20px var(--neon);
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 32px; letter-spacing: 5px; color: white; text-shadow: 0 0 10px var(--neon); margin-bottom: 30px; }
+
+        /* Icon Buttons Only (သားကြီးပြောသလို အကွက်ကြီးတွေမဟုတ်ဘဲ Logo အဝိုင်းလေးတွေ) */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+        .social-btn {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.1);
             border: 2px solid var(--neon);
-            padding: 5px;
-            box-shadow: 0 0 30px var(--neon);
-            animation: rotateGlow 4s linear infinite;
-        }
-        @keyframes rotateGlow {
-            0% { box-shadow: 0 0 20px var(--neon); }
-            50% { box-shadow: 0 0 50px var(--neon); }
-            100% { box-shadow: 0 0 20px var(--neon); }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
-            text-transform: uppercase;
-            text-shadow: 2px 2px var(--neon), -2px -2px #00ffff;
-            letter-spacing: 5px;
-            margin: 15px 0;
-        }
-
-        /* Advanced Gaming Buttons */
-        .btn {
-            position: relative;
-            background: transparent;
-            color: white;
+            font-size: 30px;
             text-decoration: none;
-            display: block;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid var(--neon);
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 3px;
-            transition: 0.3s;
-            overflow: hidden;
-            clip-path: polygon(90% 0, 100% 35%, 100% 100%, 10% 100%, 0 65%, 0 0);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover {
+        .social-btn:hover {
             background: var(--neon);
+            transform: scale(1.2) rotate(15deg);
+            box-shadow: 0 0 30px var(--neon);
             color: black;
-            transform: translateX(10px);
-            box-shadow: -10px 10px 0px white;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn i { margin-right: 15px; }
-
-        /* Scanning Line */
-        .scanner {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--neon);
-            box-shadow: 0 0 15px var(--neon);
-            top: 0;
-            z-index: 100;
-            animation: scan 3s linear infinite;
-        }
-        @keyframes scan {
-            0% { top: 0%; }
-            100% { top: 100%; }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="lightning"></div>
-    <div class="scanner"></div>
+    <div class="video-background">
+        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID?autoplay=1&mute=1&controls=0&loop=1&playlist=YOUR_YOUTUBE_VIDEO_ID" frameborder="0" allow="autoplay"></iframe>
+    </div>
+
+    <div class="particles" id="particles"></div>
 
     <div class="container">
-        <div class="profile-container">
-            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff0000/000000?text=BLITZ'">
-        </div>
-
+        <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff0000/000000?text=BLITZ'">
         <h1>BLITZ</h1>
-        <p style="color: var(--neon); font-size: 10px; margin-bottom: 30px;">[ SYSTEM ONLINE - KILLER MODE ]</p>
-
-        <div class="links">
-            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="btn">
-                <i class="fab fa-facebook-f"></i> Facebook
-            </a>
-            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="btn">
-                <i class="fab fa-tiktok"></i> TikTok
-            </a>
-            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="btn">
-                <i class="fab fa-youtube"></i> YouTube
-            </a>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="social-btn"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="social-btn"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
 
+    <script>
+        // ဂိမ်းခလုတ်လေးတွေ ကျလာအောင် လုပ်တဲ့ Script
+        const particlesContainer = document.getElementById('particles');
+        const icons = ['fa-gamepad', 'fa-ghost', 'fa-headset', 'fa-mouse', 'fa-keyboard'];
+        
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('i');
+            particle.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} particle`;
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = Math.random() * 20 + 10 + 'px';
+            particle.style.animationDuration = Math.random() * 3 + 2 + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
 </body>
 </html>
