@@ -3,172 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ // QUANTUM NODE</title>
+<title>BLITZ // BLACKSITE</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 :root{
-  --c1:#00f2ff;
-  --c2:#ff003c;
-  --bg:#020205;
+  --c:#00f2ff;
+  --r:#ff003c;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{
   height:100%;
-  background:var(--bg);
-  color:#fff;
-  font-family:'Outfit',sans-serif;
+  background:#000;
+  color:#8ff;
+  font-family:'JetBrains Mono',monospace;
   overflow:hidden;
 }
 
-/* ===== SIGNAL NOISE ===== */
-.noise{
-  position:fixed; inset:0;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+/* ===== CRT EFFECT ===== */
+body::after{
+  content:"";
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.02),
+    rgba(255,255,255,.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
   pointer-events:none;
-  z-index:5;
 }
 
-/* ===== BACKGROUND GRID ===== */
-.grid{
-  position:fixed; inset:-50%;
-  background:
-    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-  background-size:60px 60px;
-  transform:rotateX(60deg);
-  animation:gridMove 20s linear infinite;
-}
-@keyframes gridMove{
-  to{transform:rotateX(60deg) translateY(60px);}
+/* ===== TERMINAL ===== */
+#terminal{
+  padding:22px;
+  font-size:13px;
+  line-height:1.6;
+  white-space:pre-wrap;
 }
 
-/* ===== CORE ===== */
-.core{
+/* ===== UI ===== */
+#ui{
+  display:none;
   position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:280px;
-  aspect-ratio:1;
-  border-radius:50%;
-  background:
-    radial-gradient(circle,var(--c1),transparent 60%),
-    radial-gradient(circle,var(--c2),transparent 65%);
-  filter:blur(40px);
-  opacity:.35;
-  animation:pulse 5s ease-in-out infinite;
-}
-@keyframes pulse{
-  50%{transform:translate(-50%,-50%) scale(1.15);}
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* ===== CARD ===== */
 .panel{
-  position:relative;
-  z-index:2;
   width:min(88vw,360px);
-  margin:auto;
-  top:50%;
-  transform:translateY(-50%);
-  padding:46px 28px 34px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(5,8,12,.75);
-  backdrop-filter:blur(30px);
-  border-radius:26px;
-  box-shadow:0 0 0 1px rgba(0,242,255,.15);
+  background:rgba(5,8,12,.85);
+  border:1px solid rgba(0,242,255,.25);
+  border-radius:18px;
+  padding:38px 26px;
+  box-shadow:0 0 60px rgba(0,242,255,.2);
+  text-align:center;
 }
 
-/* ===== GLITCH TITLE ===== */
-.title{
+h1{
   font-family:'Syncopate',sans-serif;
   letter-spacing:10px;
-  font-size:24px;
-  position:relative;
-  margin-bottom:6px;
-}
-.title::before,
-.title::after{
-  content:"BLITZ";
-  position:absolute;left:0;top:0;
-  width:100%;
-  color:var(--c1);
-  opacity:.4;
-}
-.title::before{transform:translate(2px,-2px);}
-.title::after{transform:translate(-2px,2px); color:var(--c2);}
-.tag{
-  font-size:10px;
-  letter-spacing:3px;
-  color:#8fa;
-  margin-bottom:28px;
+  font-size:22px;
+  margin-bottom:8px;
+  color:#fff;
 }
 
-/* ===== LINKS ===== */
-.links{display:flex;flex-direction:column;gap:12px;}
-.link{
-  padding:16px 18px;
-  border:1px solid rgba(255,255,255,.15);
+.sub{
+  font-size:10px;
+  letter-spacing:3px;
+  margin-bottom:26px;
+  color:#6ff;
+}
+
+.links{display:flex;flex-direction:column;gap:14px;}
+.links a{
+  padding:14px;
+  border:1px solid rgba(255,255,255,.2);
   text-decoration:none;
   color:#fff;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  background:linear-gradient(90deg,transparent,rgba(0,242,255,.08),transparent);
-  position:relative;
 }
-.link::after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
-  opacity:0;
-}
-.link:active::after{opacity:1;}
-.link i{color:var(--c1);}
-
-/* ===== FOOTER ===== */
-.status{
-  margin-top:22px;
-  font-size:10px;
-  color:#7ff;
-  letter-spacing:2px;
-}
-.status::before{
-  content:"● ";
-  color:#0f0;
-  animation:blink 1.2s infinite;
-}
-@keyframes blink{50%{opacity:.3}}
+.links a i{color:var(--c);}
 </style>
 </head>
 
 <body>
-<div class="grid"></div>
-<div class="core"></div>
-<div class="noise"></div>
 
-<div class="panel">
-  <div class="title">BLITZ</div>
-  <div class="tag">QUANTUM ACCESS NODE</div>
+<div id="terminal"></div>
 
-  <div class="links">
-    <a class="link" href="https://www.facebook.com/BlitzGamingOfficial">
-      FACEBOOK <i class="fab fa-facebook"></i>
-    </a>
-    <a class="link" href="https://www.tiktok.com/@streamingbyblitz">
-      TIKTOK <i class="fab fa-tiktok"></i>
-    </a>
-    <a class="link" href="https://www.youtube.com/@streamingbyblitz">
-      YOUTUBE <i class="fab fa-youtube"></i>
-    </a>
-    <a class="link" href="#">
-      JOIN SQUAD <i class="fas fa-bolt"></i>
-    </a>
+<div id="ui">
+  <div class="panel">
+    <h1>BLITZ</h1>
+    <div class="sub">BLACKSITE ACCESS</div>
+
+    <div class="links">
+      <a href="https://www.facebook.com/BlitzGamingOfficial">FACEBOOK <i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
+      <a href="#">JOIN SQUAD <i class="fas fa-bolt"></i></a>
+    </div>
   </div>
-
-  <div class="status">SYSTEM ONLINE</div>
 </div>
+
+<script>
+const term=document.getElementById("terminal");
+const ui=document.getElementById("ui");
+
+const lines=[
+"[INIT] BLITZ CORE v9.7.1",
+"[AUTH] Verifying device signature...",
+"[NET] Establishing encrypted tunnel...",
+"[PING] NODE-01 :: 14ms",
+"[PING] NODE-02 :: 11ms",
+"[SEC] Firewall status: STABLE",
+"[AI ] Neural module online",
+"[AI ] Behavioral scan complete",
+"[OK ] Access granted",
+"",
+"> ENTERING BLACKSITE INTERFACE..."
+];
+
+let i=0,j=0;
+
+function type(){
+  if(i<lines.length){
+    if(j<lines[i].length){
+      term.textContent+=lines[i][j++];
+      setTimeout(type,20);
+    }else{
+      term.textContent+="\n";
+      i++; j=0;
+      setTimeout(type,300);
+    }
+  }else{
+    setTimeout(()=>{
+      term.style.display="none";
+      ui.style.display="flex";
+    },800);
+  }
+}
+type();
+</script>
+
 </body>
 </html>
