@@ -3,161 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | SUPREME AUTHORITY</title>
+    <title>BLITZ | ELITE HUB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@100;300;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff003c;
-            --primary-glow: rgba(255, 0, 60, 0.5);
-            --glass: rgba(255, 255, 255, 0.02);
-            --border: rgba(255, 255, 255, 0.1);
+            --accent: #ff003c; /* မင်းကြိုက်တဲ့ အရောင်ပြောင်းနိုင်တယ် */
+            --bg: #050505;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #000;
-            color: #fff;
-            font-family: 'Outfit', sans-serif;
-            height: 100vh;
-            overflow: hidden;
+            background-color: var(--bg);
+            color: #fff; font-family: 'Outfit', sans-serif;
+            height: 100vh; overflow: hidden;
             display: flex; justify-content: center; align-items: center;
-            perspective: 1200px;
         }
 
-        /* Fluid Background */
-        #fluid-bg { position: fixed; inset: 0; z-index: -2; filter: blur(50px); opacity: 0.6; }
+        /* 🌟 Mouse Trail Canvas (အနောက်က အလင်းတန်းအတွက်) */
+        #canvas { position: fixed; inset: 0; z-index: -1; }
 
-        /* The Developer's Cursor */
-        .cursor-outer {
-            width: 45px; height: 45px; border: 1.5px solid var(--primary);
-            border-radius: 50%; position: fixed; pointer-events: none;
-            z-index: 10000; transition: transform 0.2s ease-out;
-            mix-blend-mode: difference;
-        }
-        .cursor-inner {
-            width: 6px; height: 6px; background: #fff;
-            border-radius: 50%; position: fixed; pointer-events: none;
-            z-index: 10000;
+        /* Main Luxury Card */
+        .card-container {
+            position: relative; width: 380px;
+            z-index: 10; transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
         }
 
-        /* 3D Elite Card */
-        .portal-frame {
-            width: 440px;
-            padding: 2px;
-            border-radius: 70px;
-            background: linear-gradient(135deg, var(--border), transparent, var(--border));
-            position: relative;
-            transform-style: preserve-3d;
-            animation: cardEnter 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        @keyframes cardEnter {
-            from { opacity: 0; transform: translateZ(-500px) rotateX(20deg); }
-            to { opacity: 1; transform: translateZ(0) rotateX(0); }
-        }
-
-        .main-portal {
-            background: rgba(8, 8, 8, 0.8);
-            backdrop-filter: blur(120px) saturate(200%);
-            -webkit-backdrop-filter: blur(120px) saturate(200%);
-            border-radius: 68px;
-            padding: 80px 50px;
-            text-align: center;
-            border: 1px solid var(--border);
-            box-shadow: 0 100px 150px rgba(0,0,0,1);
-        }
-
-        /* Animated Profile Halo */
-        .profile-container {
-            position: relative;
-            width: 180px; height: 180px;
-            margin: 0 auto 40px;
-            transform: translateZ(120px);
-        }
-        .pfp {
-            width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.1);
-            padding: 10px; position: relative; z-index: 5;
-            box-shadow: 0 0 50px rgba(var(--primary-glow));
-        }
-        .halo {
-            position: absolute; inset: -20px;
-            border: 1.5px solid var(--primary);
-            border-radius: 50%; opacity: 0.15;
-            animation: pulseHalo 4s infinite ease-in-out;
-        }
-        @keyframes pulseHalo { 0%, 100% { transform: scale(1); opacity: 0.1; } 50% { transform: scale(1.15); opacity: 0.3; } }
-
-        /* Typography of Authority */
-        h1 {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 36px; letter-spacing: 20px;
-            font-weight: 900; margin-bottom: 12px;
-            background: linear-gradient(90deg, #fff, #555, #fff);
-            background-size: 200%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 6s linear infinite;
-        }
-
-        .status-badge {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: rgba(var(--primary-glow), 0.1);
-            padding: 8px 25px; border-radius: 100px;
-            color: var(--primary); font-size: 10px;
-            letter-spacing: 6px; font-weight: 900;
-            border: 1px solid rgba(var(--primary-glow), 0.3);
-            margin-bottom: 50px;
-        }
-
-        /* Infinite Interaction Links */
-        .links-grid { display: flex; flex-direction: column; gap: 20px; transform: translateZ(60px); }
-        .link-card {
+        .main-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 26px 35px; border-radius: 30px;
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border-radius: 50px; padding: 60px 35px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
+
+        /* Profile Area (No Circles) */
+        .pfp-box {
+            width: 130px; height: 130px; margin: 0 auto 30px;
+            transform: translateZ(50px);
+        }
+        .pfp-img {
+            width: 100%; height: 100%; border-radius: 35px; /* Square ဆန်ဆန် လှလှလေး */
+            object-fit: cover; border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Syncopate', sans-serif; font-size: 28px; letter-spacing: 12px;
+            margin-bottom: 5px; background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .tagline {
+            font-size: 10px; letter-spacing: 5px; color: var(--accent);
+            text-transform: uppercase; font-weight: 700; margin-bottom: 40px;
+        }
+
+        /* Elite Links */
+        .links { display: flex; flex-direction: column; gap: 15px; }
+        .btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px; border-radius: 22px;
             text-decoration: none; color: #fff;
             display: flex; align-items: center; justify-content: space-between;
-            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative; overflow: hidden;
+            font-weight: 600; letter-spacing: 2px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .link-card:hover {
-            background: var(--primary);
-            transform: scale(1.05) translateZ(30px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        .btn:hover {
+            background: var(--accent);
+            transform: scale(1.05) translateZ(20px);
+            box-shadow: 0 15px 30px rgba(255, 0, 60, 0.3);
             border-color: transparent;
         }
-        .link-card i { font-size: 24px; color: var(--primary); transition: 0.3s; }
-        .link-card:hover i { color: #fff; transform: rotate(15deg); }
-        .link-card span { font-weight: 500; letter-spacing: 3px; font-size: 14px; }
+        .btn i { font-size: 20px; }
 
     </style>
 </head>
 <body>
 
-    <div class="cursor-outer" id="c-outer"></div>
-    <div class="cursor-inner" id="c-inner"></div>
-    <canvas id="fluid-bg"></canvas>
+    <canvas id="canvas"></canvas>
 
-    <div class="portal-frame" id="scene">
-        <div class="main-portal">
-            <div class="profile-container">
-                <div class="halo"></div>
-                <img src="blitz.png" class="pfp" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
+    <div class="card-container" id="card">
+        <div class="main-card">
+            <div class="pfp-box">
+                <img src="blitz.png" alt="BLITZ" class="pfp-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
             </div>
 
             <h1>BLITZ</h1>
-            <div class="status-badge" id="live-status">INITIALIZING...</div>
+            <p class="tagline">The Supreme Creator</p>
 
-            <div class="links-grid">
-                <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="link-card">
-                    <span>FACEBOOK</span> <i class="fab fa-facebook-square"></i>
+            <div class="links">
+                <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="btn">
+                    <span>FACEBOOK</span> <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="link-card">
+                <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="btn">
                     <span>TIKTOK</span> <i class="fab fa-tiktok"></i>
                 </a>
-                <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" target="_blank" class="link-card">
+                <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" target="_blank" class="btn">
                     <span>YOUTUBE</span> <i class="fab fa-youtube"></i>
                 </a>
             </div>
@@ -165,63 +112,50 @@
     </div>
 
     <script>
-        const scene = document.getElementById('scene');
-        const cOuter = document.getElementById('c-outer');
-        const cInner = document.getElementById('c-inner');
+        // 1. Mouse Trail Effect (နောက်ခံအလင်းတန်း)
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
 
-        // 1. World-Class Mouse Tracking
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        window.dispatchEvent(new Event('resize'));
+
         document.addEventListener('mousemove', (e) => {
-            const { clientX: x, clientY: y } = e;
+            points.push({ x: e.clientX, y: e.clientY, age: 0 });
             
-            // Cursor Follow
-            cInner.style.left = x + 'px';
-            cInner.style.top = y + 'px';
-            cOuter.animate({ left: x - 22 + 'px', top: y - 22 + 'px' }, { duration: 400, fill: "forwards" });
-
-            // Card 3D Dynamic
-            const rotateX = (window.innerHeight / 2 - y) / 25;
-            const rotateY = (window.innerWidth / 2 - x) / 25;
-            scene.style.transform = `rotateX(${rotateX}deg) rotateY(${-rotateY}deg)`;
+            // Card Tilt Effect
+            const card = document.getElementById('card');
+            let xAxis = (window.innerWidth / 2 - e.clientX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.clientY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
         });
 
-        // 2. Pro Status Controller (Auto-Live logic)
-        function updateStatus() {
-            const h = new Date().getHours();
-            const m = new Date().getMinutes();
-            const status = document.getElementById('live-status');
-            const isLive = (h === 20 && m >= 30) || (h === 21);
-            
-            status.innerHTML = isLive ? 
-                '<i class="fas fa-circle" style="color:red; font-size:8px;"></i> LIVE BROADCASTING' : 
-                'PROTOCOL: OFFLINE';
-        }
-        setInterval(updateStatus, 1000);
-
-        // 3. Fluid Background Engine
-        const canvas = document.getElementById('fluid-bg');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        
-        let blobs = Array(5).fill().map(() => ({
-            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-            r: 300 + Math.random() * 200, color: ['#ff003c', '#00f2ff', '#bd00ff'][Math.floor(Math.random()*3)],
-            vx: Math.random() * 2 - 1, vy: Math.random() * 2 - 1
-        }));
-
-        function drawBlobs() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            blobs.forEach(b => {
-                b.x += b.vx; b.y += b.vy;
-                if(b.x < 0 || b.x > canvas.width) b.vx *= -1;
-                if(b.y < 0 || b.y > canvas.height) b.vy *= -1;
-                ctx.beginPath();
-                let g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-                g.addColorStop(0, b.color); g.addColorStop(1, 'transparent');
-                ctx.fillStyle = g; ctx.arc(b.x, b.y, b.r, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(drawBlobs);
+            
+            ctx.strokeStyle = '#ff003c'; // အလင်းတန်းအရောင်
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+
+            for (let i = 0; i < points.length; i++) {
+                const p = points[i];
+                p.age++;
+                if (i > 0) {
+                    ctx.lineTo(p.x, p.y);
+                } else {
+                    ctx.moveTo(p.x, p.y);
+                }
+            }
+            ctx.stroke();
+
+            points = points.filter(p => p.age < 40); // အလင်းတန်း အရှည်ကို ထိန်းချုပ်တာ
+            requestAnimationFrame(animate);
         }
-        drawBlobs();
+        animate();
     </script>
 </body>
 </html>
