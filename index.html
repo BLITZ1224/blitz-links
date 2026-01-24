@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ // BLACKSITE</title>
+<title>RESTRICTED ACCESS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -17,32 +17,72 @@
 html,body{
   height:100%;
   background:#000;
-  color:#8ff;
+  color:#9ff;
   font-family:'JetBrains Mono',monospace;
   overflow:hidden;
 }
 
-/* ===== CRT EFFECT ===== */
-body::after{
-  content:"";
-  position:fixed;inset:0;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.02),
-    rgba(255,255,255,.02) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  pointer-events:none;
+/* ===== WATCHER EFFECT ===== */
+.eye{
+  position:fixed;
+  top:50%;left:50%;
+  width:220px;height:220px;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:
+    radial-gradient(circle at center,#fff 2px,transparent 3px),
+    radial-gradient(circle,var(--c),transparent 60%);
+  filter:blur(30px);
+  opacity:.25;
+  animation:watch 6s ease-in-out infinite;
+}
+@keyframes watch{
+  50%{transform:translate(-50%,-50%) scale(1.15);}
 }
 
 /* ===== TERMINAL ===== */
-#terminal{
+#log{
   padding:22px;
   font-size:13px;
   line-height:1.6;
   white-space:pre-wrap;
 }
+
+/* ===== DECISION ===== */
+#decision{
+  display:none;
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.choice{
+  border:1px solid rgba(255,255,255,.25);
+  padding:32px 26px;
+  width:min(88vw,360px);
+  text-align:center;
+  background:rgba(5,8,12,.85);
+}
+.choice h1{
+  font-family:'Syncopate',sans-serif;
+  font-size:18px;
+  letter-spacing:4px;
+  margin-bottom:16px;
+}
+.buttons{
+  display:flex;
+  gap:14px;
+}
+.buttons button{
+  flex:1;
+  padding:14px;
+  background:#000;
+  border:1px solid var(--c);
+  color:#fff;
+  font-family:inherit;
+}
+.abort{border-color:var(--r);color:var(--r);}
 
 /* ===== UI ===== */
 #ui{
@@ -53,101 +93,103 @@ body::after{
   align-items:center;
   justify-content:center;
 }
-
 .panel{
   width:min(88vw,360px);
-  background:rgba(5,8,12,.85);
-  border:1px solid rgba(0,242,255,.25);
-  border-radius:18px;
-  padding:38px 26px;
-  box-shadow:0 0 60px rgba(0,242,255,.2);
+  border:1px solid rgba(0,242,255,.3);
+  padding:34px 24px;
   text-align:center;
 }
-
-h1{
+.panel h2{
   font-family:'Syncopate',sans-serif;
-  letter-spacing:10px;
-  font-size:22px;
+  letter-spacing:8px;
   margin-bottom:8px;
-  color:#fff;
 }
-
-.sub{
-  font-size:10px;
-  letter-spacing:3px;
-  margin-bottom:26px;
-  color:#6ff;
-}
-
-.links{display:flex;flex-direction:column;gap:14px;}
 .links a{
-  padding:14px;
-  border:1px solid rgba(255,255,255,.2);
-  text-decoration:none;
-  color:#fff;
   display:flex;
   justify-content:space-between;
+  margin-top:14px;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.25);
+  text-decoration:none;
+  color:#fff;
 }
-.links a i{color:var(--c);}
+.links i{color:var(--c);}
 </style>
 </head>
 
 <body>
 
-<div id="terminal"></div>
+<div class="eye"></div>
+<div id="log"></div>
+
+<div id="decision">
+  <div class="choice">
+    <h1>UNAUTHORIZED ENTITY</h1>
+    <p style="font-size:12px;margin-bottom:22px;">
+      System instability detected.<br>
+      Proceeding may expose classified nodes.
+    </p>
+    <div class="buttons">
+      <button class="abort" onclick="abort()">ABORT</button>
+      <button onclick="proceed()">PROCEED</button>
+    </div>
+  </div>
+</div>
 
 <div id="ui">
   <div class="panel">
-    <h1>BLITZ</h1>
-    <div class="sub">BLACKSITE ACCESS</div>
-
+    <h2>BLITZ</h2>
+    <p style="font-size:10px;letter-spacing:3px;margin-bottom:20px;">
+      SENTINEL OVERRIDE
+    </p>
     <div class="links">
       <a href="https://www.facebook.com/BlitzGamingOfficial">FACEBOOK <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
-      <a href="#">JOIN SQUAD <i class="fas fa-bolt"></i></a>
     </div>
   </div>
 </div>
 
 <script>
-const term=document.getElementById("terminal");
+const log=document.getElementById("log");
+const decision=document.getElementById("decision");
 const ui=document.getElementById("ui");
 
 const lines=[
-"[INIT] BLITZ CORE v9.7.1",
-"[AUTH] Verifying device signature...",
-"[NET] Establishing encrypted tunnel...",
-"[PING] NODE-01 :: 14ms",
-"[PING] NODE-02 :: 11ms",
-"[SEC] Firewall status: STABLE",
-"[AI ] Neural module online",
-"[AI ] Behavioral scan complete",
-"[OK ] Access granted",
+"[SENTINEL] Presence detected",
+"[SCAN] Behavioral pattern: UNKNOWN",
+"[RISK] Probability of breach increasing",
+"[WARNING] Unauthorized access",
 "",
-"> ENTERING BLACKSITE INTERFACE..."
+"> Awaiting entity decision..."
 ];
 
 let i=0,j=0;
-
 function type(){
   if(i<lines.length){
     if(j<lines[i].length){
-      term.textContent+=lines[i][j++];
-      setTimeout(type,20);
+      log.textContent+=lines[i][j++];
+      setTimeout(type,18);
     }else{
-      term.textContent+="\n";
-      i++; j=0;
-      setTimeout(type,300);
+      log.textContent+="\n";
+      i++;j=0;
+      setTimeout(type,260);
     }
   }else{
-    setTimeout(()=>{
-      term.style.display="none";
-      ui.style.display="flex";
-    },800);
+    setTimeout(()=>decision.style.display="flex",600);
   }
 }
 type();
+
+function abort(){
+  log.textContent="\n[SESSION TERMINATED]";
+  decision.style.display="none";
+}
+function proceed(){
+  decision.style.display="none";
+  log.style.display="none";
+  ui.style.display="flex";
+}
 </script>
 
 </body>
