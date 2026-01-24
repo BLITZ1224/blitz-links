@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | INTERACTIVE HUB</title>
+    <title>BLITZ | ULTIMATE PORTAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;500;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #ff003c;
-            --accent-glow: rgba(255, 0, 60, 0.5);
-            --bg: #030303;
-            --transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+            --accent-rgb: 255, 0, 60;
+            --bg: #000;
         }
 
-        /* Cyber Mode Theme (Easter Egg) */
-        body.cyber-mode {
-            --accent: #00f2ff;
-            --accent-glow: rgba(0, 242, 255, 0.5);
-            background-color: #000a0f;
-        }
+        body.cyan-mode { --accent: #00f2ff; --accent-rgb: 0, 242, 255; }
+        body.gold-mode { --accent: #ffae00; --accent-rgb: 255, 174, 0; }
+        body.purple-mode { --accent: #bd00ff; --accent-rgb: 189, 0, 255; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background var(--transition), color var(--transition), border var(--transition), box-shadow var(--transition); }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
         body {
             background-color: var(--bg);
@@ -29,130 +25,203 @@
             font-family: 'Outfit', sans-serif;
             height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
+            overflow: hidden; perspective: 1000px;
         }
 
-        /* Glitch Animation for Transition */
-        @keyframes glitch {
-            0% { clip-path: inset(50% 0 30% 0); transform: translate(-5px, 5px); }
-            20% { clip-path: inset(10% 0 80% 0); transform: translate(5px, -5px); }
-            40% { clip-path: inset(40% 0 40% 0); transform: translate(-5px, 0); }
-            100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+        /* Animated Mesh Background */
+        #bg-canvas { position: fixed; inset: 0; z-index: -2; opacity: 0.6; }
+        .vignette { position: fixed; inset: 0; background: radial-gradient(circle, transparent 20%, #000 100%); z-index: -1; pointer-events: none; }
+
+        /* The 3D Master Card */
+        .glass-container {
+            width: 90%; max-width: 420px;
+            padding: 3px; border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent, rgba(var(--accent-rgb), 0.3));
+            position: relative; transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
         }
 
-        .glitch-active { animation: glitch 0.3s linear infinite; }
-
-        /* Main Card */
         .main-card {
-            width: 90%; max-width: 390px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            padding: 50px 30px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 47px;
+            padding: 60px 35px;
             text-align: center;
-            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .avatar-container {
-            width: 130px; height: 130px; margin: 0 auto 25px;
-            position: relative; cursor: pointer;
-            user-select: none;
+        /* Profile Area with Hologram Effect */
+        .avatar-box {
+            width: 150px; height: 150px; margin: 0 auto 30px;
+            position: relative; transform: translateZ(50px);
         }
-
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%;
-            border: 3px solid var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
+            object-fit: cover; border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.5);
+            transition: var(--transition);
+        }
+        .hologram-ring {
+            position: absolute; inset: -10px;
+            border: 1px solid var(--accent);
+            border-radius: 50%; opacity: 0.3;
+            animation: ripple 2s infinite linear;
         }
 
-        h1 { font-family: 'Syncopate', sans-serif; letter-spacing: 6px; font-size: 26px; margin-bottom: 5px; }
-        .bio { color: #888; font-size: 12px; letter-spacing: 3px; margin-bottom: 35px; }
+        @keyframes ripple { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
 
-        /* Links */
-        .links-stack { display: flex; flex-direction: column; gap: 15px; }
-        .link-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 18px; border-radius: 20px;
-            text-decoration: none; color: #fff; font-weight: 600;
-            display: flex; align-items: center; 
+        /* Typography */
+        h1 {
+            font-family: 'Syncopate', sans-serif; font-size: 32px; letter-spacing: 12px;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; transform: translateZ(30px);
         }
-        .link-item i { width: 40px; color: var(--accent); font-size: 20px; }
-        .link-item:hover {
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(var(--accent-rgb), 0.1);
+            padding: 5px 15px; border-radius: 20px;
+            font-size: 11px; color: var(--accent);
+            letter-spacing: 2px; margin-bottom: 35px;
+            border: 1px solid rgba(var(--accent-rgb), 0.3);
+        }
+
+        /* Buttons Elite Design */
+        .links-stack { display: flex; flex-direction: column; gap: 15px; transform: translateZ(20px); }
+        .link-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px; border-radius: 20px;
+            text-decoration: none; color: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .link-btn:hover {
             background: var(--accent);
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px var(--accent-glow);
+            transform: scale(1.05) translateZ(10px);
+            box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.4);
+            border-color: transparent;
         }
+        .link-btn i { font-size: 20px; }
+        .link-btn span { font-weight: 600; letter-spacing: 2px; font-size: 14px; text-transform: uppercase; }
 
-        /* Easter Egg Hint Toast */
-        #hint {
-            position: fixed; bottom: 20px; font-size: 10px; color: #444; letter-spacing: 1px;
+        /* Easter Egg Control */
+        .theme-switcher {
+            position: fixed; bottom: 30px; display: flex; gap: 15px;
         }
+        .dot { width: 15px; height: 15px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; }
+
     </style>
 </head>
-<body id="body">
+<body id="main-body">
 
-    <div class="main-card" id="card">
-        <div class="avatar-container" onclick="handleEasterEgg()">
-            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
-        </div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="vignette"></div>
 
-        <h1>BLITZ</h1>
-        <p class="bio">ELITE CONTENT HUB</p>
+    <div class="glass-container" id="tilt-card">
+        <div class="main-card">
+            <div class="avatar-box" onclick="triggerEasterEgg()">
+                <div class="hologram-ring"></div>
+                <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
+            </div>
 
-        <div class="links-stack">
-            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="link-item">
-                <i class="fab fa-facebook-f"></i> FACEBOOK STREAM
-            </a>
-            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="link-item">
-                <i class="fab fa-tiktok"></i> TIKTOK CLIPS
-            </a>
-            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="link-item">
-                <i class="fab fa-youtube"></i> YOUTUBE HUB
-            </a>
+            <h1>BLITZ</h1>
+            <div class="status-pill" id="live-indicator">
+                <i class="fas fa-circle" style="font-size: 8px;"></i> OFFLINE
+            </div>
+
+            <div class="links-stack">
+                <a href="https://facebook.com/BlitzGamingOfficial" target="_blank" class="link-btn" onmouseover="playSfx()">
+                    <span>Facebook Stream</span> <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://tiktok.com/@streamingbyblitz" target="_blank" class="link-btn" onmouseover="playSfx()">
+                    <span>TikTok Elite</span> <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://youtube.com/@streamingbyblitz" target="_blank" class="link-btn" onmouseover="playSfx()">
+                    <span>YouTube Hub</span> <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="link-btn" style="background: #fff; color: #000;" onmouseover="playSfx()">
+                    <span style="color: #000;">Join the Squad</span> <i class="fas fa-crown"></i>
+                </a>
+            </div>
         </div>
     </div>
 
-    <p id="hint">Tip: Tap the logo 5 times to unlock Cyber Mode</p>
+    <div class="theme-switcher">
+        <div class="dot" style="background: #ff003c;" onclick="setTheme('default')"></div>
+        <div class="dot" style="background: #00f2ff;" onclick="setTheme('cyan')"></div>
+        <div class="dot" style="background: #ffae00;" onclick="setTheme('gold')"></div>
+        <div class="dot" style="background: #bd00ff;" onclick="setTheme('purple')"></div>
+    </div>
+
+    <audio id="hover-audio" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
 
     <script>
-        let clickCount = 0;
-        let lastClickTime = 0;
+        const card = document.getElementById('tilt-card');
+        const body = document.getElementById('main-body');
 
-        function handleEasterEgg() {
-            const now = new Date().getTime();
+        // 1. 3D Tilt Effect
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.clientX) / 20;
+            let yAxis = (window.innerHeight / 2 - e.clientY) / 20;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+        });
+
+        // 2. Auto Live System (8:30 - 10:00 PM)
+        function updateLive() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const indicator = document.getElementById('live-indicator');
+            const isLive = (h === 20 && m >= 30) || (h === 21);
             
-            // ၁ စက္ကန့်ထက်ကျော်ရင် count ကို reset ပြန်လုပ်မယ်
-            if (now - lastClickTime > 1000) {
-                clickCount = 0;
-            }
-
-            clickCount++;
-            lastClickTime = now;
-
-            // ခပ်သွက်သွက်လေး ၅ ခါနှိပ်ရင်
-            if (clickCount === 5) {
-                activateCyberMode();
-                clickCount = 0;
+            if(isLive) {
+                indicator.innerHTML = '<i class="fas fa-circle" style="animation: pulse 1s infinite"></i> LIVE NOW';
+                indicator.style.color = '#ff0000';
+                indicator.style.borderColor = '#ff0000';
             }
         }
+        setInterval(updateLive, 1000);
 
-        function activateCyberMode() {
-            const body = document.getElementById('body');
-            const card = document.getElementById('card');
-
-            // Glitch Effect စတင်မယ်
-            card.classList.add('glitch-active');
-            
-            setTimeout(() => {
-                body.classList.toggle('cyber-mode'); // Theme အရောင်ပြောင်းမယ်
-                card.classList.remove('glitch-active');
-            }, 300);
-
-            // Sound Effect ထည့်ချင်ရင် ဒီနေရာမှာ ထည့်နိုင်ပါတယ်
-            console.log("Cyber Mode Activated!");
+        // 3. Theme Switcher (Easter Egg)
+        function setTheme(theme) {
+            body.className = theme + '-mode';
+            playSfx();
         }
+
+        // 4. Sound Effect
+        function playSfx() {
+            const sfx = document.getElementById('hover-audio');
+            sfx.currentTime = 0;
+            sfx.play().catch(() => {});
+        }
+
+        // 5. Dynamic Background Particles
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = Array(80).fill().map(() => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            vX: Math.random() * 0.5 - 0.25,
+            vY: Math.random() * 0.5 - 0.25
+        }));
+
+        function animateBg() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255,255,255,0.3)";
+            particles.forEach(p => {
+                p.x += p.vX; p.y += p.vY;
+                if(p.x < 0 || p.x > canvas.width) p.vX *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vY *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
     </script>
 </body>
 </html>
