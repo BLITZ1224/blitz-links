@@ -3,121 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLITZ | LINK IN BIO</title>
+    <title>BLITZ | THE PROFESSIONAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #ff003c;
-            --accent-glow: rgba(255, 0, 60, 0.6);
-            --bg-dark: #050505;
+            --primary: #ff003c;
+            --primary-glow: rgba(255, 0, 60, 0.5);
+            --dark-bg: #030303;
         }
+
+        /* WebKit Scrollbar - Custom Design */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: var(--bg-dark);
+            background-color: var(--dark-bg);
             color: #fff;
             font-family: 'Outfit', sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             overflow-x: hidden;
-            position: relative;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 60, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 150, 255, 0.05) 0%, transparent 40%);
         }
 
-        /* 1. Particle Background */
-        #particle-canvas {
-            position: fixed; inset: 0; z-index: -1;
-        }
+        /* Floating Particles Background */
+        #particle-canvas { position: fixed; inset: 0; z-index: -1; }
 
-        /* 2. Main Card */
         .main-card {
-            width: 90%; max-width: 400px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            padding: 50px 25px;
+            width: 92%; max-width: 420px;
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 45px;
+            padding: 60px 30px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            margin: 20px 0;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* 3. Avatar with Auto-Live Pulse */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Profile Glow System */
         .avatar-container {
-            width: 125px; height: 125px; margin: 0 auto 25px;
+            width: 140px; height: 140px; margin: 0 auto 30px;
             position: relative;
         }
-
         .profile-img {
             width: 100%; height: 100%; border-radius: 50%;
-            border: 3px solid var(--accent);
-            object-fit: cover;
-            box-shadow: 0 0 20px var(--accent-glow);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 5px; object-fit: cover;
+            position: relative; z-index: 2;
+        }
+        .glow-ring {
+            position: absolute; inset: -5px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--primary), transparent);
+            animation: rotateGlow 3s linear infinite;
+            z-index: 1;
+        }
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
         }
 
-        /* Live Indicator Badge */
-        .live-badge {
-            position: absolute; bottom: 5px; right: 5px;
-            background: #ff0000; color: white;
-            font-size: 10px; font-weight: 900;
-            padding: 4px 12px; border-radius: 20px;
-            display: none; /* JS will toggle this */
-            animation: pulse 1.5s infinite;
-            border: 2px solid #000;
+        /* Text Elements */
+        h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 30px; letter-spacing: 10px;
+            background: linear-gradient(to bottom, #fff 40%, #666 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .bio-container { margin-bottom: 40px; }
+        .bio-text {
+            color: #aaa; font-size: 13px; letter-spacing: 4px;
+            text-transform: uppercase; font-weight: 300;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
-        }
-
-        /* 4. Text Styling */
-        h1 { font-family: 'Syncopate', sans-serif; letter-spacing: 6px; font-size: 26px; margin-bottom: 8px; }
-        .bio { color: #888; font-size: 13px; letter-spacing: 2px; margin-bottom: 35px; text-transform: uppercase; }
-
-        /* 5. Professional Links */
-        .links-stack { display: flex; flex-direction: column; gap: 15px; }
+        /* Elite Links */
+        .links-stack { display: flex; flex-direction: column; gap: 18px; }
 
         .link-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 18px; border-radius: 20px;
-            text-decoration: none; color: #fff; font-weight: 600;
-            display: flex; align-items: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px; border-radius: 22px;
+            text-decoration: none; color: #fff;
+            display: flex; align-items: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative; overflow: hidden;
         }
 
-        .link-item i { width: 40px; color: var(--accent); font-size: 20px; }
+        .link-item i { width: 45px; font-size: 22px; color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
+        .link-item span { font-weight: 600; letter-spacing: 1.5px; font-size: 14px; }
+
+        .link-item::after {
+            content: ''; position: absolute; top: -50%; left: -100%;
+            width: 50%; height: 200%; background: rgba(255,255,255,0.1);
+            transform: rotate(30deg); transition: 0.5s;
+        }
 
         .link-item:hover {
-            background: var(--accent);
-            transform: translateX(10px);
-            box-shadow: 0 10px 25px var(--accent-glow);
-            border-color: transparent;
+            background: rgba(255, 0, 60, 0.1);
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        .link-item:hover::after { left: 150%; }
+
+        .cta-gold {
+            background: #fff; color: #000 !important;
+            margin-top: 15px; justify-content: center;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
         }
 
-        .link-item:hover i { color: #fff; }
-
-        .cta-vip {
-            background: #fff; color: #000;
-            margin-top: 10px; justify-content: center;
-            font-weight: 900; letter-spacing: 1px;
-        }
-        .cta-vip:hover { background: #eee; color: #000; transform: scale(1.03); }
-
-        /* Music Controller */
-        .music-ctrl {
-            position: fixed; bottom: 25px; right: 25px;
-            background: rgba(255, 255, 255, 0.05);
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 100;
+        /* Audio Control */
+        .music-toggle {
+            position: fixed; top: 20px; right: 20px;
+            padding: 10px 20px; background: rgba(255,255,255,0.05);
+            border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
+            font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
     </style>
 </head>
@@ -125,124 +139,73 @@
 
     <canvas id="particle-canvas"></canvas>
 
-    <div class="main-card">
-        <div class="avatar-container">
-            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
-            <div id="live-indicator" class="live-badge">LIVE NOW</div>
-        </div>
-
-        <h1>BLITZ</h1>
-        <p class="bio">Elite Streamer • Next-Gen Content</p>
-
-        <div class="links-stack">
-            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="link-item" onmouseover="playHover()">
-                <i class="fab fa-facebook-f"></i> FACEBOOK STREAM
-            </a>
-            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="link-item" onmouseover="playHover()">
-                <i class="fab fa-tiktok"></i> TIKTOK CLIPS
-            </a>
-            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="link-item" onmouseover="playHover()">
-                <i class="fab fa-youtube"></i> YOUTUBE CHANNEL
-            </a>
-            <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" target="_blank" class="link-item cta-vip" onmouseover="playHover()">
-                <i class="fas fa-crown"></i> JOIN THE SQUAD
-            </a>
-        </div>
+    <div class="music-toggle" onclick="toggleMusic()">
+        <i id="music-icon" class="fas fa-play"></i> <span>ATMOSPHERE</span>
     </div>
 
-    <div class="music-ctrl" onclick="toggleMusic()">
-        <i id="music-icon" class="fas fa-volume-mute"></i>
+    <div class="main-card">
+        <div class="avatar-container">
+            <div class="glow-ring"></div>
+            <img src="blitz.png" alt="BLITZ" class="profile-img" onerror="this.src='https://via.placeholder.com/150/ff003c/ffffff?text=B'">
+        </div>
+
+        <div class="bio-container">
+            <h1>BLITZ</h1>
+            <p class="bio-text">Beyond Gaming • Elite Brand</p>
+        </div>
+
+        <div class="links-stack">
+            <a href="https://www.facebook.com/BlitzGamingOfficial" target="_blank" class="link-item">
+                <i class="fab fa-facebook"></i> <span>ENTER THE ARENA</span>
+            </a>
+            <a href="https://www.tiktok.com/@streamingbyblitz" target="_blank" class="link-item">
+                <i class="fab fa-tiktok"></i> <span>DAILY CLIPS</span>
+            </a>
+            <a href="https://www.youtube.com/@streamingbyblitz" target="_blank" class="link-item">
+                <i class="fab fa-youtube"></i> <span>MAIN HUB</span>
+            </a>
+            <a href="https://www.youtube.com/@streamingbyblitz?sub_confirmation=1" target="_blank" class="link-item cta-gold">
+                <span>JOIN THE ELITE SQUAD</span>
+            </a>
+        </div>
     </div>
 
     <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"></audio>
-    <audio id="hover-sfx" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
 
     <script>
-        // --- ၁။ AUTO LIVE STATUS (8:30 PM - 10:00 PM) ---
-        function checkLive() {
-            const now = new Date();
-            const hour = now.getHours();
-            const minute = now.getMinutes();
-            const liveBadge = document.getElementById('live-indicator');
-
-            // 8:30 PM = 20:30, 10:00 PM = 22:00
-            const isAfterStart = (hour > 20) || (hour === 20 && minute >= 30);
-            const isBeforeEnd = (hour < 22);
-
-            if (isAfterStart && isBeforeEnd) {
-                liveBadge.style.display = 'block';
-            } else {
-                liveBadge.style.display = 'none';
-            }
-        }
-        setInterval(checkLive, 10000);
-        checkLive();
-
-        // --- ၂။ MUSIC & SFX ---
+        // --- 1. Audio Control ---
         const bgMusic = document.getElementById('bg-music');
-        const hoverSfx = document.getElementById('hover-sfx');
         const musicIcon = document.getElementById('music-icon');
-
         function toggleMusic() {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicIcon.className = 'fas fa-volume-up';
-            } else {
-                bgMusic.pause();
-                musicIcon.className = 'fas fa-volume-mute';
-            }
+            if (bgMusic.paused) { bgMusic.play(); musicIcon.className = 'fas fa-pause'; }
+            else { bgMusic.pause(); musicIcon.className = 'fas fa-play'; }
         }
 
-        function playHover() {
-            hoverSfx.currentTime = 0;
-            hoverSfx.play().catch(()=>{}); 
-        }
-
-        // --- ၃။ PARTICLES SYSTEM ---
+        // --- 2. Particles ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function initCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.4 - 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-            }
-        }
-
-        function setup() {
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 80; i++) particles.push(new Particle());
+            for(let i=0; i<60; i++) particles.push({
+                x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+                vX: Math.random()*0.4-0.2, vY: Math.random()*0.4-0.2,
+                s: Math.random()*1.5
+            });
         }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
+        function draw() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "rgba(255,255,255,0.2)";
+            particles.forEach(p => {
+                p.x += p.vX; p.y += p.vY;
+                if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+                if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(draw);
         }
-
-        window.addEventListener('resize', () => { initCanvas(); setup(); });
-        initCanvas(); setup(); animate();
+        window.onresize = init; init(); draw();
     </script>
 </body>
 </html>
