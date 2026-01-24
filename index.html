@@ -3,165 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RESTRICTED ACCESS</title>
+<title>ENTITY DETECTED</title>
 
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-:root{
-  --c:#00f2ff;
-  --r:#ff003c;
-}
+:root{--c:#00f2ff;--r:#ff003c;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{
-  height:100%;
-  background:#000;
-  color:#9ff;
-  font-family:'JetBrains Mono',monospace;
-  overflow:hidden;
+  height:100%;background:#000;color:#9ff;
+  font-family:'JetBrains Mono',monospace;overflow:hidden;
 }
-
-/* ===== WATCHER EFFECT ===== */
-.eye{
-  position:fixed;
-  top:50%;left:50%;
-  width:220px;height:220px;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  background:
-    radial-gradient(circle at center,#fff 2px,transparent 3px),
-    radial-gradient(circle,var(--c),transparent 60%);
-  filter:blur(30px);
-  opacity:.25;
-  animation:watch 6s ease-in-out infinite;
-}
-@keyframes watch{
-  50%{transform:translate(-50%,-50%) scale(1.15);}
-}
-
-/* ===== TERMINAL ===== */
 #log{
-  padding:22px;
-  font-size:13px;
-  line-height:1.6;
+  padding:20px;font-size:13px;line-height:1.6;
   white-space:pre-wrap;
 }
-
-/* ===== DECISION ===== */
-#decision{
-  display:none;
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+#count{
+  position:fixed;top:10px;right:14px;
+  font-size:12px;color:var(--r);
 }
-.choice{
-  border:1px solid rgba(255,255,255,.25);
-  padding:32px 26px;
-  width:min(88vw,360px);
-  text-align:center;
-  background:rgba(5,8,12,.85);
+#cmd{
+  position:fixed;bottom:0;left:0;right:0;
+  background:#000;border-top:1px solid rgba(255,255,255,.15);
+  padding:12px;font-family:inherit;color:#fff;
 }
-.choice h1{
-  font-family:'Syncopate',sans-serif;
-  font-size:18px;
-  letter-spacing:4px;
-  margin-bottom:16px;
-}
-.buttons{
-  display:flex;
-  gap:14px;
-}
-.buttons button{
-  flex:1;
-  padding:14px;
-  background:#000;
-  border:1px solid var(--c);
-  color:#fff;
-  font-family:inherit;
-}
-.abort{border-color:var(--r);color:var(--r);}
-
-/* ===== UI ===== */
 #ui{
-  display:none;
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:none;position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
 }
 .panel{
-  width:min(88vw,360px);
-  border:1px solid rgba(0,242,255,.3);
-  padding:34px 24px;
+  border:1px solid rgba(0,242,255,.35);
+  padding:30px;width:min(88vw,360px);
   text-align:center;
 }
-.panel h2{
+h1{
   font-family:'Syncopate',sans-serif;
-  letter-spacing:8px;
-  margin-bottom:8px;
+  letter-spacing:6px;margin-bottom:6px;
 }
+.sub{font-size:10px;letter-spacing:2px;margin-bottom:18px;}
 .links a{
-  display:flex;
-  justify-content:space-between;
-  margin-top:14px;
-  padding:12px;
+  display:flex;justify-content:space-between;
+  padding:12px;margin-top:12px;
   border:1px solid rgba(255,255,255,.25);
-  text-decoration:none;
-  color:#fff;
+  color:#fff;text-decoration:none;
 }
-.links i{color:var(--c);}
+.links a:hover{background:rgba(255,255,255,.05);}
 </style>
 </head>
 
 <body>
 
-<div class="eye"></div>
+<div id="count">RISK LEVEL: <span id="risk">12%</span></div>
 <div id="log"></div>
-
-<div id="decision">
-  <div class="choice">
-    <h1>UNAUTHORIZED ENTITY</h1>
-    <p style="font-size:12px;margin-bottom:22px;">
-      System instability detected.<br>
-      Proceeding may expose classified nodes.
-    </p>
-    <div class="buttons">
-      <button class="abort" onclick="abort()">ABORT</button>
-      <button onclick="proceed()">PROCEED</button>
-    </div>
-  </div>
-</div>
+<input id="cmd" placeholder="> type command..." autocomplete="off">
 
 <div id="ui">
   <div class="panel">
-    <h2>BLITZ</h2>
-    <p style="font-size:10px;letter-spacing:3px;margin-bottom:20px;">
-      SENTINEL OVERRIDE
-    </p>
+    <h1>BLITZ</h1>
+    <div class="sub">SOVEREIGN ENTITY</div>
     <div class="links">
-      <a href="https://www.facebook.com/BlitzGamingOfficial">FACEBOOK <i class="fab fa-facebook"></i></a>
-      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
+      <a href="https://www.facebook.com/BlitzGamingOfficial">FACEBOOK ↗</a>
+      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK ↗</a>
+      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE ↗</a>
     </div>
   </div>
 </div>
 
 <script>
 const log=document.getElementById("log");
-const decision=document.getElementById("decision");
+const cmd=document.getElementById("cmd");
 const ui=document.getElementById("ui");
+const riskEl=document.getElementById("risk");
+
+let risk=12;
+let idleTimer;
 
 const lines=[
-"[SENTINEL] Presence detected",
-"[SCAN] Behavioral pattern: UNKNOWN",
-"[RISK] Probability of breach increasing",
-"[WARNING] Unauthorized access",
-"",
-"> Awaiting entity decision..."
+"[ENTITY] Presence locked",
+"[ANALYSIS] Cognitive delay detected",
+"[WARNING] Entity behavior unpredictable",
+"> Awaiting command..."
 ];
 
 let i=0,j=0;
@@ -175,21 +96,39 @@ function type(){
       i++;j=0;
       setTimeout(type,260);
     }
-  }else{
-    setTimeout(()=>decision.style.display="flex",600);
   }
 }
 type();
 
-function abort(){
-  log.textContent="\n[SESSION TERMINATED]";
-  decision.style.display="none";
+function increaseRisk(){
+  risk+=Math.floor(Math.random()*4)+1;
+  if(risk>99) risk=99;
+  riskEl.textContent=risk+"%";
 }
-function proceed(){
-  decision.style.display="none";
-  log.style.display="none";
-  ui.style.display="flex";
-}
+idleTimer=setInterval(increaseRisk,1800);
+
+cmd.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    const v=cmd.value.toUpperCase();
+    cmd.value="";
+    log.textContent+=`\n> ${v}\n`;
+    if(v==="HELP"){
+      log.textContent+="Available commands: WHOAMI, OVERRIDE, BLITZ\n";
+    }else if(v==="WHOAMI"){
+      log.textContent+="Unknown entity. Profile incomplete.\n";
+    }else if(v==="OVERRIDE"||v==="BLITZ"){
+      log.textContent+="Override accepted.\nUnlocking core...\n";
+      clearInterval(idleTimer);
+      setTimeout(()=>{
+        log.style.display="none";
+        cmd.style.display="none";
+        ui.style.display="flex";
+      },1200);
+    }else{
+      log.textContent+="Command rejected.\n";
+    }
+  }
+});
 </script>
 
 </body>
