@@ -1,129 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BLITZ | Links</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BLITZ | AI SUPREME</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #00f2ff; --glass: rgba(10, 10, 10, 0.9); }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #000; color: #fff; font-family: 'Outfit', sans-serif; height: 100dvh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        #aura-canvas { position: fixed; inset: 0; z-index: -1; filter: blur(40px); opacity: 0.7; }
 
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        /* Luxury Card */
+        .ai-card {
+            width: 90%; max-width: 370px; background: var(--glass);
+            backdrop-filter: blur(50px); border-radius: 45px; padding: 50px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1); text-align: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,1); position: relative;
+        }
 
-<style>
-:root{
-  --accent:#00f2ff;
-  --bg:#050508;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  height:100vh;
-  background:radial-gradient(60vw 60vw at 20% 20%, rgba(0,242,255,.15), transparent 60%),
-             radial-gradient(50vw 50vw at 80% 70%, rgba(255,0,80,.12), transparent 60%),
-             var(--bg);
-  font-family:'Outfit',sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:#fff;
-}
+        .pfp-box { width: 120px; height: 120px; margin: 0 auto 25px; position: relative; }
+        .pfp-img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--accent); padding: 8px; }
 
-/* Card */
-.card{
-  width:min(90vw,360px);
-  background:rgba(255,255,255,.06);
-  backdrop-filter:blur(30px);
-  border-radius:32px;
-  padding:42px 28px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 30px 60px rgba(0,0,0,.6);
-}
+        h1 { font-family: 'Syncopate', sans-serif; font-size: 26px; letter-spacing: 12px; margin-bottom: 10px; }
 
-/* Avatar */
-.avatar{
-  width:110px;height:110px;
-  margin:0 auto 24px;
-  border-radius:50%;
-  padding:6px;
-  background:linear-gradient(135deg,var(--accent),#ff0055);
-}
-.avatar img{
-  width:100%;height:100%;
-  border-radius:50%;
-  object-fit:cover;
-  background:#000;
-}
+        /* AI Message Styling */
+        .ai-status-wrap {
+            min-height: 40px; margin-bottom: 40px;
+            font-size: 11px; letter-spacing: 2px; color: var(--accent);
+            font-weight: 600; text-transform: uppercase;
+        }
 
-/* Text */
-h1{
-  font-family:'Syncopate',sans-serif;
-  letter-spacing:8px;
-  font-size:24px;
-  margin-bottom:6px;
-}
-.tag{
-  font-size:12px;
-  color:#aaa;
-  margin-bottom:30px;
-}
-
-/* Buttons */
-.links{display:flex;flex-direction:column;gap:14px;}
-.links a{
-  padding:16px 20px;
-  border-radius:18px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  text-decoration:none;
-  color:#fff;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-weight:600;
-  letter-spacing:1px;
-  transition:.25s;
-}
-.links a:hover{
-  background:rgba(0,242,255,.15);
-  transform:translateY(-2px);
-}
-.links i{color:var(--accent);font-size:18px;}
-
-/* Footer */
-.footer{
-  margin-top:28px;
-  font-size:11px;
-  color:#777;
-}
-</style>
+        .links-stack { display: flex; flex-direction: column; gap: 15px; }
+        .btn-ai {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px; border-radius: 22px; text-decoration: none; color: #fff;
+            display: flex; align-items: center; justify-content: space-between;
+            font-weight: 600; letter-spacing: 2px; transition: 0.4s;
+        }
+        .btn-ai:active { transform: scale(0.95); background: var(--accent); color: #000; }
+        .btn-ai i { font-size: 20px; }
+    </style>
 </head>
-
 <body>
 
-<div class="card">
-  <div class="avatar">
-    <img src="blitz.png" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
-  </div>
+    <canvas id="aura-canvas"></canvas>
 
-  <h1>BLITZ</h1>
-  <div class="tag">Gaming • Streaming • Creator</div>
+    <div class="ai-card">
+        <div class="pfp-box">
+            <img src="blitz.png" class="pfp-img" onerror="this.src='https://via.placeholder.com/150/00f2ff/ffffff?text=B'">
+        </div>
 
-  <div class="links">
-    <a href="https://www.facebook.com/BlitzGamingOfficial">
-      Facebook <i class="fab fa-facebook"></i>
-    </a>
-    <a href="https://www.tiktok.com/@streamingbyblitz">
-      TikTok <i class="fab fa-tiktok"></i>
-    </a>
-    <a href="https://www.youtube.com/@streamingbyblitz">
-      YouTube <i class="fab fa-youtube"></i>
-    </a>
-    <a href="#">
-      Join the Squad <i class="fas fa-bolt"></i>
-    </a>
-  </div>
+        <h1>BLITZ</h1>
+        <div class="ai-status-wrap" id="ai-output">CONNECTING AI...</div>
 
-  <div class="footer">© BLITZ</div>
-</div>
+        <div class="links-stack">
+            <a href="https://www.facebook.com/BlitzGamingOfficial" class="btn-ai"><span>FACEBOOK</span> <i class="fab fa-facebook"></i></a>
+            <a href="https://www.tiktok.com/@streamingbyblitz" class="btn-ai"><span>TIKTOK</span> <i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@streamingbyblitz" class="btn-ai"><span>YOUTUBE</span> <i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
 
+    <script>
+        // AI Integration Logic
+        const API_KEY = "AIzaSyDs_hqpi2aXbgJpqN6UIaSoBKzYLT8aqgI";
+        const output = document.getElementById('ai-output');
+
+        async function fetchAIWelcome() {
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "Create a 1-sentence very short and cool welcome message for a professional gamer named BLITZ. Use a futuristic vibe." }] }] })
+                });
+                const data = await res.json();
+                const text = data.candidates[0].content.parts[0].text;
+                typeWriter(text);
+            } catch (e) {
+                output.innerText = "ELITE ACCESS GRANTED";
+            }
+        }
+
+        function typeWriter(text) {
+            let i = 0;
+            output.innerHTML = "";
+            function type() {
+                if (i < text.length) {
+                    output.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+
+        fetchAIWelcome();
+
+        // Aura Background & Touch Effect
+        const canvas = document.getElementById('aura-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+        window.addEventListener('touchmove', (e) => {
+            const t = e.touches[0];
+            particles.push({ x: t.clientX, y: t.clientY, s: Math.random()*50+20, a: 1 });
+        });
+
+        function animate() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach((p, i) => {
+                p.a -= 0.02;
+                ctx.globalAlpha = p.a;
+                ctx.fillStyle = '#00f2ff';
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+                if(p.a <= 0) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
