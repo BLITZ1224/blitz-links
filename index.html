@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ | Gaming Bio</title>
+<title>BLITZ | Gaming Elite</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -22,46 +22,67 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:
-    radial-gradient(60vw 60vw at 20% 20%, color-mix(in srgb,var(--c1) 25%,transparent), transparent 60%),
-    radial-gradient(50vw 50vw at 80% 70%, color-mix(in srgb,var(--c2) 25%,transparent), transparent 60%),
-    var(--bg);
+  background: var(--bg);
   color:#fff;
-  overflow-x:hidden;
+  overflow:hidden;
+  position: relative;
 }
 
-/* Card with Glow Effect */
+/* 🌌 Animated Stars Background */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%; height: 200%;
+  background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), 
+                    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                    radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: stars 100s linear infinite;
+  opacity: 0.3;
+}
+@keyframes stars { from {transform: translateY(0);} to {transform: translateY(-100%);} }
+
+/* 🌈 RGB Border Animation Card */
+.card-container {
+  position: relative;
+  padding: 3px;
+  border-radius: 40px;
+  background: linear-gradient(0deg, var(--c1), var(--c2));
+  background-size: 200% 200%;
+  animation: rotateBorder 4s linear infinite;
+}
+@keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+
 .card{
   width:min(92vw,380px);
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(35px);
-  border-radius:36px;
+  background:rgba(10,10,15,0.85);
+  backdrop-filter:blur(20px);
+  border-radius:38px;
   padding:46px 30px 38px;
   text-align:center;
-  border:1px solid rgba(255,255,255,.15);
-  box-shadow: 0 0 40px rgba(0, 242, 255, 0.1), 0 40px 80px rgba(0,0,0,.7);
-  transform-style:preserve-3d;
-  transition:transform .15s ease;
+  position: relative;
+  z-index: 1;
 }
 
-/* Avatar */
 .avatar{
-  width:112px;height:112px;
+  width:115px; height:115px;
   margin:0 auto 26px;
   border-radius:50%;
-  padding:6px;
-  background:linear-gradient(135deg,var(--c1),var(--c2));
-  box-shadow:0 0 30px color-mix(in srgb,var(--c1) 40%,transparent);
-  cursor:pointer;
+  padding:5px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  position: relative;
+  animation: float 3s ease-in-out infinite;
 }
+@keyframes float { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+
 .avatar img{
-  width:100%;height:100%;
+  width:100%; height:100%;
   border-radius:50%;
   object-fit:cover;
-  background:#000;
+  border: 4px solid #000;
 }
 
-/* Live Badge */
 #live-status { display: none; margin-bottom: 20px; }
 .live-badge {
   background: var(--c2);
@@ -70,99 +91,90 @@ body{
   border-radius: 50px;
   font-weight: 700;
   font-size: 13px;
-  text-transform: uppercase;
   box-shadow: 0 0 20px var(--c2);
   animation: pulse 1.5s infinite;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
 }
-@keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.1);} }
 
-h1{ font-family:'Syncopate',sans-serif; font-size:24px; letter-spacing:9px; margin-bottom:6px; text-shadow: 0 0 10px var(--c1); }
-.tag{ font-size:12px; color:#aaa; margin-bottom:32px; letter-spacing: 2px;}
+h1{ font-family:'Syncopate',sans-serif; font-size:22px; letter-spacing:8px; margin-bottom:8px; color: var(--c1); }
+.tag{ font-size:11px; color:#888; margin-bottom:30px; letter-spacing: 2px; text-transform: uppercase;}
 
 .links{display:flex;flex-direction:column;gap:15px;}
 .links a{
-  padding:17px 22px;
-  border-radius:20px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
+  padding:18px 22px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.1);
   text-decoration:none;
   color:#fff;
   font-weight:600;
-  letter-spacing:1px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  transition:.3s;
+  transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .links a:hover{
-  background:rgba(255,255,255,.15);
-  border:1px solid var(--c1);
-  transform:translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+  background: rgba(0, 242, 255, 0.1);
+  border-color: var(--c1);
+  transform: scale(1.05);
 }
 
-/* Red Live Button */
+/* 🚨 LIVE Button Style */
 #live-btn {
   display: none;
-  background: linear-gradient(90deg, #ff0000, #b30000) !important;
+  background: linear-gradient(90deg, #ff0000, #ff5500) !important;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
   border: none !important;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
 }
-#live-btn i { color: #fff; animation: blink 1s infinite; }
-@keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+#live-btn i { animation: blink 1s infinite; }
+@keyframes blink { 0%, 100% {opacity: 1;} 50% {opacity: 0.2;} }
 
 .links i{color:var(--c1);font-size:18px;}
 
-.footer{ margin-top:28px; font-size:11px; color:#555; letter-spacing: 1px; }
+.footer{ margin-top:30px; font-size:10px; color:#444; text-transform: uppercase; letter-spacing: 2px; }
 
 .spark{
-  position:fixed;
-  width:8px;height:8px;
-  border-radius:50%;
-  background:var(--c1);
-  pointer-events:none;
-  animation:spark .6s ease-out forwards;
+  position:fixed; width:10px; height:10px;
+  border-radius:50%; background:var(--c1);
+  pointer-events:none; animation:spark .6s ease-out forwards;
 }
-@keyframes spark{ to{transform:scale(3);opacity:0;} }
+@keyframes spark{ to{transform:scale(4); opacity:0;} }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="card">
-  <div class="avatar" id="avatar">
-    <img src="B L I T Z.jpg" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=BLITZ'">
+<div class="card-container">
+  <div class="card">
+    <div class="avatar" id="avatar">
+      <img src="B L I T Z.jpg" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=BLITZ'">
+    </div>
+
+    <div id="live-status">
+      <span class="live-badge"><i class="fas fa-circle"></i> LIVE NOW</span>
+    </div>
+
+    <h1>BLITZ</h1>
+    <div class="tag">Gaming • Streaming • Creator</div>
+
+    <div class="links">
+      <a href="https://www.facebook.com/blitz2412" id="live-btn">LIVE စတင်နေပါပြီ! <i class="fas fa-satellite-dish"></i></a>
+      
+      <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <div class="footer" id="footer"></div>
   </div>
-
-  <div id="live-status">
-    <span class="live-badge"><i class="fas fa-circle"></i> LIVE NOW</span>
-  </div>
-
-  <h1>BLITZ</h1>
-  <div class="tag">Gaming • Streaming • Creator</div>
-
-  <div class="links">
-    <a href="https://www.facebook.com/blitz2412" id="live-btn">LIVE စတင်နေပါပြီ! <i class="fas fa-satellite-dish"></i></a>
-    
-    <a href="https://www.facebook.com/blitz2412">Facebook <i class="fab fa-facebook"></i></a>
-    <a href="https://www.tiktok.com/@streamingbyblitz">TikTok <i class="fab fa-tiktok"></i></a>
-    <a href="#">Join the Squad <i class="fas fa-bolt"></i></a>
-  </div>
-
-  <div class="footer" id="footer"></div>
 </div>
 
 <script>
-/* 🕒 ည ၈:၃၀ (20:30) Auto System */
+/* 🕒 ည ၈:၃၀ (20:30) မှာ Auto ပေါ်မယ့်စနစ် */
 function checkLive() {
   const now = new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
 
-  // 8:30 PM to 12:00 AM
   if (hours > 20 || (hours === 20 && minutes >= 30)) {
     document.getElementById('live-status').style.display = 'block';
     document.getElementById('live-btn').style.display = 'flex';
@@ -171,24 +183,21 @@ function checkLive() {
     document.getElementById('live-btn').style.display = 'none';
   }
 }
-setInterval(checkLive, 30000); // စက္ကန့် ၃၀ တစ်ခါစစ်မယ်
+setInterval(checkLive, 30000);
 checkLive();
 
-/* 🌀 Card Tilt */
-window.addEventListener("deviceorientation",e=>{
-  const x=e.gamma/8; const y=e.beta/8;
-  document.getElementById('card').style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
-});
-
-/* ✨ Sparkle & Haptic */
-document.addEventListener("pointerdown",e=>{
+/* ✨ Click Effect & Vibrate */
+document.addEventListener("pointerdown", e => {
   navigator.vibrate?.(15);
-  const s=document.createElement("div");
-  s.className="spark"; s.style.left=e.clientX+"px"; s.style.top=e.clientY+"px";
-  document.body.appendChild(s); setTimeout(()=>s.remove(),600);
+  const s = document.createElement("div");
+  s.className = "spark"; s.style.left = e.clientX + "px"; s.style.top = e.clientY + "px";
+  document.body.appendChild(s); setTimeout(() => s.remove(), 600);
 });
 
-/* 🌈 Theme switch */
+/* 📅 Footer Year */
+document.getElementById('footer').innerHTML = `© ${new Date().getFullYear()} BLITZ GAMING`;
+
+/* 🌈 Avatar Theme Switch */
 const themes=[["#00f2ff","#ff0055"],["#8a5cff","#00ffa6"],["#ff9f00","#ff0055"]];
 let t=0;
 document.getElementById('avatar').onclick=()=>{
@@ -196,9 +205,6 @@ document.getElementById('avatar').onclick=()=>{
   document.documentElement.style.setProperty("--c1",themes[t][0]);
   document.documentElement.style.setProperty("--c2",themes[t][1]);
 };
-
-/* 📅 Footer Year */
-document.getElementById('footer').innerHTML = `© ${new Date().getFullYear()} BLITZ GAMING`;
 </script>
 
 </body>
