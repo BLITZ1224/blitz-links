@@ -3,48 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ | Gaming Hub & Giveaway</title>
+<title>BLITZ | Gaming Hub</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-:root{ --c1:#00f2ff; --c2:#ff0055; --bg:#050508; }
+:root{
+  --c1:#00f2ff;
+  --c2:#ff0055;
+  --bg:#050508;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; }
 
-/* 🌌 Stars Background */
-.stars-container { position: fixed; width: 100%; height: 100%; z-index: 0; }
-.star { position: absolute; background: white; border-radius: 50%; animation: moveStar linear infinite; box-shadow: 0 0 5px #fff; }
+body{
+  min-height:100vh;
+  font-family:'Outfit',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: var(--bg);
+  color:#fff;
+  overflow:hidden;
+  position: relative;
+}
+
+/* 🌌 Enhanced Stars */
+.stars-container {
+  position: fixed; width: 100%; height: 100%; z-index: 0;
+}
+.star {
+  position: absolute; background: white; border-radius: 50%;
+  animation: moveStar linear infinite;
+  box-shadow: 0 0 5px #fff;
+}
 @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
 
-/* 🌈 Card Styling */
-.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; margin: 20px 0; }
+/* 🌈 RGB Border Card */
+.card-container {
+  position: relative; padding: 3px; border-radius: 40px;
+  background: linear-gradient(0deg, var(--c1), var(--c2));
+  background-size: 200% 200%;
+  animation: rotateBorder 4s linear infinite;
+  z-index: 1;
+}
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-.card{ width:min(92vw,380px); background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:40px 25px; text-align:center; }
 
-.avatar{ width:110px; height:110px; margin:0 auto 20px; border-radius:50%; padding:5px; background: linear-gradient(135deg, var(--c1), var(--c2)); animation: float 3s ease-in-out infinite; cursor: pointer; }
+.card{
+  width:min(92vw,380px); background:rgba(10,10,15,0.92);
+  backdrop-filter:blur(30px); border-radius:38px; padding:46px 30px 38px; text-align:center;
+}
+
+.avatar{
+  width:115px; height:115px; margin:0 auto 26px; border-radius:50%; padding:5px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  animation: float 3s ease-in-out infinite; cursor: pointer;
+}
 @keyframes float { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 4px solid #000; }
 
-h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; margin-bottom:5px; color: var(--c1); }
-.tag{ font-size:10px; color:#888; margin-bottom:25px; letter-spacing: 2px; text-transform: uppercase;}
+h1{ font-family:'Syncopate',sans-serif; font-size:22px; letter-spacing:8px; margin-bottom:8px; color: var(--c1); text-shadow: 0 0 15px var(--c1); }
+.tag{ font-size:11px; color:#888; margin-bottom:30px; letter-spacing: 2px; text-transform: uppercase;}
 
-.links{ display:flex; flex-direction:column; gap:12px; }
-.links a{ padding:16px 20px; border-radius:18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; }
+.links{display:flex;flex-direction:column;gap:15px;}
+.links a{
+  padding:18px 22px; border-radius:22px; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff;
+  font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .4s;
+}
+.links a:hover{ transform: scale(1.05); border-color: var(--c1); background: rgba(0, 242, 255, 0.08); }
 
-/* 🚨 Live Button Logic */
-#stream-btn.live-active { background: linear-gradient(90deg, #ff0000, #ff5500) !important; border: none; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.02);} }
+/* 🚨 Dynamic Stream Button */
+#stream-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed var(--c2);
+}
+#stream-btn.live-active {
+  background: linear-gradient(90deg, #ff0000, #ff5500) !important;
+  border: none !important;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.03);} }
 
-/* 🎡 Wheel Styling */
-.wheel-box { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-#wheel { border: 4px solid var(--c1); border-radius: 50%; box-shadow: 0 0 15px var(--c1); transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); }
-.spin-btn { margin-top: 15px; width: 100%; padding: 12px; border-radius: 15px; border: none; background: var(--c1); color: #000; font-weight: 900; cursor: pointer; }
+.footer{ margin-top:30px; font-size:10px; color:#555; letter-spacing: 2px; }
 
-.footer{ margin-top:25px; font-size:10px; color:#444; letter-spacing: 2px; }
+.spark{ position:fixed; width:8px; height:8px; border-radius:50%; background:var(--c1); pointer-events:none; animation:spark .6s ease-out forwards; }
+@keyframes spark{ to{transform:scale(4); opacity:0;} }
 </style>
 </head>
+
 <body>
 
 <div class="stars-container" id="stars-box"></div>
@@ -55,7 +103,7 @@ h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; marg
       <img src="B L I T Z.jpg" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
     </div>
 
-    <h1>BLITZ</h1>
+    <h1 id="name">BLITZ</h1>
     <div class="tag">Gaming • Streaming • Creator</div>
 
     <div class="links">
@@ -63,18 +111,9 @@ h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; marg
         <span id="stream-text">DAILY STREAM (8:30 PM)</span>
         <i class="fas fa-video" id="stream-icon"></i>
       </a>
+      
       <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
-    </div>
-
-    <div class="wheel-box">
-      <p style="font-size: 11px; color: var(--c1); margin-bottom: 10px; letter-spacing: 2px;">GIVEAWAY WHEEL</p>
-      <div style="position: relative; width: 160px; height: 160px; margin: 0 auto;">
-        <canvas id="wheel" width="160" height="160"></canvas>
-        <div style="position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 15px solid var(--c2);"></div>
-      </div>
-      <button class="spin-btn" onclick="spinWheel()">SPIN TO WIN!</button>
-      <p id="winner-text" style="margin-top: 10px; font-size: 14px; color: var(--c2); font-weight: bold;"></p>
     </div>
 
     <div class="footer" id="footer"></div>
@@ -82,74 +121,62 @@ h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; marg
 </div>
 
 <script>
-/* 🌠 Stars Logic */
+/* 🌠 Create Random Moving Stars */
 const starsBox = document.getElementById('stars-box');
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 60; i++) {
   const star = document.createElement('div');
   star.className = 'star';
-  const size = Math.random() * 3 + 'px';
+  const size = Math.random() * 4 + 'px';
   star.style.width = size; star.style.height = size;
   star.style.left = Math.random() * 100 + '%';
-  star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  star.style.animationDuration = (Math.random() * 4 + 2) + 's';
   star.style.animationDelay = Math.random() * 5 + 's';
+  star.style.opacity = Math.random();
   starsBox.appendChild(star);
 }
 
-/* 🕒 Live Button Logic */
-function checkLive() {
+/* 🕒 Live Auto-Update Logic */
+function updateStatus() {
   const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
   const btn = document.getElementById('stream-btn');
   const txt = document.getElementById('stream-text');
-  if (now.getHours() > 20 || (now.getHours() === 20 && now.getMinutes() >= 30)) {
+  const icon = document.getElementById('stream-icon');
+
+  // ည ၈:၃၀ (20:30) မှာ Live ပုံစံပြောင်းမယ်
+  if (hours > 20 || (hours === 20 && minutes >= 30)) {
     btn.classList.add('live-active');
     txt.innerHTML = "LIVE စတင်နေပါပြီ!";
+    icon.className = "fas fa-satellite-dish";
   } else {
     btn.classList.remove('live-active');
     txt.innerHTML = "DAILY STREAM (8:30 PM)";
+    icon.className = "fas fa-video";
   }
 }
-setInterval(checkLive, 30000); checkLive();
+setInterval(updateStatus, 30000);
+updateStatus();
 
-/* 🎡 Wheel Logic */
-const items = ["DIAMOND", "SKIN", "TRY AGAIN", "5000 KS", "GOOD LUCK", "BIG PRIZE"];
-const colors = ["#00f2ff", "#111", "#00f2ff", "#111", "#00f2ff", "#111"];
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
-
-function drawWheel() {
-  const arc = (Math.PI * 2) / items.length;
-  items.forEach((item, i) => {
-    ctx.beginPath(); ctx.fillStyle = colors[i]; ctx.moveTo(80, 80);
-    ctx.arc(80, 80, 80, i * arc, (i + 1) * arc); ctx.fill();
-    ctx.save(); ctx.translate(80 + Math.cos(i * arc + arc/2) * 55, 80 + Math.sin(i * arc + arc/2) * 55);
-    ctx.rotate(i * arc + arc/ arc/2 + Math.PI/2); ctx.fillStyle = "#fff";
-    ctx.font = "bold 8px sans-serif"; ctx.fillText(item, -ctx.measureText(item).width/2, 0); ctx.restore();
-  });
-}
-drawWheel();
-
-let currentRotation = 0;
-function spinWheel() {
-  currentRotation += Math.floor(Math.random() * 360) + 1440;
-  canvas.style.transform = `rotate(${currentRotation}deg)`;
-  document.getElementById("winner-text").innerHTML = "Spinning...";
-  setTimeout(() => {
-    const actualDeg = currentRotation % 360;
-    const index = Math.floor((360 - actualDeg) / (360 / items.length)) % items.length;
-    document.getElementById("winner-text").innerHTML = "RESULT: " + items[index];
-  }, 4000);
-}
-
-/* 🌈 Theme Switch */
+/* 🌈 Theme Switch (Avatar Click) */
 const themes=[["#00f2ff","#ff0055"],["#8a5cff","#00ffa6"],["#ff9f00","#ff0055"]];
 let t=0;
 document.getElementById('avatar').onclick=()=>{
   t=(t+1)%themes.length;
   document.documentElement.style.setProperty("--c1",themes[t][0]);
   document.documentElement.style.setProperty("--c2",themes[t][1]);
+  navigator.vibrate?.(20);
 };
+
+/* ✨ Click Effect */
+document.addEventListener("pointerdown", e => {
+  const s = document.createElement("div");
+  s.className = "spark"; s.style.left = e.clientX + "px"; s.style.top = e.clientY + "px";
+  document.body.appendChild(s); setTimeout(() => s.remove(), 600);
+});
 
 document.getElementById('footer').innerHTML = `© ${new Date().getFullYear()} BLITZ GAMING`;
 </script>
+
 </body>
 </html>
