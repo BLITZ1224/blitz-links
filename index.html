@@ -27,7 +27,7 @@ body{
     radial-gradient(50vw 50vw at 80% 70%, color-mix(in srgb,var(--c2) 25%,transparent), transparent 60%),
     var(--bg);
   color:#fff;
-  overflow:hidden;
+  overflow-x:hidden;
 }
 
 /* Card */
@@ -59,6 +59,31 @@ body{
   border-radius:50%;
   object-fit:cover;
   background:#000;
+}
+
+/* Live Status Badge */
+#live-status {
+  display: none;
+  margin-bottom: 20px;
+}
+.live-badge {
+  background: var(--c2);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px var(--c2);
+  animation: pulse 1.5s infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* Text */
@@ -96,6 +121,13 @@ h1{
 }
 .links i{color:var(--c1);font-size:18px;}
 
+/* Giveaway Button Special */
+.giveaway-btn {
+  background: linear-gradient(90deg, var(--c2), #ff8000) !important;
+  border: none !important;
+  box-shadow: 0 10px 20px rgba(255, 0, 85, 0.3);
+}
+
 .footer{
   margin-top:28px;
   font-size:11px;
@@ -121,36 +153,48 @@ h1{
 
 <div class="card" id="card">
   <div class="avatar" id="avatar">
-    <img src="blitz.png" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
+    <img src="B L I T Z.jpg" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=BLITZ'">
+  </div>
+
+  <div id="live-status">
+    <span class="live-badge"><i class="fas fa-circle"></i> LIVE NOW</span>
   </div>
 
   <h1>BLITZ</h1>
   <div class="tag">Gaming • Streaming • Creator</div>
 
   <div class="links">
-    <a href="https://www.facebook.com/BlitzGamingOfficial">Facebook <i class="fab fa-facebook"></i></a>
+    <a href="https://www.facebook.com/blitz2412" class="giveaway-btn">KOF GIVEAWAY ဒီည ၉ နာရီ! <i class="fas fa-gift"></i></a>
+    
+    <a href="https://www.facebook.com/blitz2412">Facebook <i class="fab fa-facebook"></i></a>
     <a href="https://www.tiktok.com/@streamingbyblitz">TikTok <i class="fab fa-tiktok"></i></a>
     <a href="https://www.youtube.com/@streamingbyblitz">YouTube <i class="fab fa-youtube"></i></a>
-    <a href="#">Join the Squad <i class="fas fa-bolt"></i></a>
   </div>
 
   <div class="footer">© BLITZ</div>
 </div>
 
 <script>
-/* 🌀 Tilt */
+/* 🌀 Live Status Logic - Set this to TRUE when you start streaming */
+const isLiveNow = true; 
+
+if(isLiveNow) {
+  document.getElementById('live-status').style.display = 'block';
+}
+
+/* 🌀 Tilt effect */
 window.addEventListener("deviceorientation",e=>{
   const x=e.gamma/8;
   const y=e.beta/8;
   card.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
 });
 
-/* 🔊 Haptic */
+/* 🔊 Haptic vibration */
 document.querySelectorAll("a,.avatar").forEach(el=>{
   el.addEventListener("click",()=>navigator.vibrate?.(20));
 });
 
-/* 🌈 Theme switch */
+/* 🌈 Theme switch on avatar click */
 const themes=[
   ["#00f2ff","#ff0055"],
   ["#8a5cff","#00ffa6"],
@@ -163,7 +207,7 @@ avatar.onclick=()=>{
   document.documentElement.style.setProperty("--c2",themes[t][1]);
 };
 
-/* ✨ Sparkle */
+/* ✨ Sparkle effect on click */
 document.addEventListener("pointerdown",e=>{
   const s=document.createElement("div");
   s.className="spark";
