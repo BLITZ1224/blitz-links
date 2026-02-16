@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ | Ultimate Bio</title>
+<title>BLITZ | Pro Bio</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -18,13 +18,13 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
+.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .hero-card { position: relative; background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255, 0, 85, 0.1) 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1; }
 .hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2.5px solid #ffd700; object-fit: cover; }
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; }
-.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; }
-.links a:hover { border-color: var(--c1); transform: translateX(5px); background: rgba(255,255,255,0.1); }
-/* 🎵 Music Controls */
-.music-box { margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; }
+.links { display:flex; flex-direction:column; gap:10px; }
+.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; font-size: 13px; }
+.links a:hover { background: rgba(255,255,255,0.1); border-color: var(--c1); transform: translateX(5px); }
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 </style>
 </head>
@@ -33,13 +33,11 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 <div class="card-container" id="main-card">
   <div class="card">
     <div class="avatar" onclick="changeTheme()"><img src="B L I T Z.jpg" alt="BLITZ"></div>
-    <h1 style="font-family:'Syncopate'; font-size:18px; color:var(--c1);">BLITZ</h1>
+    <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
     
-    <div class="music-box" onclick="toggleMusic()">
-        <i class="fas fa-music" id="music-icon"></i> <span id="music-status" style="font-size: 10px;">PLAY MUSIC</span>
-    </div>
+    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">Loading...</b></div>
 
-    <div class="hero-card" style="margin-top: 15px;">
+    <div class="hero-card">
         <img src="chou-icon.jpg" class="hero-icon" id="hero-img-display">
         <div style="text-align: left;">
             <h4 id="hero-name-display" style="color:#ffd700;">SIGNATURE: CHOU</h4>
@@ -49,58 +47,45 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     </div>
 
     <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
-    
+
     <div class="links">
-      <a href="#"><span id="stream-text">STREAM COUNTDOWN</span><i class="fas fa-video"></i></a>
+      <a href="https://www.facebook.com/blitz2412"><span id="stream-text">STREAM COUNTDOWN</span><i class="fas fa-video"></i></a>
       <a href="https://m.me/blitz2412" style="background: linear-gradient(90deg, #0084ff, #00c6ff);">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
+      <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
   </div>
 </div>
 
-<audio id="myAudio" loop></audio>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🌠 Stars & Copy Logic */
+/* 🌠 Stars */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
-  const star = document.createElement('div'); star.className = 'star';
+  const star = document.createElement('div');
+  star.className = 'star';
   star.style.width = star.style.height = Math.random() * 2 + 'px';
-  star.style.left = Math.random() * 100 + '%'; star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.animationDuration = (Math.random() * 3 + 2) + 's';
   starsBox.appendChild(star);
 }
+
+/* 📋 Copy ID */
 function copyID(id) {
-    navigator.clipboard.writeText(id); document.getElementById('id-text').innerText = "COPIED!";
+    navigator.clipboard.writeText(id);
+    document.getElementById('id-text').innerText = "COPIED!";
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-/* 🎵 Music Logic */
-const audio = document.getElementById('myAudio');
-function toggleMusic() {
-    if (audio.paused) { audio.play(); document.getElementById('music-status').innerText = "PLAYING..."; }
-    else { audio.pause(); document.getElementById('music-status').innerText = "PAUSED"; }
+/* 🎨 Theme Change */
+let colorIndex = 0;
+const colors = [{c1:'#00f2ff',c2:'#ff0055'}, {c1:'#ffdd00',c2:'#ff5500'}, {c1:'#00ff88',c2:'#0066ff'}];
+function changeTheme() {
+    colorIndex = (colorIndex + 1) % colors.length;
+    document.documentElement.style.setProperty('--c1', colors[colorIndex].c1);
+    document.documentElement.style.setProperty('--c2', colors[colorIndex].c2);
 }
-
-/* 🔥 Supabase God Mode */
-const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; //
-const SB_KEY = "sb_publishable_-3nMJwzu8-nGFG9ahzLGiw_dnW4oPey"; //
-const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
-
-async function loadBlitzStats() {
-    const { data } = await supabaseClient.from('stats').select('*');
-    if (data) {
-        data.forEach(item => {
-            if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
-            if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
-            if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
-            if (item.name === 'hero_name') document.getElementById('hero-name-display').innerText = "SIGNATURE: " + item.value;
-            if (item.name === 'hero_img') document.getElementById('hero-img-display').src = item.value;
-            if (item.name === 'bg_music') audio.src = item.value;
-        });
-    }
-}
-loadBlitzStats();
-supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, loadBlitzStats).subscribe();
 
 /* ⏰ Countdown */
 function updateCountdown() {
@@ -111,6 +96,27 @@ function updateCountdown() {
     document.getElementById('stream-text').innerText = `LIVE ထိ ${h}h ${m}m လို`;
 }
 setInterval(updateCountdown, 60000); updateCountdown();
+
+/* 🔥 Supabase Admin Logic */
+const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co";
+const SB_KEY = "sb_publishable_-3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
+const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+async function loadStats() {
+    const { data } = await supabaseClient.from('stats').select('*');
+    if (data) {
+        data.forEach(item => {
+            if (item.name === 'top_fan') document.getElementById('fan-name').innerText = item.value;
+            if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
+            if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
+            if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
+            if (item.name === 'hero_name') document.getElementById('hero-name-display').innerText = "SIGNATURE: " + item.value;
+            if (item.name === 'hero_img') document.getElementById('hero-img-display').src = item.value;
+        });
+    }
+}
+loadStats();
+supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, loadStats).subscribe();
 </script>
 </body>
 </html>
