@@ -80,7 +80,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     </div>
 
     <div class="hero-card">
-        <img src="chou-icon.jpg" class="hero-icon" id="hero-img-display">
+        <img src="chou-icon.jpg" class="hero-icon">
         <div style="text-align: left;">
             <span class="chou-title">SIGNATURE: CHOU</span>
             <p style="font-size: 11px;">Matches: <span class="stat-highlight" id="matches-display">...</span> | WR: <span class="stat-highlight" id="wr-display">...</span></p>
@@ -108,7 +108,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🎨 Theme Switcher (မူရင်းအတိုင်း) */
+/* 🎨 Theme Switcher */
 let colorIndex = 0;
 const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
 function changeTheme(){
@@ -117,12 +117,11 @@ function changeTheme(){
     document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
 }
 
-/* ⏰ Smart Countdown (မူရင်းအတိုင်း) */
+/* ⏰ Smart Countdown */
 function updateCountdown() {
     const now = new Date();
     const start = new Date(); start.setHours(20, 30, 0, 0);
     const end = new Date(); end.setHours(23, 0, 0, 0);
-
     const btn = document.getElementById('countdown-btn');
     const txt = document.getElementById('stream-text');
 
@@ -143,28 +142,33 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000); updateCountdown();
 
-/* 🔥 Supabase Connection (ဒါက အသစ်ပြင်ပေးထားတာပါ) */
+/* 🔥 Supabase Connection */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
 const SB_KEY = "sb_publishable_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmaHVtd2htZnFkZXhndnZ0cnBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3MDA4NTcsImV4cCI6MjA1NTI3Njg1N30.C3_u3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
 async function loadStats() {
-    const { data, error } = await supabaseClient
-        .from('site_configs')
-        .select('*')
-        .eq('id', 1)
-        .single();
+    try {
+        const { data, error } = await supabaseClient
+            .from('site_configs')
+            .select('*')
+            .eq('id', 1)
+            .single();
 
-    if (data) {
-        document.getElementById('fan-name').innerText = data.top_supporter;
-        document.getElementById('matches-display').innerText = data.hero_matches;
-        document.getElementById('wr-display').innerText = data.hero_wr + "%";
-        document.getElementById('mmr-display').innerText = data.hero_mmr;
+        if (data) {
+            document.getElementById('fan-name').innerText = data.top_supporter || "None";
+            document.getElementById('matches-display').innerText = data.hero_matches || "0";
+            document.getElementById('wr-display').innerText = (data.hero_wr || "0") + "%";
+            document.getElementById('mmr-display').innerText = data.hero_mmr || "0";
+        }
+        if (error) console.error("Error:", error.message);
+    } catch (err) {
+        console.error("Fetch failed:", err);
     }
 }
 loadStats();
 
-// Realtime Update - Database ပြောင်းတာနဲ့ Website မှာ ချက်ချင်းလိုက်ပြောင်းမယ်
+// Bot ကနေ ပြင်လိုက်တာနဲ့ Website မှာ ချက်ချင်းလိုက်ပြောင်းအောင် Realtime လုပ်ခြင်း
 supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_configs' }, loadStats).subscribe();
 
 function copyID(id) {
@@ -173,7 +177,7 @@ function copyID(id) {
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-/* 🌌 Stars (မူရင်းအတိုင်း) */
+/* 🌌 Stars */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div'); star.className = 'star';
