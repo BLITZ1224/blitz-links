@@ -3,77 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ | Pro Bio</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+<title>BLITZ | Chou Signature</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
+/* မီးရောင် (Color Themes) ပြင်ဆင်ချက် */
 :root{ --c1:#00f2ff; --c2:#ff0055; --bg:#050508; }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; }
+body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; transition: 0.5s; }
 
 /* 🌌 Stars Background */
 .stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .star { position: absolute; background: white; border-radius: 50%; animation: moveStar linear infinite; box-shadow: 0 0 5px #fff; }
 @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
 
-.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); }
+.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-/* 📸 Profile Image */
-.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
+/* 📸 Profile & Theme Switcher */
+.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; transition: 0.5s; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 
-/* 🥋 Hero Card with Background */
+/* 🏆 Top Supporter */
+.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+/* 🥋 Chou Signature Card */
 .hero-card { 
     position: relative; 
-    background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255, 0, 85, 0.1) 100%); 
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255, 255, 255, 0.01) 100%); 
     border: 1px solid rgba(255, 255, 255, 0.1); 
     border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
 }
 
-/* ဒီအပိုင်းက နောက်ခံပုံအတွက်ပါ */
 .hero-card::before { 
     content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
     background: url('chou-box-bg.jpg') top center/cover no-repeat; 
-    opacity: 0.2; z-index: -1; 
+    opacity: 0.25; z-index: -1; 
 }
 
-.hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2.5px solid #ffd700; object-fit: cover; }
+.hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--c1); object-fit: cover; }
 
-/* 📋 Buttons */
-.id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; }
-.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; }
+/* Font လှလှလေးနဲ့ Chou နာမည် */
+.chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; letter-spacing: 1px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 10px var(--c1); }
+
+.stat-highlight { color: var(--c1); font-weight: 700; }
+
+.id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
+
+.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; border: 1px solid transparent; }
 .links a:hover { border-color: var(--c1); transform: translateX(5px); background: rgba(255,255,255,0.1); }
 
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 </style>
 </head>
 <body>
+
 <div class="stars-container" id="stars-box"></div>
+
 <div class="card-container">
   <div class="card">
-    <div class="avatar" onclick="changeTheme()"><img src="B L I T Z.jpg" alt="BLITZ"></div>
-    <h1 style="font-family:'Syncopate'; font-size:18px; color:var(--c1);">BLITZ</h1>
+    <div class="avatar" onclick="changeTheme()">
+      <img src="B L I T Z.jpg" alt="BLITZ">
+    </div>
+
+    <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
     
-    <div style="background: rgba(255,215,0,0.1); border-radius: 15px; padding: 8px; margin: 12px 0; font-size: 11px; color:#ffd700;">
-        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">wai yan</b>
+    <div class="top-fan">
+        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">Loading...</b>
     </div>
 
     <div class="hero-card">
         <img src="chou-icon.jpg" class="hero-icon" id="hero-img-display">
         <div style="text-align: left;">
-            <h4 id="hero-name-display" style="color:#ffd700;">SIGNATURE: CHOU</h4>
-            <p style="font-size: 11px;">Matches: <span id="matches-display" style="color:var(--c1);">1123</span> | WR: <span id="wr-display" style="color:var(--c1);">61%</span></p>
-            <p style="font-size: 11px;">MMR: <span id="mmr-display" style="color:var(--c1);">4320</span></p>
+            <span class="chou-title">SIGNATURE: CHOU</span>
+            <p style="font-size: 11px;">Matches: <span class="stat-highlight" id="matches-display">...</span> | WR: <span class="stat-highlight" id="wr-display">...</span></p>
+            <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">...</span></p>
         </div>
     </div>
 
-    <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
+    <div class="id-box" onclick="copyID('1036720164 (13159)')">
+        <span id="id-text">ID: 1036720164 (13159)</span>
+        <i class="far fa-copy"></i>
+    </div>
 
     <div class="links">
-      <a href="https://www.facebook.com/blitz2412"><span id="stream-text">LIVE ထိ ...</span><i class="fas fa-video"></i></a>
+      <a href="https://www.facebook.com/blitz2412" id="countdown-btn">
+        <span id="stream-text">LIVE ထိ ...</span>
+        <i class="fas fa-video"></i>
+      </a>
       <a href="https://m.me/blitz2412" style="background: linear-gradient(90deg, #0084ff, #00c6ff);">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
       <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
@@ -84,7 +103,23 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🌠 Stars Logic */
+/* 🎨 Theme Changer (မီးရောင်ချိန်းတာ) */
+let colorIndex = 0;
+const themes = [
+    {c1:'#00f2ff', c2:'#ff0055'}, // Cyan-Pink
+    {c1:'#ffdd00', c2:'#ff5500'}, // Gold-Orange
+    {c1:'#00ff88', c2:'#0066ff'}, // Green-Blue
+    {c1:'#bf00ff', c2:'#ff0088'}  // Purple-Pink
+];
+
+function changeTheme() {
+    colorIndex = (colorIndex + 1) % themes.length;
+    const theme = themes[colorIndex];
+    document.documentElement.style.setProperty('--c1', theme.c1);
+    document.documentElement.style.setProperty('--c2', theme.c2);
+}
+
+/* 🌌 Stars Background */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div'); star.className = 'star';
@@ -93,14 +128,15 @@ for (let i = 0; i < 40; i++) {
   starsBox.appendChild(star);
 }
 
-/* 📋 Copy Function */
+/* 📋 Copy ID */
 function copyID(id) {
     navigator.clipboard.writeText(id);
-    document.getElementById('id-text').innerText = "COPIED!";
-    setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
+    const idText = document.getElementById('id-text');
+    idText.innerText = "COPIED!";
+    setTimeout(() => { idText.innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-/* 🔥 Supabase Connection */
+/* 🔥 Supabase Admin Logic */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
 const SB_KEY = "sb_publishable_-3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
@@ -113,8 +149,6 @@ async function loadStats() {
             if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
             if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
             if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
-            if (item.name === 'hero_name') document.getElementById('hero-name-display').innerText = "SIGNATURE: " + item.value;
-            if (item.name === 'hero_img') document.getElementById('hero-img-display').src = item.value;
         });
     }
 }
@@ -127,7 +161,7 @@ function updateCountdown() {
     if (now > target) target.setDate(target.getDate() + 1);
     const diff = target - now;
     const h = Math.floor(diff / 3600000); const m = Math.floor((diff % 3600000) / 60000);
-    document.getElementById('stream-text').innerText = `LIVE စရန် ${h}h ${m}m လို`;
+    document.getElementById('stream-text').innerText = `LIVE ထိ ${h}h ${m}m လို`;
 }
 setInterval(updateCountdown, 60000); updateCountdown();
 </script>
