@@ -20,40 +20,36 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 .card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); }
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-.card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; }
+
+/* 🥋 Card with Background Image */
+.card{ background:rgba(10,10,15,0.9); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; overflow: hidden; }
+.card-bg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('chou-bg.jpg') center/cover no-repeat; opacity: 0.15; z-index: -1; filter: grayscale(50%); }
 
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 
-/* 🥋 Chou Signature Section */
-.hero-card { background: linear-gradient(135deg, rgba(0,242,255,0.1), rgba(255,0,85,0.1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden; }
-.hero-card::after { content: 'CHOU'; position: absolute; right: -10px; bottom: -5px; font-size: 40px; font-weight: 900; color: rgba(255,255,255,0.03); font-style: italic; }
-.hero-icon { width: 55px; height: 55px; border-radius: 12px; border: 2px solid #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.3); object-fit: cover; }
-.hero-info { text-align: left; z-index: 1; }
+/* Chou Signature Section */
+.hero-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+.hero-icon { width: 55px; height: 55px; border-radius: 12px; border: 2px solid #ffd700; object-fit: cover; }
+.hero-info { text-align: left; }
 .hero-info h4 { font-size: 14px; color: #ffd700; letter-spacing: 1px; margin-bottom: 3px; }
-.hero-info p { font-size: 10px; color: #bbb; line-height: 1.4; }
+.hero-info p { font-size: 10px; color: #bbb; }
 .stat-highlight { color: #fff; font-weight: 700; }
 
 /* 🏆 Top Supporter */
-.top-fan { background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 8px; margin-bottom: 15px; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #ffd700; }
+.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 8px; margin-bottom: 15px; font-size: 11px; color: #ffd700; }
 
-/* 📋 Copy ID Box */
-.id-box { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
-.id-box:active { transform: scale(0.95); }
-.id-box span { font-weight: 700; font-size: 13px; color: var(--c1); letter-spacing: 0.5px; }
+.id-box { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; }
+.id-box span { font-weight: 700; font-size: 13px; color: var(--c1); }
 
 .links { display:flex; flex-direction:column; gap:10px; }
 .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; font-size: 13px; }
-.links a:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); border-color: var(--c1); }
+.links a:hover { background: rgba(255,255,255,0.1); border-color: var(--c1); }
 
-/* Buttons Custom Colors */
 .msg-btn { background: linear-gradient(90deg, #0084ff, #00c6ff) !important; border: none !important; }
-.yt-btn { border-color: #ff0000 !important; }
-.yt-btn i { color: #ff0000; }
 
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 @keyframes slideUp { from {transform:translate(-50%,50px); opacity:0;} to {transform:translate(-50%,0); opacity:1;} }
-
 .footer{ margin-top:25px; font-size:9px; color:#444; letter-spacing: 2px; }
 </style>
 </head>
@@ -63,51 +59,49 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <div class="card-container" id="main-card">
   <div class="card">
-    <div class="avatar" onclick="changeTheme()">
+    <div class="card-bg-overlay"></div> <div class="avatar" onclick="changeTheme()">
       <img src="B L I T Z.jpg" alt="BLITZ">
     </div>
 
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
 
     <div class="top-fan">
-        <i class="fas fa-crown"></i>
-        <span>TOP SUPPORTER: <b id="fan-name">Waiting for you...</b></span>
+        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">Waiting...</b>
     </div>
 
     <div class="hero-card">
-        <img src="chou-skin.jpg" class="hero-icon" alt="Chou">
+        <img src="chou-icon.jpg" class="hero-icon" alt="Chou">
         <div class="hero-info">
             <h4>SIGNATURE: CHOU</h4>
             <p>Matches: <span class="stat-highlight">3,500+</span> | WR: <span class="stat-highlight">68%</span></p>
-            <p>Current MMR: <span class="stat-highlight" style="color:#00f2ff">8,671</span></p>
+            <p>MMR: <span class="stat-highlight" style="color:#00f2ff">8,671</span></p>
         </div>
     </div>
 
     <div class="id-box" onclick="copyID('1036720164 (13159)')">
         <span id="id-text">ID: 1036720164 (13159)</span>
-        <i class="far fa-copy" style="color:var(--c1)"></i>
+        <i class="far fa-copy"></i>
     </div>
 
     <div class="links">
-      <a href="https://www.facebook.com/blitz2412" id="stream-btn"><span id="stream-text">STREAM COUNTDOWN</span><i class="fas fa-video"></i></a>
-      <a href="https://m.me/blitz2412" class="msg-btn">DIRECT MESSENGER <i class="fab fa-facebook-messenger"></i></a>
-      <a href="https://www.facebook.com/blitz2412">FACEBOOK PAGE <i class="fab fa-facebook"></i></a>
-      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK CHANNEL <i class="fab fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@streamingbyblitz" class="yt-btn">YOUTUBE CHANNEL <i class="fab fa-youtube"></i></a>
+      <a href="https://www.facebook.com/blitz2412" id="stream-btn"><span id="stream-text">COUNTDOWN</span><i class="fas fa-video"></i></a>
+      <a href="https://m.me/blitz2412" class="msg-btn">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
+      <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
 
-    <div class="footer">© 2026 BLITZ GAMING | DESIGNED FOR PROS</div>
+    <div class="footer">© 2026 BLITZ GAMING</div>
   </div>
 </div>
 
 <script>
-/* 🌠 Stars Background */
+/* 🌠 Stars Logic */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div');
   star.className = 'star';
-  const size = Math.random() * 2 + 'px';
-  star.style.width = size; star.style.height = size;
+  star.style.width = star.style.height = Math.random() * 2 + 'px';
   star.style.left = Math.random() * 100 + '%';
   star.style.animationDuration = (Math.random() * 3 + 2) + 's';
   starsBox.appendChild(star);
@@ -117,15 +111,11 @@ for (let i = 0; i < 40; i++) {
 function copyID(id) {
     navigator.clipboard.writeText(id);
     const idText = document.getElementById('id-text');
-    idText.innerText = "COPIED TO CLIPBOARD!";
-    idText.style.color = "#00ff88";
-    setTimeout(() => { 
-        idText.innerText = "ID: 1036720164 (13159)"; 
-        idText.style.color = "var(--c1)";
-    }, 2000);
+    idText.innerText = "COPIED!";
+    setTimeout(() => { idText.innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-/* 🎨 Theme Change Logic (Click Profile) */
+/* 🎨 Theme Change */
 let colorIndex = 0;
 const colors = [{c1:'#00f2ff',c2:'#ff0055'}, {c1:'#ffdd00',c2:'#ff5500'}, {c1:'#00ff88',c2:'#0066ff'}];
 function changeTheme() {
@@ -136,7 +126,7 @@ function changeTheme() {
     document.getElementById('main-card').style.background = `linear-gradient(0deg, ${theme.c1}, ${theme.c2})`;
 }
 
-/* ⏰ Stream Countdown Logic */
+/* ⏰ Countdown */
 function updateCountdown() {
     const now = new Date();
     const streamTime = new Date();
@@ -145,19 +135,18 @@ function updateCountdown() {
     const diff = streamTime - now;
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    document.getElementById('stream-text').innerHTML = `LIVE စရန် ${hours} နာရီ နှင့် ${mins} မိနစ် လိုပါသည်`;
+    document.getElementById('stream-text').innerHTML = `LIVE ထိ ${hours}h ${mins}m လို`;
 }
 setInterval(updateCountdown, 60000); updateCountdown();
 
-/* ✨ Polite Greeting Logic */
-function showGreeting() {
+/* ✨ Greeting */
+setTimeout(() => {
     const popup = document.createElement('div');
-    popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2); padding: 12px 20px; border-radius: 20px; color: white; font-size: 11px; z-index: 9999; animation: slideUp 0.6s ease-out; text-align: center; width: min(85vw, 320px);";
-    popup.innerHTML = "🥋 BLITZ ရဲ့ Chou Gameplay တွေကို လာရောက်အားပေးတဲ့အတွက် ကျေးဇူးတင်ပါတယ်ဗျ။";
+    popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2); padding: 12px 20px; border-radius: 20px; color: white; font-size: 11px; z-index: 9999; animation: slideUp 0.6s ease-out;";
+    popup.innerHTML = "🥋 BLITZ ရဲ့ Chou Gameplay များမှ ကြိုဆိုပါတယ်။";
     document.body.appendChild(popup);
-    setTimeout(() => { popup.style.opacity='0'; popup.style.transition='1s'; setTimeout(()=>popup.remove(),1000); }, 6000);
-}
-setTimeout(showGreeting, 2500);
+    setTimeout(() => { popup.style.opacity='0'; popup.style.transition='1s'; setTimeout(()=>popup.remove(),1000); }, 5000);
+}, 2500);
 </script>
 
 </body>
