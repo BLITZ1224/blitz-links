@@ -21,13 +21,13 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-/* 📸 Profile & Theme Switcher */
+/* 📸 Profile */
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; transition: 0.5s; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 
 .top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-/* 🥋 Hero Card with Background Text */
+/* 🥋 Hero Card with Background */
 .hero-card { 
     position: relative; 
     background: rgba(255, 255, 255, 0.02); 
@@ -35,14 +35,21 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
 }
 
+/* 🖼️ Chou Box Background Fix */
+.hero-card::before { 
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: url('chou-box-bg.jpg') top center/cover no-repeat; 
+    opacity: 0.2; z-index: -2; 
+}
+
 .hero-card::after {
     content: "CHOU";
-    position: absolute; right: -10px; bottom: -10px;
-    font-family: 'Syncopate', sans-serif; font-size: 50px; font-weight: 900;
+    position: absolute; right: -5px; bottom: -10px;
+    font-family: 'Syncopate', sans-serif; font-size: 55px; font-weight: 900;
     color: var(--c1); opacity: 0.1; z-index: -1; letter-spacing: -2px;
 }
 
-.hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--c1); object-fit: cover; z-index: 2; }
+.hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2px solid var(--c1); object-fit: cover; z-index: 2; box-shadow: 0 0 15px rgba(0,242,255,0.3); }
 .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 10px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
 
@@ -102,9 +109,9 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🔥 Supabase Setup */
+/* 🔥 Supabase Connection */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
-const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; // Updated Key
+const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
 async function loadStats() {
@@ -119,10 +126,10 @@ async function loadStats() {
                 if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
             });
         }
-    } catch (e) { console.error("Error loading stats:", e.message); }
+    } catch (e) { console.error("Database Error:", e.message); }
 }
 
-/* 🔄 Listen for Real-time Updates */
+/* 🔄 Real-time Update Logic */
 supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, loadStats).subscribe();
 
 /* 🎨 Theme Switcher */
@@ -134,7 +141,7 @@ function changeTheme(){
     document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
 }
 
-/* ⏰ Countdown Logic */
+/* ⏰ Live Countdown Logic */
 function updateCountdown() {
     const now = new Date();
     const start = new Date(); start.setHours(20, 30, 0, 0); 
