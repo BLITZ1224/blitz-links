@@ -13,20 +13,20 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; }
 
-/* 🌌 Stars Background */
-.stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; }
+.stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .star { position: absolute; background: white; border-radius: 50%; animation: moveStar linear infinite; box-shadow: 0 0 5px #fff; }
 @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
 
-.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); }
+.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); transition: 0.5s; }
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
+/* 📸 Avatar - အရောင်ပြောင်းဖို့ ဒါကိုနှိပ်ပါ */
+.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; position: relative; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 
-/* 🥋 Chou Signature Box With Database Support */
+/* 🥋 Chou Signature Card */
 .hero-card { 
     position: relative;
     background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255, 0, 85, 0.1) 100%); 
@@ -38,6 +38,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     align-items: center; 
     gap: 12px; 
     overflow: hidden;
+    z-index: 1;
 }
 
 .hero-card::before {
@@ -46,7 +47,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     top: 0; left: 0; width: 100%; height: 100%;
     background: url('chou-box-bg.jpg') top center/cover no-repeat;
     opacity: 0.15;
-    z-index: 0;
+    z-index: -1;
 }
 
 .hero-card::after {
@@ -58,20 +59,22 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     font-weight: 900;
     font-style: italic;
     color: rgba(255, 0, 85, 0.2);
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
 }
 
 .hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2.5px solid #ffd700; object-fit: cover; z-index: 1; position: relative; }
 .hero-info { text-align: left; z-index: 1; position: relative; }
 .hero-info h4 { font-size: 14px; color: #ffd700; letter-spacing: 1px; margin-bottom: 3px; }
-.hero-info p { font-size: 11px; color: #fff; font-weight: 500; text-shadow: 1px 1px 2px #000; }
+.hero-info p { font-size: 11px; color: #fff; font-weight: 500; }
 .stat-highlight { color: #00f2ff; font-weight: 700; }
 
-.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 8px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-.id-box { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; }
-.id-box span { font-weight: 700; font-size: 13px; color: var(--c1); }
+/* 📋 Copy ID Box */
+.id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
+.id-box:active { transform: scale(0.95); }
+.id-box span { font-weight: 700; font-size: 13px; color: var(--c1); pointer-events: none; }
 
 .links { display:flex; flex-direction:column; gap:10px; }
 .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; font-size: 13px; }
@@ -80,7 +83,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .msg-btn { background: linear-gradient(90deg, #0084ff, #00c6ff) !important; border: none !important; }
 
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
-.footer{ margin-top:25px; font-size:9px; color:#444; letter-spacing: 2px; }
+.footer{ margin-top:25px; font-size:9px; color:#444; letter-spacing: 2px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -121,14 +124,14 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
       <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
 
-    <div class="footer">© 2026 BLITZ GAMING</div>
+    <div class="footer" onclick="loadBlitzStats()">© 2026 BLITZ GAMING</div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-/* 🌠 Stars Background Script */
+/* 🌠 Stars */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div');
@@ -139,30 +142,43 @@ for (let i = 0; i < 40; i++) {
   starsBox.appendChild(star);
 }
 
-/* 📋 Copy ID Logic */
+/* 📋 Copy ID Logic (FIXED) */
 function copyID(id) {
-    navigator.clipboard.writeText(id);
+    const el = document.createElement('textarea');
+    el.value = id;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    
     const idText = document.getElementById('id-text');
     idText.innerText = "COPIED!";
-    setTimeout(() => { idText.innerText = "ID: 1036720164 (13159)"; }, 2000);
+    idText.style.color = "#00ff88";
+    setTimeout(() => { 
+        idText.innerText = "ID: 1036720164 (13159)"; 
+        idText.style.color = "var(--c1)";
+    }, 2000);
 }
 
-/* 🎨 Theme Change */
+/* 🎨 Theme Switcher (Avatar နှိပ်ရင် အရောင်ပြောင်းမယ်) */
 let colorIndex = 0;
-const colors = [{c1:'#00f2ff',c2:'#ff0055'}, {c1:'#ffdd00',c2:'#ff5500'}, {c1:'#00ff88',c2:'#0066ff'}];
+const colors = [
+    {c1:'#00f2ff',c2:'#ff0055'}, 
+    {c1:'#ffdd00',c2:'#ff5500'}, 
+    {c1:'#00ff88',c2:'#0066ff'}
+];
 function changeTheme() {
     colorIndex = (colorIndex + 1) % colors.length;
     const theme = colors[colorIndex];
     document.documentElement.style.setProperty('--c1', theme.c1);
     document.documentElement.style.setProperty('--c2', theme.c2);
-    document.getElementById('main-card').style.background = `linear-gradient(0deg, ${theme.c1}, ${theme.c2})`;
 }
 
-/* ⏰ Countdown Timer */
+/* ⏰ Countdown */
 function updateCountdown() {
     const now = new Date();
     const streamTime = new Date();
-    streamTime.setHours(20, 30, 0); 
+    streamTime.setHours(20, 30, 0);
     if (now > streamTime) streamTime.setDate(streamTime.getDate() + 1);
     const diff = streamTime - now;
     const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -171,33 +187,33 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 60000); updateCountdown();
 
-/* 🔥 SUPABASE REAL-TIME DATABASE LOGIC */
+/* 🔥 Supabase Database (Admin Panel) Logic */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; //
 const SB_KEY = "sb_publishable_-3nMJwzu8-nGFG9ahzLGiw_dnW4oPey"; //
-const supabase = supabase.createClient(SB_URL, SB_KEY);
+const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-async function syncBlitzStats() {
-    const { data, error } = await supabase.from('stats').select('*');
-    if (data) {
-        // Update Top Fan
-        const fan = data.find(d => d.name === 'top_fan');
-        if (fan) document.getElementById('fan-name').innerText = fan.value;
-        
-        // Update MMR
-        const mmr = data.find(d => d.name === 'mmr');
-        if (mmr) document.getElementById('mmr-display').innerText = mmr.value;
-    }
+async function loadBlitzStats() {
+    try {
+        const { data, error } = await supabaseClient.from('stats').select('*');
+        if (data) {
+            const fan = data.find(d => d.name === 'top_fan');
+            if (fan) document.getElementById('fan-name').innerText = fan.value;
+            
+            const mmr = data.find(d => d.name === 'mmr');
+            if (mmr) document.getElementById('mmr-display').innerText = mmr.value;
+        }
+    } catch (e) { console.log("DB Load Error"); }
 }
 
-// Listen for updates in Real-time
-supabase
-  .channel('stats-changes')
+// Real-time Update - Dashboard မှာ ပြင်တာနဲ့ ချက်ချင်းလိုက်ပြောင်းမယ်
+supabaseClient
+  .channel('any')
   .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, () => {
-    syncBlitzStats();
+    loadBlitzStats();
   })
   .subscribe();
 
-syncBlitzStats(); // Initial load
+loadBlitzStats();
 </script>
 
 </body>
