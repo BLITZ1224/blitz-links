@@ -46,7 +46,10 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; font-size: 13px; }
 .links a:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); border-color: var(--c1); }
 
+/* Buttons Custom Colors */
 .msg-btn { background: linear-gradient(90deg, #0084ff, #00c6ff) !important; border: none !important; }
+.yt-btn { border-color: #ff0000 !important; }
+.yt-btn i { color: #ff0000; }
 
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 @keyframes slideUp { from {transform:translate(-50%,50px); opacity:0;} to {transform:translate(-50%,0); opacity:1;} }
@@ -90,6 +93,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
       <a href="https://m.me/blitz2412" class="msg-btn">DIRECT MESSENGER <i class="fab fa-facebook-messenger"></i></a>
       <a href="https://www.facebook.com/blitz2412">FACEBOOK PAGE <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK CHANNEL <i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@streamingbyblitz" class="yt-btn">YOUTUBE CHANNEL <i class="fab fa-youtube"></i></a>
     </div>
 
     <div class="footer">© 2026 BLITZ GAMING | DESIGNED FOR PROS</div>
@@ -97,7 +101,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 </div>
 
 <script>
-/* 🌠 Stars */
+/* 🌠 Stars Background */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div');
@@ -116,12 +120,12 @@ function copyID(id) {
     idText.innerText = "COPIED TO CLIPBOARD!";
     idText.style.color = "#00ff88";
     setTimeout(() => { 
-        idText.innerText = "ID: 1036720164"; 
+        idText.innerText = "ID: 1036720164 (13159)"; 
         idText.style.color = "var(--c1)";
     }, 2000);
 }
 
-/* 🎨 Theme Change Logic */
+/* 🎨 Theme Change Logic (Click Profile) */
 let colorIndex = 0;
 const colors = [{c1:'#00f2ff',c2:'#ff0055'}, {c1:'#ffdd00',c2:'#ff5500'}, {c1:'#00ff88',c2:'#0066ff'}];
 function changeTheme() {
@@ -132,7 +136,7 @@ function changeTheme() {
     document.getElementById('main-card').style.background = `linear-gradient(0deg, ${theme.c1}, ${theme.c2})`;
 }
 
-/* ⏰ Countdown */
+/* ⏰ Stream Countdown Logic */
 function updateCountdown() {
     const now = new Date();
     const streamTime = new Date();
@@ -145,7 +149,7 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 60000); updateCountdown();
 
-/* ✨ Polite Greeting */
+/* ✨ Polite Greeting Logic */
 function showGreeting() {
     const popup = document.createElement('div');
     popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2); padding: 12px 20px; border-radius: 20px; color: white; font-size: 11px; z-index: 9999; animation: slideUp 0.6s ease-out; text-align: center; width: min(85vw, 320px);";
