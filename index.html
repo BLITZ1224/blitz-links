@@ -161,7 +161,7 @@ function updateCountdown() {
     if (now > target) target.setDate(target.getDate() + 1);
     const diff = target - now;
     const h = Math.floor(diff / 3600000); const m = Math.floor((diff % 3600000) / 60000);
-    document.getElementById('stream-text').innerText = `LIVE ထိ ${h}h ${m}m လို`;
+    document.getElementById('stream-text').innerText = `LIVE စရန် ${h}h ${m}m လို`;
 }
 setInterval(updateCountdown, 60000); updateCountdown();
 </script>
