@@ -10,101 +10,107 @@
 :root{ --c1:#00f2ff; --c2:#ff0055; --bg:#050508; }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; }
+
+/* 🌌 Stars Background */
 .stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .star { position: absolute; background: white; border-radius: 50%; animation: moveStar linear infinite; box-shadow: 0 0 5px #fff; }
 @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
+
 .card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
+
+/* 📸 Profile Area */
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; transition: 0.5s; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
+
 .top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.hero-card { position: relative; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1; }
-.hero-card::after { content: "CHOU"; position: absolute; right: -10px; bottom: -10px; font-family: 'Syncopate', sans-serif; font-size: 50px; font-weight: 900; color: var(--c1); opacity: 0.1; z-index: -1; letter-spacing: -2px; }
+
+/* 🥋 Hero Card */
+.hero-card { 
+    position: relative; 
+    background: rgba(255, 255, 255, 0.02); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
+}
+
+.hero-card::after {
+    content: "CHOU";
+    position: absolute; right: -10px; bottom: -10px;
+    font-family: 'Syncopate', sans-serif; font-size: 50px; font-weight: 900;
+    color: var(--c1); opacity: 0.1; z-index: -1; letter-spacing: -2px;
+}
+
 .hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--c1); object-fit: cover; z-index: 2; }
 .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 10px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
+
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
+
 .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; border: 1px solid transparent; }
+.links a:hover { border-color: var(--c1); transform: translateX(5px); background: rgba(255,255,255,0.1); }
+
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 </style>
 </head>
 <body>
+
 <div class="stars-container" id="stars-box"></div>
+
 <div class="card-container">
   <div class="card">
-    <div class="avatar"><img src="B L I T Z.jpg" alt="BLITZ"></div>
+    <div class="avatar">
+      <img src="B L I T Z.jpg" alt="BLITZ">
+    </div>
+
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
     
-    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">Loading...</b></div>
+    <div class="top-fan">
+        <i class="fas fa-crown"></i> TOP SUPPORTER: <b>Blitz_Fan_Club</b>
+    </div>
+
     <div class="hero-card">
         <img src="chou-icon.jpg" class="hero-icon">
         <div style="text-align: left;">
             <span class="chou-title">SIGNATURE: CHOU</span>
-            <p style="font-size: 11px;">Matches: <span class="stat-highlight" id="matches-display">...</span> | WR: <span class="stat-highlight" id="wr-display">...</span></p>
-            <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">...</span></p>
+            <p style="font-size: 11px;">Matches: <span class="stat-highlight">180</span> | WR: <span class="stat-highlight">62%</span></p>
+            <p style="font-size: 11px;">MMR: <span class="stat-highlight">2700</span></p>
         </div>
     </div>
 
-    <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
+    <div class="id-box" onclick="copyID('1036720164 (13159)')">
+        <span id="id-text">ID: 1036720164 (13159)</span>
+        <i class="far fa-copy"></i>
+    </div>
+
     <div class="links">
       <a href="https://m.me/blitz2412" style="background: linear-gradient(90deg, #0084ff, #00c6ff);">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
       <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// အခုနက သင်ထုတ်လိုက်တဲ့ Key အသစ်ကို ဒီမှာ ထည့်ပေးထားပါတယ်
-const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
-const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
-
-const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
-
-async function loadStats() {
-    try {
-        const { data, error } = await supabaseClient
-            .from('site_configs')
-            .select('*')
-            .eq('id', 1)
-            .single();
-
-        if (data) {
-            document.getElementById('fan-name').innerText = data.top_supporter;
-            document.getElementById('matches-display').innerText = data.hero_matches;
-            document.getElementById('wr-display').innerText = data.hero_wr + "%";
-            document.getElementById('mmr-display').innerText = data.hero_mmr;
-        }
-        if (error) console.error("Database Error:", error.message);
-    } catch (err) {
-        console.error("Connection failed:", err);
-    }
-}
-
-// ပထမအကြိမ် Load လုပ်ခြင်း
-loadStats();
-
-// Realtime Update - ဒေတာပြောင်းရင် Website မှာ တန်းပေါ်စေဖို့
-supabaseClient
-    .channel('schema-db-changes')
-    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_configs' }, loadStats)
-    .subscribe();
-
-// Stars animation
-const starsBox = document.getElementById('stars-box');
-for (let i = 0; i < 40; i++) {
-  const star = document.createElement('div'); star.className = 'star';
-  star.style.width = star.style.height = Math.random() * 2 + 'px';
-  star.style.left = Math.random() * 100 + '%'; star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-  starsBox.appendChild(star);
-}
-
+// Copy ID Function
 function copyID(id) {
     navigator.clipboard.writeText(id);
     document.getElementById('id-text').innerText = "COPIED!";
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
+}
+
+// Stars Background Animation
+const starsBox = document.getElementById('stars-box');
+for (let i = 0; i < 40; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.width = star.style.height = Math.random() * 2 + 'px';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  star.style.opacity = Math.random();
+  starsBox.appendChild(star);
 }
 </script>
 </body>
