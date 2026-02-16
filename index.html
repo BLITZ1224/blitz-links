@@ -28,7 +28,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 /* 🥋 Chou Signature Section */
 .hero-card { background: linear-gradient(135deg, rgba(0,242,255,0.1), rgba(255,0,85,0.1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden; }
 .hero-card::after { content: 'CHOU'; position: absolute; right: -10px; bottom: -5px; font-size: 40px; font-weight: 900; color: rgba(255,255,255,0.03); font-style: italic; }
-.hero-icon { width: 55px; height: 55px; border-radius: 12px; border: 2px solid #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+.hero-icon { width: 55px; height: 55px; border-radius: 12px; border: 2px solid #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.3); object-fit: cover; }
 .hero-info { text-align: left; z-index: 1; }
 .hero-info h4 { font-size: 14px; color: #ffd700; letter-spacing: 1px; margin-bottom: 3px; }
 .hero-info p { font-size: 10px; color: #bbb; line-height: 1.4; }
@@ -72,7 +72,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     </div>
 
     <div class="hero-card">
-        <img src="https://i.pinimg.com/736x/ec/18/1a/ec181a938c5f5904d9c025078c1a6f80.jpg" class="hero-icon" alt="Chou">
+        <img src="chou-skin.jpg" class="hero-icon" alt="Chou">
         <div class="hero-info">
             <h4>SIGNATURE: CHOU</h4>
             <p>Matches: <span class="stat-highlight">3,500+</span> | WR: <span class="stat-highlight">68%</span></p>
@@ -109,19 +109,19 @@ for (let i = 0; i < 40; i++) {
   starsBox.appendChild(star);
 }
 
-/* 📋 Copy ID */
+/* 📋 Copy ID Logic */
 function copyID(id) {
     navigator.clipboard.writeText(id);
     const idText = document.getElementById('id-text');
     idText.innerText = "COPIED TO CLIPBOARD!";
     idText.style.color = "#00ff88";
     setTimeout(() => { 
-        idText.innerText = "ID: 1036720164 (13159)"; 
+        idText.innerText = "ID: 1036720164"; 
         idText.style.color = "var(--c1)";
     }, 2000);
 }
 
-/* 🎨 Theme Change */
+/* 🎨 Theme Change Logic */
 let colorIndex = 0;
 const colors = [{c1:'#00f2ff',c2:'#ff0055'}, {c1:'#ffdd00',c2:'#ff5500'}, {c1:'#00ff88',c2:'#0066ff'}];
 function changeTheme() {
