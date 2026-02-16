@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BLITZ | Interactive Gaming Hub</title>
+<title>BLITZ | Professional Chou User</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -11,40 +11,47 @@
 <style>
 :root{ --c1:#00f2ff; --c2:#ff0055; --bg:#050508; }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; }
+body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; }
 
-/* 🌌 Stars Background */
-.stars-container { position: fixed; width: 100%; height: 100%; z-index: 0; }
+/* 🌌 Background Stars */
+.stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; }
 .star { position: absolute; background: white; border-radius: 50%; animation: moveStar linear infinite; box-shadow: 0 0 5px #fff; }
 @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
 
-/* 🌈 Card Styling */
-.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; margin: 20px 0; transition: 0.5s; }
+.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); }
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+.card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; }
 
-.card{ width:min(92vw,380px); background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:40px 25px; text-align:center; }
+.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
+.avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 
-/* 📸 Avatar with Click Effect */
-.avatar{ width:110px; height:110px; margin:0 auto 20px; border-radius:50%; padding:5px; background: linear-gradient(135deg, var(--c1), var(--c2)); animation: float 3s ease-in-out infinite; cursor: pointer; transition: transform 0.2s; }
-.avatar:active { transform: scale(0.9); }
-.avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 4px solid #000; }
+/* 🥋 Chou Signature Section */
+.hero-card { background: linear-gradient(135deg, rgba(0,242,255,0.1), rgba(255,0,85,0.1)); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden; }
+.hero-card::after { content: 'CHOU'; position: absolute; right: -10px; bottom: -5px; font-size: 40px; font-weight: 900; color: rgba(255,255,255,0.03); font-style: italic; }
+.hero-icon { width: 55px; height: 55px; border-radius: 12px; border: 2px solid #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+.hero-info { text-align: left; z-index: 1; }
+.hero-info h4 { font-size: 14px; color: #ffd700; letter-spacing: 1px; margin-bottom: 3px; }
+.hero-info p { font-size: 10px; color: #bbb; line-height: 1.4; }
+.stat-highlight { color: #fff; font-weight: 700; }
 
-h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; margin-bottom:5px; color: var(--c1); text-shadow: 0 0 10px var(--c1); transition: 0.5s; }
-.tag{ font-size:10px; color:#888; margin-bottom:25px; letter-spacing: 2px; text-transform: uppercase;}
+/* 🏆 Top Supporter */
+.top-fan { background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 8px; margin-bottom: 15px; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #ffd700; }
 
-.links{ display:flex; flex-direction:column; gap:12px; }
-.links a{ padding:16px 20px; border-radius:18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; }
-.links a:hover{ background: rgba(255,255,255,0.1); transform: scale(1.02); }
+/* 📋 Copy ID Box */
+.id-box { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
+.id-box:active { transform: scale(0.95); }
+.id-box span { font-weight: 700; font-size: 13px; color: var(--c1); letter-spacing: 0.5px; }
 
-#stream-btn.live-active { background: linear-gradient(90deg, #ff0000, #ff5500) !important; border: none; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.02);} }
+.links { display:flex; flex-direction:column; gap:10px; }
+.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; font-size: 13px; }
+.links a:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); border-color: var(--c1); }
 
-@keyframes slideUp { from { transform: translate(-50%, 100px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+.msg-btn { background: linear-gradient(90deg, #0084ff, #00c6ff) !important; border: none !important; }
 
-/* 📜 Quotes Box (Progress bar ဖြုတ်ပြီး စာသားချည်းပဲ ထားပေးထားတယ်) */
-.quote-box { margin-top: 25px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+@keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
+@keyframes slideUp { from {transform:translate(-50%,50px); opacity:0;} to {transform:translate(-50%,0); opacity:1;} }
 
-.footer{ margin-top:25px; font-size:10px; color:#444; letter-spacing: 2px; }
+.footer{ margin-top:25px; font-size:9px; color:#444; letter-spacing: 2px; }
 </style>
 </head>
 <body>
@@ -54,88 +61,78 @@ h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; marg
 <div class="card-container" id="main-card">
   <div class="card">
     <div class="avatar" onclick="changeTheme()">
-      <img src="B L I T Z.jpg" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
+      <img src="B L I T Z.jpg" alt="BLITZ">
     </div>
 
-    <h1 id="brand-name">BLITZ</h1>
-    <div class="tag">Gaming • Streaming • Creator</div>
+    <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
 
-    <div class="links">
-      <a href="https://www.facebook.com/blitz2412" id="stream-btn">
-        <span id="stream-text">STREAM COUNTDOWN</span>
-        <i class="fas fa-video"></i>
-      </a>
-      <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
-      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
+    <div class="top-fan">
+        <i class="fas fa-crown"></i>
+        <span>TOP SUPPORTER: <b id="fan-name">Waiting for you...</b></span>
     </div>
 
-    <div class="quote-box">
-        <div id="dynamic-quote" style="font-size: 11px; color: #aaa; font-style: italic; min-height: 20px;">
-            "Gaming is not just a hobby, it's a lifestyle."
+    <div class="hero-card">
+        <img src="https://i.pinimg.com/736x/ec/18/1a/ec181a938c5f5904d9c025078c1a6f80.jpg" class="hero-icon" alt="Chou">
+        <div class="hero-info">
+            <h4>SIGNATURE: CHOU</h4>
+            <p>Matches: <span class="stat-highlight">3,500+</span> | WR: <span class="stat-highlight">68%</span></p>
+            <p>Current MMR: <span class="stat-highlight" style="color:#00f2ff">8,671</span></p>
         </div>
     </div>
 
-    <div class="footer">© 2026 BLITZ GAMING</div>
+    <div class="id-box" onclick="copyID('1036720164 (13159)')">
+        <span id="id-text">ID: 1036720164 (13159)</span>
+        <i class="far fa-copy" style="color:var(--c1)"></i>
+    </div>
+
+    <div class="links">
+      <a href="https://www.facebook.com/blitz2412" id="stream-btn"><span id="stream-text">STREAM COUNTDOWN</span><i class="fas fa-video"></i></a>
+      <a href="https://m.me/blitz2412" class="msg-btn">DIRECT MESSENGER <i class="fab fa-facebook-messenger"></i></a>
+      <a href="https://www.facebook.com/blitz2412">FACEBOOK PAGE <i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK CHANNEL <i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <div class="footer">© 2026 BLITZ GAMING | DESIGNED FOR PROS</div>
   </div>
 </div>
 
 <script>
-/* 🌠 Stars Background */
+/* 🌠 Stars */
 const starsBox = document.getElementById('stars-box');
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 40; i++) {
   const star = document.createElement('div');
   star.className = 'star';
-  const size = Math.random() * 3 + 'px';
+  const size = Math.random() * 2 + 'px';
   star.style.width = size; star.style.height = size;
   star.style.left = Math.random() * 100 + '%';
   star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-  star.style.animationDelay = Math.random() * 5 + 's';
   starsBox.appendChild(star);
 }
 
-/* 🎨 Theme Change Logic (Avatar Click) */
+/* 📋 Copy ID */
+function copyID(id) {
+    navigator.clipboard.writeText(id);
+    const idText = document.getElementById('id-text');
+    idText.innerText = "COPIED TO CLIPBOARD!";
+    idText.style.color = "#00ff88";
+    setTimeout(() => { 
+        idText.innerText = "ID: 1036720164 (13159)"; 
+        idText.style.color = "var(--c1)";
+    }, 2000);
+}
+
+/* 🎨 Theme Change */
 let colorIndex = 0;
-const colors = [
-    {c1: '#00f2ff', c2: '#ff0055'}, 
-    {c1: '#ffdd00', c2: '#ff5500'}, 
-    {c1: '#00ff88', c2: '#0066ff'}, 
-    {c1: '#bf00ff', c2: '#ff0080'}, 
-    {c1: '#ffffff', c2: '#444444'}  
-];
+const colors = [{c1:'#00f2ff',c2:'#ff0055'}, {c1:'#ffdd00',c2:'#ff5500'}, {c1:'#00ff88',c2:'#0066ff'}];
 function changeTheme() {
     colorIndex = (colorIndex + 1) % colors.length;
     const theme = colors[colorIndex];
     document.documentElement.style.setProperty('--c1', theme.c1);
     document.documentElement.style.setProperty('--c2', theme.c2);
-    document.getElementById('brand-name').style.color = theme.c1;
-    document.getElementById('brand-name').style.textShadow = `0 0 15px ${theme.c1}`;
-    // Card border ကိုပါ ပြောင်းပေးမယ်
     document.getElementById('main-card').style.background = `linear-gradient(0deg, ${theme.c1}, ${theme.c2})`;
 }
 
-/* 📜 Random Quotes Logic */
-const quotes = [
-    "\"Gaming is not just a hobby, it's a lifestyle.\"",
-    "\"Savage ဆိုတာ ကြိုးစားသူတိုင်းအတွက်ပါ။\"",
-    "\"BLITZ Community ကနေ နွေးထွေးစွာ ကြိုဆိုပါတယ်။\"",
-    "\"ဒီနေ့ ရှုံးပေမဲ့ မနက်ဖြန် Victory က မင်းအတွက်ပဲ။\"",
-    "\"Don't just play the game, lead it.\""
-];
-let qIndex = 0;
-function rotateQuotes() {
-    const qElem = document.getElementById('dynamic-quote');
-    qElem.style.opacity = '0';
-    setTimeout(() => {
-        qIndex = (qIndex + 1) % quotes.length;
-        qElem.innerText = quotes[qIndex];
-        qElem.style.opacity = '1';
-        qElem.style.transition = '0.5s';
-    }, 500);
-}
-setInterval(rotateQuotes, 8000);
-
-/* ⏰ Stream Countdown Logic */
+/* ⏰ Countdown */
 function updateCountdown() {
     const now = new Date();
     const streamTime = new Date();
@@ -144,40 +141,19 @@ function updateCountdown() {
     const diff = streamTime - now;
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const btn = document.getElementById('stream-btn');
-    const txt = document.getElementById('stream-text');
-    if (now.getHours() === 20 && now.getMinutes() >= 30 || now.getHours() > 20) {
-        btn.classList.add('live-active');
-        txt.innerHTML = "🔴 LIVE စတင်နေပါပြီ!";
-    } else {
-        btn.classList.remove('live-active');
-        txt.innerHTML = `LIVE စရန် ${hours} နာရီ နှင့် ${mins} မိနစ် လိုပါသည်`;
-    }
+    document.getElementById('stream-text').innerHTML = `LIVE စရန် ${hours} နာရီ နှင့် ${mins} မိနစ် လိုပါသည်`;
 }
-setInterval(updateCountdown, 60000);
-updateCountdown();
+setInterval(updateCountdown, 60000); updateCountdown();
 
-/* ✨ Polite Greeting Logic */
-function showPoliteGreeting() {
-    const now = new Date();
-    const hour = now.getHours();
-    let message = "";
-    if (hour >= 5 && hour < 12) message = "☀️ မင်္ဂလာရှိသော နံနက်ခင်းလေးဖြစ်ပါစေဗျာ။ Streaming By BLITZ မှ နွေးထွေးစွာ ကြိုဆိုပါတယ်။";
-    else if (hour >= 12 && hour < 17) message = "🌤️ မင်္ဂလာရှိသော နေ့လည်ခင်းလေးပါဗျ။ အချိန်ပေးပြီး လာရောက်အားပေးတဲ့အတွက် ကျေးဇူးတင်ပါတယ်။";
-    else if (hour >= 17 && hour < 20) message = "🌆 မင်္ဂလာရှိသော ညနေခင်းလေးပါဗျာ။ BLITZ ရဲ့ Stream အသစ်တွေကို စောင့်ကြည့်ဖို့ ဖိတ်ခေါ်ပါတယ်။";
-    else message = "🌙 မင်္ဂလာညချမ်းလေးပါဗျ။ ဒီညလည်း BLITZ နဲ့အတူ ပျော်ရွှင်စရာ Gaming အချိန်လေး ဖြစ်ပါစေနော်။";
-
+/* ✨ Polite Greeting */
+function showGreeting() {
     const popup = document.createElement('div');
-    popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 15px 25px; border-radius: 20px; color: white; font-size: 12px; z-index: 9999; animation: slideUp 0.6s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; width: min(90vw, 350px); line-height: 1.5;";
-    popup.innerHTML = message;
+    popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2); padding: 12px 20px; border-radius: 20px; color: white; font-size: 11px; z-index: 9999; animation: slideUp 0.6s ease-out; text-align: center; width: min(85vw, 320px);";
+    popup.innerHTML = "🥋 BLITZ ရဲ့ Chou Gameplay တွေကို လာရောက်အားပေးတဲ့အတွက် ကျေးဇူးတင်ပါတယ်ဗျ။";
     document.body.appendChild(popup);
-    setTimeout(() => {
-        popup.style.opacity = '0';
-        popup.style.transition = '1s';
-        setTimeout(() => popup.remove(), 1000);
-    }, 7000); 
+    setTimeout(() => { popup.style.opacity='0'; popup.style.transition='1s'; setTimeout(()=>popup.remove(),1000); }, 6000);
 }
-setTimeout(showPoliteGreeting, 3000);
+setTimeout(showGreeting, 2500);
 </script>
 
 </body>
