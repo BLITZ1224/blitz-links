@@ -52,7 +52,12 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 .top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
-.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; }
+
+/* FB Live Button Style */
+@keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
+.live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
+
+.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; border: 1px solid transparent; }
 .links a:hover { border-color: var(--c1); transform: translateX(5px); }
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 </style>
@@ -75,39 +80,67 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     </div>
     <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
     <div class="links">
-      <a href="https://www.facebook.com/blitz2412" id="countdown-btn"><span id="stream-text">LIVE စရန် ...</span><i class="fas fa-video"></i></a>
+      <a href="https://www.facebook.com/blitz2412" id="countdown-btn">
+        <span id="stream-text">LIVE စရန် ...</span>
+        <i class="fas fa-video"></i>
+      </a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
-    <div class="visitor-box"><i class="fas fa-eye"></i> VIEWS: <span id="view-count">...</span></div>
+    <div class="visitor-box"><i class="fas fa-eye"></i> UNIQUE VIEWS: <span id="view-count">...</span></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://openfpcdn.io/fingerprintjs/v4"></script>
+
 <script>
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
 const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-async function loadAndIncrement() {
+/* 🛡️ Device Fingerprinting & View Counting Logic */
+async function handleUniqueVisitor() {
     try {
-        const { data } = await supabaseClient.from('stats').select('*');
-        if (data) {
-            let currentViews = 0;
-            data.forEach(item => {
-                if (item.name === 'top_fan') document.getElementById('fan-name').innerText = item.value;
-                if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
-                if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
-                if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
-                if (item.name === 'visitor_count') {
-                    currentViews = parseInt(item.value);
-                    document.getElementById('view-count').innerText = currentViews + 1;
-                }
-            });
-            // Update Visitor Count in Database
-            await supabaseClient.from('stats').update({ value: (currentViews + 1).toString() }).eq('name', 'visitor_count');
+        // 1. Get Device Fingerprint
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        const deviceId = result.visitorId;
+
+        // 2. Check if this device already exists in logs
+        const { data: existingLog } = await supabaseClient
+            .from('visitor_logs')
+            .select('device_id')
+            .eq('device_id', deviceId)
+            .single();
+
+        if (!existingLog) {
+            // New Device! Add to logs and Increment View Count
+            await supabaseClient.from('visitor_logs').insert([{ device_id: deviceId }]);
+            
+            const { data: statData } = await supabaseClient.from('stats').select('value').eq('name', 'visitor_count').single();
+            if (statData) {
+                const newCount = parseInt(statData.value) + 1;
+                await supabaseClient.from('stats').update({ value: newCount.toString() }).eq('name', 'visitor_count');
+            }
         }
-    } catch (e) { console.error(e.message); }
+        
+        // 3. Load all stats to display
+        loadStats();
+    } catch (e) { console.error(e.message); loadStats(); }
+}
+
+async function loadStats() {
+    const { data } = await supabaseClient.from('stats').select('*');
+    if (data) {
+        data.forEach(item => {
+            if (item.name === 'top_fan') document.getElementById('fan-name').innerText = item.value;
+            if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
+            if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
+            if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
+            if (item.name === 'visitor_count') document.getElementById('view-count').innerText = item.value;
+        });
+    }
 }
 
 function changeTheme(){
@@ -117,13 +150,31 @@ function changeTheme(){
     document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
 }
 
+function updateCountdown() {
+    const now = new Date();
+    const start = new Date(); start.setHours(20, 30, 0, 0); 
+    const txt = document.getElementById('stream-text');
+    if (now >= start && now <= new Date().setHours(23,0,0,0)) {
+        txt.innerHTML = `<span class="live-now-text">🔴 LIVE NOW</span>`;
+    } else {
+        let target = new Date(); target.setHours(20, 30, 0, 0);
+        if (now > target) target.setDate(target.getDate() + 1);
+        const diff = target - now;
+        txt.innerText = `LIVE စရန် ${Math.floor(diff/3600000)}h ${Math.floor((diff%3600000)/60000)}m လို`;
+    }
+}
+
 function copyID(id) {
     navigator.clipboard.writeText(id);
     document.getElementById('id-text').innerText = "COPIED!";
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-window.onload = () => { loadAndIncrement(); };
+window.onload = () => { 
+    handleUniqueVisitor(); 
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+};
 
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
