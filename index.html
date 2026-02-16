@@ -19,27 +19,27 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
 
 /* 🌈 Card Styling */
-.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; margin: 20px 0; }
+.card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; margin: 20px 0; transition: 0.5s; }
 @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+
 .card{ width:min(92vw,380px); background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:40px 25px; text-align:center; }
 
-.avatar{ width:110px; height:110px; margin:0 auto 20px; border-radius:50%; padding:5px; background: linear-gradient(135deg, var(--c1), var(--c2)); animation: float 3s ease-in-out infinite; }
-@keyframes float { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+/* 📸 Avatar with Click Effect */
+.avatar{ width:110px; height:110px; margin:0 auto 20px; border-radius:50%; padding:5px; background: linear-gradient(135deg, var(--c1), var(--c2)); animation: float 3s ease-in-out infinite; cursor: pointer; transition: transform 0.2s active; }
+.avatar:active { transform: scale(0.9); }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 4px solid #000; }
 
-h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; margin-bottom:5px; color: var(--c1); }
+h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; margin-bottom:5px; color: var(--c1); text-shadow: 0 0 10px var(--c1); transition: 0.5s; }
 .tag{ font-size:10px; color:#888; margin-bottom:25px; letter-spacing: 2px; text-transform: uppercase;}
 
 .links{ display:flex; flex-direction:column; gap:12px; }
 .links a{ padding:16px 20px; border-radius:18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition: .3s; }
 .links a:hover{ background: rgba(255,255,255,0.1); transform: scale(1.02); }
 
-/* 🚨 Stream Countdown Style */
 #stream-btn.live-active { background: linear-gradient(90deg, #ff0000, #ff5500) !important; border: none; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); animation: pulse 1.5s infinite; }
 @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.02);} }
 
-/* 🎊 Popup Style */
-@keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes slideUp { from { transform: translate(-50%, 100px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
 
 .footer{ margin-top:25px; font-size:10px; color:#444; letter-spacing: 2px; }
 </style>
@@ -48,21 +48,20 @@ h1{ font-family:'Syncopate',sans-serif; font-size:20px; letter-spacing:6px; marg
 
 <div class="stars-container" id="stars-box"></div>
 
-<div class="card-container">
+<div class="card-container" id="main-card">
   <div class="card">
-    <div class="avatar">
+    <div class="avatar" onclick="changeTheme()">
       <img src="B L I T Z.jpg" onerror="this.src='https://via.placeholder.com/300/000/00f2ff?text=B'">
     </div>
 
-    <h1>BLITZ</h1>
+    <h1 id="brand-name">BLITZ</h1>
     <div class="tag">Gaming • Streaming • Creator</div>
 
     <div class="links">
       <a href="https://www.facebook.com/blitz2412" id="stream-btn">
-        <span id="stream-text">DAILY STREAM (8:30 PM)</span>
+        <span id="stream-text">STREAM COUNTDOWN</span>
         <i class="fas fa-video"></i>
       </a>
-
       <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
@@ -86,15 +85,32 @@ for (let i = 0; i < 50; i++) {
   starsBox.appendChild(star);
 }
 
-/* ⏰ ၁။ Dynamic Stream Countdown Logic */
+/* 🎨 Theme Change Logic (Profile နှိပ်ရင် အရောင်ပြောင်းမယ်) */
+let colorIndex = 0;
+const colors = [
+    {c1: '#00f2ff', c2: '#ff0055'}, // Default (Cyan/Pink)
+    {c1: '#ffdd00', c2: '#ff5500'}, // Gold/Orange
+    {c1: '#00ff88', c2: '#0066ff'}, // Green/Blue
+    {c1: '#bf00ff', c2: '#ff0080'}, // Purple/Magenta
+    {c1: '#ffffff', c2: '#444444'}  // Silver/Grey
+];
+
+function changeTheme() {
+    colorIndex = (colorIndex + 1) % colors.length;
+    const theme = colors[colorIndex];
+    document.documentElement.style.setProperty('--c1', theme.c1);
+    document.documentElement.style.setProperty('--c2', theme.c2);
+    document.getElementById('brand-name').style.color = theme.c1;
+    document.getElementById('brand-name').style.textShadow = `0 0 15px ${theme.c1}`;
+}
+
+/* ⏰ Stream Countdown Logic */
 function updateCountdown() {
     const now = new Date();
     const streamTime = new Date();
-    streamTime.setHours(20, 30, 0); // ည ၈:၃၀ ကို သတ်မှတ်
+    streamTime.setHours(20, 30, 0);
 
-    if (now > streamTime) {
-        streamTime.setDate(streamTime.getDate() + 1);
-    }
+    if (now > streamTime) streamTime.setDate(streamTime.getDate() + 1);
 
     const diff = streamTime - now;
     const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -103,7 +119,6 @@ function updateCountdown() {
     const btn = document.getElementById('stream-btn');
     const txt = document.getElementById('stream-text');
     
-    // Live လွှင့်နေချိန် (၈:၃၀ မှ ည ၁၂:၀၀ အထိ)
     if (now.getHours() === 20 && now.getMinutes() >= 30 || now.getHours() > 20) {
         btn.classList.add('live-active');
         txt.innerHTML = "🔴 LIVE စတင်နေပါပြီ!";
@@ -112,28 +127,33 @@ function updateCountdown() {
         txt.innerHTML = `LIVE စရန် ${hours} နာရီ နှင့် ${mins} မိနစ် လိုပါသည်`;
     }
 }
-setInterval(updateCountdown, 60000); 
+setInterval(updateCountdown, 60000);
 updateCountdown();
 
-/* 🎊 ၂။ Latest Follower Welcome Popup Logic */
-function showFollowerPopup() {
-    // TikTok မှာ follower ၉ ယောက်တိုးလာတာကို popup ပြမယ်
+/* ✨ Polite & Timed Greeting Logic */
+function showPoliteGreeting() {
+    const now = new Date();
+    const hour = now.getHours();
+    let message = "";
+
+    if (hour >= 5 && hour < 12) message = "☀️ မင်္ဂလာရှိသော နံနက်ခင်းလေးဖြစ်ပါစေဗျာ။ BLITZ Hub မှ နွေးထွေးစွာ ကြိုဆိုပါတယ်။";
+    else if (hour >= 12 && hour < 17) message = "🌤️ မင်္ဂလာရှိသော နေ့လည်ခင်းလေးပါဗျ။ အချိန်ပေးပြီး လာရောက်အားပေးတဲ့အတွက် ကျေးဇူးတင်ပါတယ်။";
+    else if (hour >= 17 && hour < 20) message = "🌆 မင်္ဂလာရှိသော ညနေခင်းလေးပါဗျာ။ BLITZ ရဲ့ Stream အသစ်တွေကို စောင့်ကြည့်ဖို့ ဖိတ်ခေါ်ပါတယ်။";
+    else message = "🌙 မင်္ဂလာညချမ်းလေးပါဗျ။ ဒီညလည်း BLITZ နဲ့အတူ ပျော်ရွှင်စရာ Gaming အချိန်လေး ဖြစ်ပါစေနော်။";
+
     const popup = document.createElement('div');
-    popup.id = "follower-alert";
-    popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, var(--c1), var(--c2)); padding: 12px 25px; border-radius: 50px; color: white; font-weight: bold; font-size: 13px; z-index: 9999; animation: slideUp 0.5s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); white-space: nowrap;";
-    popup.innerHTML = `🎉 Welcome our 9 new followers! (Total: 17)`;
+    popup.style = "position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 15px 25px; border-radius: 20px; color: white; font-size: 13px; z-index: 9999; animation: slideUp 0.6s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; width: min(90vw, 350px); line-height: 1.5;";
     
+    popup.innerHTML = message;
     document.body.appendChild(popup);
 
     setTimeout(() => {
         popup.style.opacity = '0';
-        popup.style.transition = '0.5s';
-        setTimeout(() => popup.remove(), 500);
-    }, 6000); 
+        popup.style.transition = '1s';
+        setTimeout(() => popup.remove(), 1000);
+    }, 7000); 
 }
-
-// စာမျက်နှာပွင့်ပြီး ၃ စက္ကန့်အကြာမှာ Popup ပြမယ်
-setTimeout(showFollowerPopup, 3000);
+setTimeout(showPoliteGreeting, 3000);
 </script>
 
 </body>
