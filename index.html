@@ -9,7 +9,7 @@
 <style>
 :root{ --c1:#00f2ff; --c2:#ff0055; --bg:#050508; }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; }
+body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; transition: 0.5s; }
 
 /* 🌌 Stars Background */
 .stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -21,13 +21,13 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-/* 📸 Profile Area */
+/* 📸 Profile & Theme Switcher */
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; transition: 0.5s; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 
 .top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-/* 🥋 Hero Card */
+/* 🥋 Hero Card with Background Text */
 .hero-card { 
     position: relative; 
     background: rgba(255, 255, 255, 0.02); 
@@ -35,6 +35,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
 }
 
+/* ေနာက်ခံ စာသား (CHOU) */
 .hero-card::after {
     content: "CHOU";
     position: absolute; right: -10px; bottom: -10px;
@@ -42,9 +43,19 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     color: var(--c1); opacity: 0.1; z-index: -1; letter-spacing: -2px;
 }
 
+.hero-card::before { 
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: url('chou-box-bg.jpg') top center/cover no-repeat; 
+    opacity: 0.15; z-index: -2; 
+}
+
 .hero-icon { width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--c1); object-fit: cover; z-index: 2; }
 .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 10px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
+
+/* Live Status Styles */
+@keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
+.live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
 
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
 
@@ -60,22 +71,22 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <div class="card-container">
   <div class="card">
-    <div class="avatar">
+    <div class="avatar" onclick="changeTheme()">
       <img src="B L I T Z.jpg" alt="BLITZ">
     </div>
 
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
     
     <div class="top-fan">
-        <i class="fas fa-crown"></i> TOP SUPPORTER: <b>Blitz_Fan_Club</b>
+        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">wai yan</b>
     </div>
 
     <div class="hero-card">
-        <img src="chou-icon.jpg" class="hero-icon">
+        <img src="chou-icon.jpg" class="hero-icon" id="hero-img-display">
         <div style="text-align: left;">
             <span class="chou-title">SIGNATURE: CHOU</span>
-            <p style="font-size: 11px;">Matches: <span class="stat-highlight">180</span> | WR: <span class="stat-highlight">62%</span></p>
-            <p style="font-size: 11px;">MMR: <span class="stat-highlight">2700</span></p>
+            <p style="font-size: 11px;">Matches: <span class="stat-highlight" id="matches-display">...</span> | WR: <span class="stat-highlight" id="wr-display">...</span></p>
+            <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">...</span></p>
         </div>
     </div>
 
@@ -85,6 +96,10 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     </div>
 
     <div class="links">
+      <a href="https://www.facebook.com/blitz2412" id="countdown-btn">
+        <span id="stream-text">LIVE စရန် ...</span>
+        <i class="fas fa-video"></i>
+      </a>
       <a href="https://m.me/blitz2412" style="background: linear-gradient(90deg, #0084ff, #00c6ff);">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
       <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
@@ -93,23 +108,74 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// Copy ID Function
+/* 🎨 Theme Switcher */
+let colorIndex = 0;
+const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
+function changeTheme(){
+    colorIndex = (colorIndex + 1) % themes.length;
+    document.documentElement.style.setProperty('--c1', themes[colorIndex].c1);
+    document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
+}
+
+/* ⏰ Smart Countdown & Live Logic */
+function updateCountdown() {
+    const now = new Date();
+    const start = new Date(); start.setHours(20, 30, 0, 0); // 8:30 PM
+    const end = new Date(); end.setHours(23, 0, 0, 0); // 11:00 PM
+
+    const btn = document.getElementById('countdown-btn');
+    const txt = document.getElementById('stream-text');
+
+    if (now >= start && now <= end) {
+        txt.innerHTML = `<span class="live-now-text">🔴 LIVE NOW</span>`;
+        btn.style.borderColor = "#ff0000";
+        btn.style.background = "rgba(255, 0, 0, 0.1)";
+    } else {
+        let target = new Date(); target.setHours(20, 30, 0, 0);
+        if (now > target) target.setDate(target.getDate() + 1);
+        const diff = target - now;
+        const h = Math.floor(diff / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        txt.innerText = `LIVE စရန် ${h}h ${m}m လို`;
+        btn.style.borderColor = "transparent";
+        btn.style.background = "rgba(255, 255, 255, 0.05)";
+    }
+}
+setInterval(updateCountdown, 1000); updateCountdown();
+
+/* 🔥 Supabase Connection */
+const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
+const SB_KEY = "sb_publishable_-3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
+const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+async function loadStats() {
+    const { data } = await supabaseClient.from('stats').select('*');
+    if (data) {
+        data.forEach(item => {
+            if (item.name === 'top_fan') document.getElementById('fan-name').innerText = item.value;
+            if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
+            if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
+            if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
+        });
+    }
+}
+loadStats();
+supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, loadStats).subscribe();
+
 function copyID(id) {
     navigator.clipboard.writeText(id);
     document.getElementById('id-text').innerText = "COPIED!";
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-// Stars Background Animation
+/* 🌌 Stars */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
-  const star = document.createElement('div');
-  star.className = 'star';
+  const star = document.createElement('div'); star.className = 'star';
   star.style.width = star.style.height = Math.random() * 2 + 'px';
-  star.style.left = Math.random() * 100 + '%';
-  star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-  star.style.opacity = Math.random();
+  star.style.left = Math.random() * 100 + '%'; star.style.animationDuration = (Math.random() * 3 + 2) + 's';
   starsBox.appendChild(star);
 }
 </script>
