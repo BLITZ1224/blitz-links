@@ -35,15 +35,17 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
   <div class="card">
     <div class="avatar"><img src="B L I T Z.jpg" alt="BLITZ"></div>
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
-    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">Blitz_Fan_Club</b></div>
+    
+    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">Loading...</b></div>
     <div class="hero-card">
         <img src="chou-icon.jpg" class="hero-icon">
         <div style="text-align: left;">
             <span class="chou-title">SIGNATURE: CHOU</span>
-            <p style="font-size: 11px;">Matches: <span class="stat-highlight" id="matches-display">180</span> | WR: <span class="stat-highlight" id="wr-display">62%</span></p>
-            <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">2700</span></p>
+            <p style="font-size: 11px;">Matches: <span class="stat-highlight" id="matches-display">...</span> | WR: <span class="stat-highlight" id="wr-display">...</span></p>
+            <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">...</span></p>
         </div>
     </div>
+
     <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
     <div class="links">
       <a href="https://m.me/blitz2412" style="background: linear-gradient(90deg, #0084ff, #00c6ff);">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
@@ -55,24 +57,40 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// Key အသစ်ကို ဤနေရာတွင် ထည့်ပါ
+// အခုနက သင်ထုတ်လိုက်တဲ့ Key အသစ်ကို ဒီမှာ ထည့်ပေးထားပါတယ်
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
-const SB_KEY = "sb_publishable_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmaHVtd2htZnFkZXhndnZ0cnBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3MDA4NTcsImV4cCI6MjA1NTI3Njg1N30.C3_u3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
+const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
 
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
 async function loadStats() {
     try {
-        const { data, error } = await supabaseClient.from('site_configs').select('*').eq('id', 1).single();
+        const { data, error } = await supabaseClient
+            .from('site_configs')
+            .select('*')
+            .eq('id', 1)
+            .single();
+
         if (data) {
             document.getElementById('fan-name').innerText = data.top_supporter;
             document.getElementById('matches-display').innerText = data.hero_matches;
             document.getElementById('wr-display').innerText = data.hero_wr + "%";
             document.getElementById('mmr-display').innerText = data.hero_mmr;
         }
-    } catch (err) { console.log("Still failing but showing default values."); }
+        if (error) console.error("Database Error:", error.message);
+    } catch (err) {
+        console.error("Connection failed:", err);
+    }
 }
+
+// ပထမအကြိမ် Load လုပ်ခြင်း
 loadStats();
+
+// Realtime Update - ဒေတာပြောင်းရင် Website မှာ တန်းပေါ်စေဖို့
+supabaseClient
+    .channel('schema-db-changes')
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_configs' }, loadStats)
+    .subscribe();
 
 // Stars animation
 const starsBox = document.getElementById('stars-box');
@@ -82,7 +100,12 @@ for (let i = 0; i < 40; i++) {
   star.style.left = Math.random() * 100 + '%'; star.style.animationDuration = (Math.random() * 3 + 2) + 's';
   starsBox.appendChild(star);
 }
-function copyID(id) { navigator.clipboard.writeText(id); document.getElementById('id-text').innerText = "COPIED!"; setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000); }
+
+function copyID(id) {
+    navigator.clipboard.writeText(id);
+    document.getElementById('id-text').innerText = "COPIED!";
+    setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
+}
 </script>
 </body>
 </html>
