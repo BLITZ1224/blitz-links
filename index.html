@@ -35,7 +35,6 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
 }
 
-/* ေနာက်ခံ စာသား (CHOU) */
 .hero-card::after {
     content: "CHOU";
     position: absolute; right: -10px; bottom: -10px;
@@ -53,7 +52,6 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 10px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
 
-/* Live Status Styles */
 @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
 .live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
 
@@ -78,7 +76,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
     
     <div class="top-fan">
-        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">wai yan</b>
+        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">...</b>
     </div>
 
     <div class="hero-card">
@@ -110,7 +108,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🎨 Theme Switcher */
+/* 🎨 Theme Switcher (မူရင်းအတိုင်း) */
 let colorIndex = 0;
 const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
 function changeTheme(){
@@ -119,11 +117,11 @@ function changeTheme(){
     document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
 }
 
-/* ⏰ Smart Countdown & Live Logic */
+/* ⏰ Smart Countdown (မူရင်းအတိုင်း) */
 function updateCountdown() {
     const now = new Date();
-    const start = new Date(); start.setHours(20, 30, 0, 0); // 8:30 PM
-    const end = new Date(); end.setHours(23, 0, 0, 0); // 11:00 PM
+    const start = new Date(); start.setHours(20, 30, 0, 0);
+    const end = new Date(); end.setHours(23, 0, 0, 0);
 
     const btn = document.getElementById('countdown-btn');
     const txt = document.getElementById('stream-text');
@@ -145,24 +143,29 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000); updateCountdown();
 
-/* 🔥 Supabase Connection */
+/* 🔥 Supabase Connection (ဒါက အသစ်ပြင်ပေးထားတာပါ) */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
-const SB_KEY = "sb_publishable_-3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
+const SB_KEY = "sb_publishable_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmaHVtd2htZnFkZXhndnZ0cnBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3MDA4NTcsImV4cCI6MjA1NTI3Njg1N30.C3_u3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
 async function loadStats() {
-    const { data } = await supabaseClient.from('stats').select('*');
+    const { data, error } = await supabaseClient
+        .from('site_configs')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
     if (data) {
-        data.forEach(item => {
-            if (item.name === 'top_fan') document.getElementById('fan-name').innerText = item.value;
-            if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
-            if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
-            if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
-        });
+        document.getElementById('fan-name').innerText = data.top_supporter;
+        document.getElementById('matches-display').innerText = data.hero_matches;
+        document.getElementById('wr-display').innerText = data.hero_wr + "%";
+        document.getElementById('mmr-display').innerText = data.hero_mmr;
     }
 }
 loadStats();
-supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, loadStats).subscribe();
+
+// Realtime Update - Database ပြောင်းတာနဲ့ Website မှာ ချက်ချင်းလိုက်ပြောင်းမယ်
+supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_configs' }, loadStats).subscribe();
 
 function copyID(id) {
     navigator.clipboard.writeText(id);
@@ -170,7 +173,7 @@ function copyID(id) {
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-/* 🌌 Stars */
+/* 🌌 Stars (မူရင်းအတိုင်း) */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div'); star.className = 'star';
