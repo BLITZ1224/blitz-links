@@ -21,65 +21,50 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-/* 📸 Profile */
-.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; transition: 0.5s; }
-.avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
-
-.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-/* 🥋 Hero Card with Background */
+/* 🥋 Chou Hero Card (Neon Glow) */
 .hero-card { 
     position: relative; 
-    background: rgba(255, 255, 255, 0.02); 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
+    background: rgba(0, 0, 0, 0.7); 
+    border: 1.5px solid var(--c1); 
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.25);
     border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
 }
-
-/* 🖼️ Chou Box Background Fix */
 .hero-card::before { 
     content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
     background: url('chou-box-bg.jpg') top center/cover no-repeat; 
-    opacity: 0.2; z-index: -2; 
+    opacity: 0.3; z-index: -2; 
 }
-
 .hero-card::after {
     content: "CHOU";
-    position: absolute; right: -5px; bottom: -10px;
-    font-family: 'Syncopate', sans-serif; font-size: 55px; font-weight: 900;
+    position: absolute; right: -5px; bottom: -15px;
+    font-family: 'Syncopate', sans-serif; font-size: 60px; font-weight: 900;
     color: var(--c1); opacity: 0.1; z-index: -1; letter-spacing: -2px;
 }
-
-.hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2px solid var(--c1); object-fit: cover; z-index: 2; box-shadow: 0 0 15px rgba(0,242,255,0.3); }
-.chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 10px var(--c1); }
+.hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2.5px solid var(--c1); object-fit: cover; z-index: 2; box-shadow: 0 0 15px var(--c1); }
+.chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 15px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
 
-@keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
-.live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
+/* 👁️ Views Box */
+.visitor-box { margin-top: 15px; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
 
+/* Other Styles */
+.avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
+.avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
+.top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
-
-.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; border: 1px solid transparent; }
-.links a:hover { border-color: var(--c1); transform: translateX(5px); background: rgba(255,255,255,0.1); }
-
+.links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; }
+.links a:hover { border-color: var(--c1); transform: translateX(5px); }
 @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
 </style>
 </head>
 <body>
 
 <div class="stars-container" id="stars-box"></div>
-
 <div class="card-container">
   <div class="card">
-    <div class="avatar" onclick="changeTheme()">
-      <img src="B L I T Z.jpg" alt="BLITZ">
-    </div>
-
+    <div class="avatar" onclick="changeTheme()"><img src="B L I T Z.jpg" alt="BLITZ"></div>
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
-    
-    <div class="top-fan">
-        <i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">wai yan</b>
-    </div>
-
+    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">wai yan</b></div>
     <div class="hero-card">
         <img src="chou-icon.jpg" class="hero-icon">
         <div style="text-align: left;">
@@ -88,78 +73,48 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
             <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">...</span></p>
         </div>
     </div>
-
-    <div class="id-box" onclick="copyID('1036720164 (13159)')">
-        <span id="id-text">ID: 1036720164 (13159)</span>
-        <i class="far fa-copy"></i>
-    </div>
-
+    <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
     <div class="links">
-      <a href="https://www.facebook.com/blitz2412" id="countdown-btn">
-        <span id="stream-text">LIVE စရန် ...</span>
-        <i class="fas fa-video"></i>
-      </a>
-      <a href="https://m.me/blitz2412" style="background: linear-gradient(90deg, #0084ff, #00c6ff);">MESSENGER <i class="fab fa-facebook-messenger"></i></a>
-      <a href="https://www.facebook.com/blitz2412">FACEBOOK <i class="fab fa-facebook"></i></a>
+      <a href="https://www.facebook.com/blitz2412" id="countdown-btn"><span id="stream-text">LIVE စရန် ...</span><i class="fas fa-video"></i></a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
+    <div class="visitor-box"><i class="fas fa-eye"></i> VIEWS: <span id="view-count">...</span></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🔥 Supabase Connection */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
 const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-async function loadStats() {
+async function loadAndIncrement() {
     try {
-        const { data, error } = await supabaseClient.from('stats').select('*');
-        if (error) throw error;
+        const { data } = await supabaseClient.from('stats').select('*');
         if (data) {
+            let currentViews = 0;
             data.forEach(item => {
                 if (item.name === 'top_fan') document.getElementById('fan-name').innerText = item.value;
                 if (item.name === 'mmr') document.getElementById('mmr-display').innerText = item.value;
                 if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
                 if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
+                if (item.name === 'visitor_count') {
+                    currentViews = parseInt(item.value);
+                    document.getElementById('view-count').innerText = currentViews + 1;
+                }
             });
+            // Update Visitor Count in Database
+            await supabaseClient.from('stats').update({ value: (currentViews + 1).toString() }).eq('name', 'visitor_count');
         }
-    } catch (e) { console.error("Database Error:", e.message); }
+    } catch (e) { console.error(e.message); }
 }
 
-/* 🔄 Real-time Update Logic */
-supabaseClient.channel('any').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, loadStats).subscribe();
-
-/* 🎨 Theme Switcher */
-let colorIndex = 0;
-const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
 function changeTheme(){
-    colorIndex = (colorIndex + 1) % themes.length;
+    let colorIndex = Math.floor(Math.random() * 4);
+    const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
     document.documentElement.style.setProperty('--c1', themes[colorIndex].c1);
     document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
-}
-
-/* ⏰ Live Countdown Logic */
-function updateCountdown() {
-    const now = new Date();
-    const start = new Date(); start.setHours(20, 30, 0, 0); 
-    const end = new Date(); end.setHours(23, 0, 0, 0); 
-    const btn = document.getElementById('countdown-btn');
-    const txt = document.getElementById('stream-text');
-
-    if (now >= start && now <= end) {
-        txt.innerHTML = `<span class="live-now-text">🔴 LIVE NOW</span>`;
-        btn.style.borderColor = "#ff0000";
-    } else {
-        let target = new Date(); target.setHours(20, 30, 0, 0);
-        if (now > target) target.setDate(target.getDate() + 1);
-        const diff = target - now;
-        const h = Math.floor(diff / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        txt.innerText = `LIVE စရန် ${h}h ${m}m လို`;
-    }
 }
 
 function copyID(id) {
@@ -168,13 +123,8 @@ function copyID(id) {
     setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
 }
 
-window.onload = () => {
-    loadStats();
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-};
+window.onload = () => { loadAndIncrement(); };
 
-/* 🌌 Stars */
 const starsBox = document.getElementById('stars-box');
 for (let i = 0; i < 40; i++) {
   const star = document.createElement('div'); star.className = 'star';
