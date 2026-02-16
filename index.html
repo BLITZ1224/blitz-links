@@ -108,7 +108,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* 🎨 Theme Switcher (မူရင်းအတိုင်း) */
+/* 🎨 Theme Switcher */
 let colorIndex = 0;
 const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
 function changeTheme(){
@@ -117,7 +117,7 @@ function changeTheme(){
     document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
 }
 
-/* ⏰ Smart Countdown (မူရင်းအတိုင်း) */
+/* ⏰ Smart Countdown */
 function updateCountdown() {
     const now = new Date();
     const start = new Date(); start.setHours(20, 30, 0, 0);
@@ -144,10 +144,10 @@ setInterval(updateCountdown, 1000); updateCountdown();
 
 /* 🔥 Supabase Connection */
 const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
-// ဒီ Key က အပြည့်အစုံ ဖြစ်ရပါမယ်။ Console မှာ Invalid API key မပြအောင် သေချာစစ်ထားပေးပါတယ်။
 const SB_KEY = "sb_publishable_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmaHVtd2htZnFkZXhndnZ0cnBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk3MDA4NTcsImV4cCI6MjA1NTI3Njg1N30.C3_u3nMJwzu8-nGFG9ahzLGiw_dnW4oPey";
 
-const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+// Initialize Client with Trimmed Key to avoid accidental spaces
+const supabaseClient = supabase.createClient(SB_URL, SB_KEY.trim());
 
 async function loadStats() {
     try {
@@ -158,28 +158,31 @@ async function loadStats() {
             .single();
 
         if (error) {
-            console.error("Supabase error:", error.message);
+            console.error("Supabase load error:", error.message);
             return;
         }
 
         if (data) {
-            document.getElementById('fan-name').innerText = data.top_supporter;
-            document.getElementById('matches-display').innerText = data.hero_matches;
-            document.getElementById('wr-display').innerText = data.hero_wr + "%";
-            document.getElementById('mmr-display').innerText = data.hero_mmr;
+            document.getElementById('fan-name').innerText = data.top_supporter || "N/A";
+            document.getElementById('matches-display').innerText = data.hero_matches || "0";
+            document.getElementById('wr-display').innerText = (data.hero_wr || "0") + "%";
+            document.getElementById('mmr-display').innerText = data.hero_mmr || "0";
         }
     } catch (err) {
-        console.error("Fetch failed:", err);
+        console.error("Network or script error:", err);
     }
 }
 
-// ပထမအကြိမ် Load လုပ်မယ်
+// Initial Data Fetch
 loadStats();
 
-// Realtime Update - Bot ကနေ ပြင်လိုက်တာနဲ့ Website မှာ ချက်ချင်းလိုက်ပြောင်းမယ်
+// Realtime Sync - Listener setup
 supabaseClient
-    .channel('public:site_configs')
-    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_configs' }, loadStats)
+    .channel('site_configs_realtime')
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_configs' }, () => {
+        console.log("Database updated, refreshing UI...");
+        loadStats();
+    })
     .subscribe();
 
 function copyID(id) {
