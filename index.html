@@ -21,7 +21,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-/* 🥋 Chou Hero Card (Neon Glow) */
+/* 🥋 Chou Hero Card */
 .hero-card { 
     position: relative; 
     background: rgba(0, 0, 0, 0.7); 
@@ -29,33 +29,20 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
     box-shadow: 0 0 20px rgba(0, 242, 255, 0.25);
     border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
 }
-.hero-card::before { 
-    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    background: url('chou-box-bg.jpg') top center/cover no-repeat; 
-    opacity: 0.3; z-index: -2; 
-}
-.hero-card::after {
-    content: "CHOU";
-    position: absolute; right: -5px; bottom: -15px;
-    font-family: 'Syncopate', sans-serif; font-size: 60px; font-weight: 900;
-    color: var(--c1); opacity: 0.1; z-index: -1; letter-spacing: -2px;
-}
 .hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2.5px solid var(--c1); object-fit: cover; z-index: 2; box-shadow: 0 0 15px var(--c1); }
 .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 15px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
 
-/* 👁️ Views Box */
 .visitor-box { margin-top: 15px; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
-
-/* Other Styles */
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
 .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
 .top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
 
-/* FB Live Button Style */
+/* LIVE Status Animations */
 @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
 .live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
+.announcement-text { color: #ffdd00 !important; font-weight: 700; text-transform: uppercase; font-size: 12px; }
 
 .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; border: 1px solid transparent; }
 .links a:hover { border-color: var(--c1); transform: translateX(5px); }
@@ -69,7 +56,8 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
   <div class="card">
     <div class="avatar" onclick="changeTheme()"><img src="B L I T Z.jpg" alt="BLITZ"></div>
     <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
-    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">wai yan</b></div>
+    <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">...</b></div>
+    
     <div class="hero-card">
         <img src="chou-icon.jpg" class="hero-icon">
         <div style="text-align: left;">
@@ -78,15 +66,18 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
             <p style="font-size: 11px;">MMR: <span class="stat-highlight" id="mmr-display">...</span></p>
         </div>
     </div>
+
     <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
+    
     <div class="links">
-      <a href="https://www.facebook.com/blitz2412" id="countdown-btn">
-        <span id="stream-text">LIVE စရန် ...</span>
+      <a href="https://www.facebook.com/blitz2412" id="live-btn">
+        <span id="stream-text">LOADING...</span>
         <i class="fas fa-video"></i>
       </a>
       <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
     </div>
+    
     <div class="visitor-box"><i class="fas fa-eye"></i> UNIQUE VIEWS: <span id="view-count">...</span></div>
   </div>
 </div>
@@ -99,15 +90,16 @@ const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co";
 const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
 const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-/* 🛡️ Device Fingerprinting & View Counting Logic */
+// Global Variables to store status
+let currentLiveStatus = "open";
+let currentAnnouncement = "none";
+
 async function handleUniqueVisitor() {
     try {
-        // 1. Get Device Fingerprint
         const fp = await FingerprintJS.load();
         const result = await fp.get();
         const deviceId = result.visitorId;
 
-        // 2. Check if this device already exists in logs
         const { data: existingLog } = await supabaseClient
             .from('visitor_logs')
             .select('device_id')
@@ -115,17 +107,13 @@ async function handleUniqueVisitor() {
             .single();
 
         if (!existingLog) {
-            // New Device! Add to logs and Increment View Count
             await supabaseClient.from('visitor_logs').insert([{ device_id: deviceId }]);
-            
             const { data: statData } = await supabaseClient.from('stats').select('value').eq('name', 'visitor_count').single();
             if (statData) {
                 const newCount = parseInt(statData.value) + 1;
                 await supabaseClient.from('stats').update({ value: newCount.toString() }).eq('name', 'visitor_count');
             }
         }
-        
-        // 3. Load all stats to display
         loadStats();
     } catch (e) { console.error(e.message); loadStats(); }
 }
@@ -139,21 +127,28 @@ async function loadStats() {
             if (item.name === 'matches') document.getElementById('matches-display').innerText = item.value;
             if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
             if (item.name === 'visitor_count') document.getElementById('view-count').innerText = item.value;
+            
+            // 🔥 Live Status Logic
+            if (item.name === 'live_status') currentLiveStatus = item.value;
+            if (item.name === 'announcement') currentAnnouncement = item.value;
         });
+        updateCountdown(); // Refresh UI after loading data
     }
 }
 
-function changeTheme(){
-    let colorIndex = Math.floor(Math.random() * 4);
-    const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
-    document.documentElement.style.setProperty('--c1', themes[colorIndex].c1);
-    document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
-}
-
 function updateCountdown() {
+    const txt = document.getElementById('stream-text');
+    
+    // ၁။ Bot က ပိတ်ထားရင် (Closed)
+    if (currentLiveStatus === 'closed') {
+        txt.innerHTML = `<span class="announcement-text">🚫 ${currentAnnouncement}</span>`;
+        return;
+    }
+
+    // ၂။ Bot က ဖွင့်ထားရင် (Open) - ပုံမှန် Countdown ပြမယ်
     const now = new Date();
     const start = new Date(); start.setHours(20, 30, 0, 0); 
-    const txt = document.getElementById('stream-text');
+    
     if (now >= start && now <= new Date().setHours(23,0,0,0)) {
         txt.innerHTML = `<span class="live-now-text">🔴 LIVE NOW</span>`;
     } else {
@@ -162,6 +157,16 @@ function updateCountdown() {
         const diff = target - now;
         txt.innerText = `LIVE စရန် ${Math.floor(diff/3600000)}h ${Math.floor((diff%3600000)/60000)}m လို`;
     }
+}
+
+// ၅ စက္ကန့်တစ်ခါ Bot ရဲ့ အမိန့်ကို စောင့်ဖတ်မယ်
+setInterval(loadStats, 5000);
+
+function changeTheme(){
+    let colorIndex = Math.floor(Math.random() * 4);
+    const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
+    document.documentElement.style.setProperty('--c1', themes[colorIndex].c1);
+    document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
 }
 
 function copyID(id) {
@@ -173,7 +178,6 @@ function copyID(id) {
 window.onload = () => { 
     handleUniqueVisitor(); 
     setInterval(updateCountdown, 1000);
-    updateCountdown();
 };
 
 const starsBox = document.getElementById('stars-box');
