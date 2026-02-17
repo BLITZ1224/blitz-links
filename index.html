@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     
     <title>BLITZ | Official Bio</title>
-    <meta name="description" content="MLBB Streamer & Chou Specialist. Check out my real-time stats!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://blitz1224.github.io/blitz-links/">
     <meta property="og:title" content="BLITZ | Official Bio">
+    <meta property="og:description" content="MLBB Streamer & Chou Specialist. Check out my real-time stats!">
     <meta property="og:image" content="https://blitz1224.github.io/blitz-links/B%20L%20I%20T%20Z.jpg">
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700;900&display=swap" rel="stylesheet">
@@ -28,8 +28,12 @@
 
         .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
+        .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
+        .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
+
+        /* ✅ TOP SUPPORTER Box (မင်းမူရင်းအတိုင်း) */
         .top-fan { 
-            background: rgba(255, 215, 0, 0.05); border: 1.5px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 12px; margin-bottom: 15px; 
+            background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 12px; margin-bottom: 15px; 
             font-size: 11px; color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 8px;
         }
 
@@ -41,14 +45,13 @@
             background: url('chou-box-bg.jpg') top center/cover no-repeat; opacity: 0.3; z-index: -2; 
         }
         .hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2.5px solid var(--c1); object-fit: cover; z-index: 2; }
-        .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; }
 
         .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; }
         
-        /* Bot Announcement Styling */
         .announcement-text { color: #ffdd00 !important; font-weight: 700; text-transform: uppercase; font-size: 12px; }
         .live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
         @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
+        @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
     </style>
 </head>
 <body>
@@ -64,7 +67,7 @@
         <div class="hero-card">
             <img src="chou-icon.jpg" class="hero-icon">
             <div style="text-align: left;">
-                <span class="chou-title">SIGNATURE: CHOU</span>
+                <span style="font-family: 'Syncopate'; font-weight: 900; font-size: 14px; color: var(--c1); display: block;">SIGNATURE: CHOU</span>
                 <p style="font-size: 11px;">Matches: <span id="matches-display" style="color:var(--c1);">...</span> | WR: <span id="wr-display" style="color:var(--c1);">...</span></p>
                 <p style="font-size: 11px;">MMR: <span id="mmr-display" style="color:var(--c1);">...</span></p>
             </div>
@@ -78,7 +81,7 @@
             <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
             <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
         </div>
-        <div class="visitor-box" style="font-size: 10px; opacity: 0.5; margin-top: 10px;">UNIQUE VIEWS: <span id="view-count">...</span></div>
+        <div class="visitor-box" style="font-size: 10px; opacity: 0.5; margin-top: 10px; text-align: center;">UNIQUE VIEWS: <span id="view-count">...</span></div>
     </div>
 </div>
 
@@ -92,7 +95,6 @@
     let currentLiveStatus = "open";
     let currentAnnouncement = "none";
 
-    // ✅ မင်းရဲ့ မူရင်း Bot Realtime Logic (ဘာမှမပြင်ထားပါ)
     supabaseClient.channel('public:stats').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, payload => { loadStats(); }).subscribe();
 
     async function loadStats() {
@@ -111,9 +113,9 @@
         }
     }
 
+    // ✅ မင်းမူရင်းလုပ်ထားတဲ့ Bot Announcement Logic အစစ်
     function updateStatus() {
         const txt = document.getElementById('stream-text');
-        // Bot က ပိတ်ထားရင် Announcement ပြမယ်
         if (currentLiveStatus === 'closed') {
             txt.innerHTML = `<span class="announcement-text">🚫 ${currentAnnouncement}</span>`;
             return;
@@ -131,7 +133,6 @@
         }
     }
 
-    // Visitor Logic & Theme Switcher (မူရင်းအတိုင်း)
     async function handleUniqueVisitor() {
         const fp = await FingerprintJS.load();
         const result = await fp.get();
@@ -145,6 +146,21 @@
     }
 
     window.onload = () => { handleUniqueVisitor(); setInterval(updateStatus, 1000); };
+
+    const starsBox = document.getElementById('stars-box');
+    for (let i = 0; i < 40; i++) {
+        const star = document.createElement('div'); star.className = 'star';
+        star.style.width = star.style.height = Math.random() * 2 + 'px';
+        star.style.left = Math.random() * 100 + '%'; star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        starsBox.appendChild(star);
+    }
+
+    function changeTheme(){
+        let colorIndex = Math.floor(Math.random() * 4);
+        const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
+        document.documentElement.style.setProperty('--c1', themes[colorIndex].c1);
+        document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
+    }
 </script>
 </body>
 </html>
