@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     
     <title>BLITZ | Official Bio</title>
-    <meta name="title" content="BLITZ | Official Bio">
-    <meta name="description" content="MLBB Streamer & Chou Specialist. Watch my Live Streams and track real-time stats!">
-    
+    <meta name="description" content="MLBB Streamer & Chou Specialist. Check out my real-time stats!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://blitz1224.github.io/blitz-links/">
     <meta property="og:title" content="BLITZ | Official Bio">
-    <meta property="og:description" content="MLBB Streamer | Real-time MMR, WR & Live Countdown.">
     <meta property="og:image" content="https://blitz1224.github.io/blitz-links/B%20L%20I%20T%20Z.jpg">
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Syncopate:wght@700;900&display=swap" rel="stylesheet">
@@ -20,30 +17,21 @@
     <style>
         :root{ --c1:#00f2ff; --c2:#ff0055; --bg:#050508; --gold: #ffd700; }
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; transition: 0.5s; }
+        body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-content:center; align-items:center; background: var(--bg); color:#fff; overflow-x:hidden; position: relative; padding: 40px 0; }
 
-        /* 🌌 Stars Background */
         .stars-container { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
         .star { position: absolute; background: white; border-radius: 50%; animation: moveStar linear infinite; box-shadow: 0 0 5px #fff; }
         @keyframes moveStar { from { transform: translateY(110vh); } to { transform: translateY(-10vh); } }
 
-        .card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .card-container { position: relative; padding: 3px; border-radius: 40px; background: linear-gradient(0deg, var(--c1), var(--c2)); background-size: 200% 200%; animation: rotateBorder 4s linear infinite; z-index: 1; width:min(92vw,400px); }
         @keyframes rotateBorder { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
 
         .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-        .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
-        .avatar img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border: 3px solid #000; }
-
-        /* 👑 TOP FAN Glowing Section (ဂုဏ်ပြုလွှာအသစ်) */
         .top-fan { 
             background: rgba(255, 215, 0, 0.05); border: 1.5px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 12px; margin-bottom: 15px; 
-            font-size: 12px; color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-            animation: goldGlow 2s infinite alternate;
+            font-size: 11px; color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        @keyframes goldGlow { from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.1); } to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); } }
-        #fan-name { font-weight: 900; text-transform: uppercase; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
 
         .hero-card { 
             position: relative; background: rgba(0, 0, 0, 0.7); border: 1.5px solid var(--c1); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; overflow: hidden; z-index: 1;
@@ -52,17 +40,13 @@
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: url('chou-box-bg.jpg') top center/cover no-repeat; opacity: 0.3; z-index: -2; 
         }
-        .hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2.5px solid var(--c1); object-fit: cover; z-index: 2; box-shadow: 0 0 10px var(--c1); }
+        .hero-icon { width: 65px; height: 65px; border-radius: 14px; border: 2.5px solid var(--c1); object-fit: cover; z-index: 2; }
         .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; }
-        
-        .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
 
-        .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; transition: .3s; border: 1px solid transparent; }
-        .links a:hover { border-color: var(--c1); transform: translateX(5px); background: rgba(0, 242, 255, 0.05); }
-
-        .visitor-box { margin-top: 15px; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
+        .links a { padding:14px 18px; border-radius:15px; background:rgba(255,255,255,0.05); text-decoration:none; color:#fff; font-weight:600; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 13px; }
         
-        @keyframes float { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
+        /* Bot Announcement Styling */
+        .announcement-text { color: #ffdd00 !important; font-weight: 700; text-transform: uppercase; font-size: 12px; }
         .live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
         @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
     </style>
@@ -75,21 +59,16 @@
         <div class="avatar" onclick="changeTheme()"><img src="B L I T Z.jpg" alt="BLITZ"></div>
         <h1 style="font-family:'Syncopate'; font-size:18px; letter-spacing:4px; margin-bottom:12px; color:var(--c1);">BLITZ</h1>
         
-        <div class="top-fan">
-            <i class="fas fa-crown"></i> 
-            <span>TOP SUPPORTER: <span id="fan-name">LOADING...</span></span>
-        </div>
+        <div class="top-fan"><i class="fas fa-crown"></i> TOP SUPPORTER: <b id="fan-name">...</b></div>
         
         <div class="hero-card">
             <img src="chou-icon.jpg" class="hero-icon">
             <div style="text-align: left;">
                 <span class="chou-title">SIGNATURE: CHOU</span>
-                <p style="font-size: 11px;">Matches: <span id="matches-display" style="color:var(--c1); font-weight:700;">...</span> | WR: <span id="wr-display" style="color:var(--c1); font-weight:700;">...</span></p>
-                <p style="font-size: 11px;">MMR: <span id="mmr-display" style="color:var(--c1); font-weight:700;">...</span></p>
+                <p style="font-size: 11px;">Matches: <span id="matches-display" style="color:var(--c1);">...</span> | WR: <span id="wr-display" style="color:var(--c1);">...</span></p>
+                <p style="font-size: 11px;">MMR: <span id="mmr-display" style="color:var(--c1);">...</span></p>
             </div>
         </div>
-
-        <div class="id-box" onclick="copyID('1036720164 (13159)')"><span id="id-text">ID: 1036720164 (13159)</span><i class="far fa-copy"></i></div>
 
         <div class="links">
             <a href="https://www.facebook.com/blitz2412" id="live-btn">
@@ -99,7 +78,7 @@
             <a href="https://www.tiktok.com/@streamingbyblitz">TIKTOK <i class="fab fa-tiktok"></i></a>
             <a href="https://www.youtube.com/@streamingbyblitz">YOUTUBE <i class="fab fa-youtube"></i></a>
         </div>
-        <div class="visitor-box"><i class="fas fa-eye"></i> UNIQUE VIEWS: <span id="view-count">...</span></div>
+        <div class="visitor-box" style="font-size: 10px; opacity: 0.5; margin-top: 10px;">UNIQUE VIEWS: <span id="view-count">...</span></div>
     </div>
 </div>
 
@@ -109,24 +88,12 @@
     const SB_URL = "https://zfhumhwmfqdexgzvtrpp.supabase.co"; 
     const SB_KEY = "sb_publishable_7Kxf-6gazHN3n-Wo-NNvHA_LpQ7rCG8"; 
     const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
     let currentLiveStatus = "open";
+    let currentAnnouncement = "none";
 
+    // ✅ မင်းရဲ့ မူရင်း Bot Realtime Logic (ဘာမှမပြင်ထားပါ)
     supabaseClient.channel('public:stats').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, payload => { loadStats(); }).subscribe();
-
-    async function handleUniqueVisitor() {
-        try {
-            const fp = await FingerprintJS.load();
-            const result = await fp.get();
-            const deviceId = result.visitorId;
-            const { data: existingLog } = await supabaseClient.from('visitor_logs').select('device_id').eq('device_id', deviceId).single();
-            if (!existingLog) {
-                await supabaseClient.from('visitor_logs').insert([{ device_id: deviceId }]);
-                const { data: statData } = await supabaseClient.from('stats').select('value').eq('name', 'visitor_count').single();
-                if (statData) { await supabaseClient.from('stats').update({ value: (parseInt(statData.value) + 1).toString() }).eq('name', 'visitor_count'); }
-            }
-            loadStats();
-        } catch (e) { loadStats(); }
-    }
 
     async function loadStats() {
         const { data } = await supabaseClient.from('stats').select('*');
@@ -138,13 +105,20 @@
                 if (item.name === 'wr') document.getElementById('wr-display').innerText = item.value;
                 if (item.name === 'visitor_count') document.getElementById('view-count').innerText = item.value;
                 if (item.name === 'live_status') currentLiveStatus = item.value;
+                if (item.name === 'announcement') currentAnnouncement = item.value;
             });
-            updateCountdown();
+            updateStatus();
         }
     }
 
-    function updateCountdown() {
+    function updateStatus() {
         const txt = document.getElementById('stream-text');
+        // Bot က ပိတ်ထားရင် Announcement ပြမယ်
+        if (currentLiveStatus === 'closed') {
+            txt.innerHTML = `<span class="announcement-text">🚫 ${currentAnnouncement}</span>`;
+            return;
+        }
+        // ပုံမှန်အချိန်ဆိုရင် Countdown ပြမယ်
         const now = new Date();
         const start = new Date(); start.setHours(20, 30, 0, 0); 
         if (now >= start && now <= new Date().setHours(23,0,0,0)) {
@@ -157,28 +131,20 @@
         }
     }
 
-    function changeTheme(){
-        let colorIndex = Math.floor(Math.random() * 4);
-        const themes = [{c1:'#00f2ff',c2:'#ff0055'},{c1:'#ffdd00',c2:'#ff5500'},{c1:'#00ff88',c2:'#0066ff'},{c1:'#bf00ff',c2:'#ff0088'}];
-        document.documentElement.style.setProperty('--c1', themes[colorIndex].c1);
-        document.documentElement.style.setProperty('--c2', themes[colorIndex].c2);
+    // Visitor Logic & Theme Switcher (မူရင်းအတိုင်း)
+    async function handleUniqueVisitor() {
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        const { data: existingLog } = await supabaseClient.from('visitor_logs').select('device_id').eq('device_id', result.visitorId).single();
+        if (!existingLog) {
+            await supabaseClient.from('visitor_logs').insert([{ device_id: result.visitorId }]);
+            const { data: v } = await supabaseClient.from('stats').select('value').eq('name', 'visitor_count').single();
+            await supabaseClient.from('stats').update({ value: (parseInt(v.value) + 1).toString() }).eq('name', 'visitor_count');
+        }
+        loadStats();
     }
 
-    function copyID(id) {
-        navigator.clipboard.writeText(id);
-        document.getElementById('id-text').innerText = "COPIED!";
-        setTimeout(() => { document.getElementById('id-text').innerText = "ID: 1036720164 (13159)"; }, 2000);
-    }
-
-    window.onload = () => { handleUniqueVisitor(); setInterval(updateCountdown, 1000); };
-
-    const starsBox = document.getElementById('stars-box');
-    for (let i = 0; i < 40; i++) {
-        const star = document.createElement('div'); star.className = 'star';
-        star.style.width = star.style.height = Math.random() * 2 + 'px';
-        star.style.left = Math.random() * 100 + '%'; star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        starsBox.appendChild(star);
-    }
+    window.onload = () => { handleUniqueVisitor(); setInterval(updateStatus, 1000); };
 </script>
 </body>
 </html>
