@@ -21,7 +21,7 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 
 .card{ background:rgba(10,10,15,0.95); backdrop-filter:blur(30px); border-radius:38px; padding:30px 20px; text-align:center; position: relative; z-index: 2; }
 
-/* 🥋 Chou Hero Card (နောက်ခံပုံ ပြန်ထည့်ထားသည်) */
+/* 🥋 Chou Hero Card */
 .hero-card { 
     position: relative; 
     background: rgba(0, 0, 0, 0.7); 
@@ -44,7 +44,6 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .chou-title { font-family: 'Syncopate', sans-serif; font-weight: 900; font-size: 14px; color: var(--c1); margin-bottom: 4px; display: block; text-shadow: 0 0 15px var(--c1); }
 .stat-highlight { color: var(--c1); font-weight: 700; }
 
-/* Views Box */
 .visitor-box { margin-top: 15px; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
 
 .avatar{ width:90px; height:90px; margin:0 auto 15px; border-radius:50%; padding:4px; background: linear-gradient(135deg, var(--c1), var(--c2)); cursor: pointer; animation: float 3s ease-in-out infinite; }
@@ -52,7 +51,6 @@ body{ min-height:100vh; font-family:'Outfit',sans-serif; display:flex; justify-c
 .top-fan { background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .id-box { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 15px; border: 1px dashed var(--c1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; color: var(--c1); font-weight: 700; font-size: 13px; }
 
-/* FB Live Button Style */
 @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
 .live-now-text { color: #ff0000 !important; font-weight: 900 !important; animation: blink 1s infinite; }
 .announcement-text { color: #ffdd00 !important; font-weight: 700; text-transform: uppercase; font-size: 12px; }
@@ -102,28 +100,29 @@ const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 let currentLiveStatus = "open";
 let currentAnnouncement = "none";
 
+// Realtime Update စနစ် (Bot ကပြင်တာနဲ့ Website မှာတန်းပြောင်းရန်)
+supabaseClient
+  .channel('public:stats')
+  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stats' }, payload => {
+    loadStats();
+  })
+  .subscribe();
+
 async function handleUniqueVisitor() {
     try {
         const fp = await FingerprintJS.load();
         const result = await fp.get();
         const deviceId = result.visitorId;
-
-        const { data: existingLog } = await supabaseClient
-            .from('visitor_logs')
-            .select('device_id')
-            .eq('device_id', deviceId)
-            .single();
-
+        const { data: existingLog } = await supabaseClient.from('visitor_logs').select('device_id').eq('device_id', deviceId).single();
         if (!existingLog) {
             await supabaseClient.from('visitor_logs').insert([{ device_id: deviceId }]);
             const { data: statData } = await supabaseClient.from('stats').select('value').eq('name', 'visitor_count').single();
             if (statData) {
-                const newCount = parseInt(statData.value) + 1;
-                await supabaseClient.from('stats').update({ value: newCount.toString() }).eq('name', 'visitor_count');
+                await supabaseClient.from('stats').update({ value: (parseInt(statData.value) + 1).toString() }).eq('name', 'visitor_count');
             }
         }
         loadStats();
-    } catch (e) { console.error(e.message); loadStats(); }
+    } catch (e) { loadStats(); }
 }
 
 async function loadStats() {
@@ -159,8 +158,6 @@ function updateCountdown() {
         txt.innerText = `LIVE စရန် ${Math.floor(diff/3600000)}h ${Math.floor((diff%3600000)/60000)}m လို`;
     }
 }
-
-setInterval(loadStats, 5000);
 
 function changeTheme(){
     let colorIndex = Math.floor(Math.random() * 4);
